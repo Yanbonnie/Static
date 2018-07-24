@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TEST</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/weui.css">
+</head>
+
+<body style="background: #fff;">
+
+    <div class="list" id="listBox">
+        <div class="listBox">
+            <ul>
+                <li class="flexBox" v-for="(item,index) in [1,1,1,11,1,11,1,1,1]">
+                    <div class="flexL">
+                        <img src="./images/card.jpg" alt="">
+                    </div>
+                    <div class="flexR">
+                        <h3>平安保险卡</h3>
+                        <p>50万交通险 | 燃气险 | 住院津贴</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="cover" v-show="detailState">
+            <div class="coverBox">
+                <div class="title">
+                    <div class="flexBox">
+                        <span></span>
+                        <span>权益详情</span>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="scrollBox sign_page_scrollBody">
+                    <div class="txtBox">
+                        <div class="itemTxt">
+                            <h3>年费</h3>
+                            <p>200元/年，卡片激活即收取，首年消费满3万元免次年年费。</p>
+                        </div>
+                        <div class="itemTxt">
+                            <h3>加油88折，年返最高￥720</h3>
+                            <p>活动时间：2018-01-05至2018-09-01</p>
+                            <p>皮娜娜信用卡新客户：贺卡首页及次月，有人以一笔微信或支付宝快捷支付交易，即享受制定加油消费88折，每客户每月最高获60元加油奖励金；贺卡第三个月起，月可计积分消费满2千元且有微信或支付宝快捷支付任意一笔，可继续参加活动；平安信用卡老客户：当月积分消费满2千元且有人以一笔微信支付宝快捷支付交易，即享受活动指定信用卡加油消费88折。每位客户每月最高获得60元加油奖励金。</p>
+                        </div>
+                        <div class="itemTxt">
+                            <h3>新客户享微信/支付宝/京东等40元免单</h3>
+                            <p>活动对象：2018-01-02至2019-05-06核卡的平安信用卡新客户，且从未使用平安信用在支付宝、财付通、京东支付或银联移动支付上有过消费。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <img src="./images/close.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/zepto.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script>
+        $(function () {
+            new Vue({
+                el: "#listBox",
+                data: {
+                    detailState:false
+                },
+                methods: {
+                    init: function () {
+
+                    }
+                },
+                mounted: function () {
+                    this.init();
+                }
+            })
+        })
+    </script>
+
+</body>
+
+</html>
