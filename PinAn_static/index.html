@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TEST</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/weui.css">
+</head>
+
+<body>
+
+    <div class="wrap index_page" id="index-box">
+        <div class="panel panel1">
+            <div class="title">
+                <img src="./images/title1.png" alt="">
+            </div>
+            <div class="flexBox">
+                <div>
+                    <img src="./images/icon1.png" alt="">
+                    <p>麦当劳</p>
+                </div>
+                <div>
+                    <img src="./images/icon2.png" alt="">
+                    <p>鲜丰水果</p>
+                </div>
+                <div>
+                    <img src="./images/icon3.png" alt="">
+                    <p>联华超市</p>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel2">
+            <div class="title">
+                <img src="./images/title2.png" alt="">
+            </div>
+            <div class="banner">
+                <img src="./images/banner.jpg" alt="">
+            </div>
+            <div class="flexBox">
+                <div>
+                    <img src="./images/tab1.png" alt="">
+                    <p>违章查缴</p>
+                </div>
+                <div>
+                    <img src="./images/tab2.png" alt="">
+                    <p>油卡充值</p>
+                </div>
+                <div>
+                    <img src="./images/tab3.png" alt="">
+                    <p>新车分期</p>
+                </div>
+                <div>
+                    <img src="./images/tab4.png" alt="">
+                    <p>积分体系</p>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel3">
+            <div class="title">
+                <img src="./images/title3.png" alt="">
+            </div>
+            <div class="flexBox">
+                <div>
+                    <img src="./images/qy1.png" alt="">
+                    <p>自助餐</p>
+                </div>
+                <div>
+                    <img src="./images/qy2.png" alt="">
+                    <p>航班延误</p>
+                </div>
+                <div>
+                    <img src="./images/qy3.png" alt="">
+                    <p>接送机</p>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel4">
+            <div class="title">
+                <img src="./images/title4.png" alt="">
+            </div>
+            <div class="flexBox">
+                <div class="item">
+                    <p>酱香东坡肉</p>
+                    <img src="./images/food1.jpg" alt="">
+                </div>
+                <div class="item">
+                    <p>酱香东坡肉</p>
+                    <img src="./images/food2.jpg" alt="">
+                </div>
+                <div>
+                    
+                    <img src="./images/food3.jpg" alt="">
+                    <p>酱香东坡肉</p>
+                </div>
+                <div>
+                    
+                    <img src="./images/food4.jpg" alt="">
+                    <p>酱香东坡肉</p>
+                </div>
+                <div>
+                    
+                    <img src="./images/food5.jpg" alt="">
+                    <p>酱香东坡肉</p>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel5">
+            <div class="title">
+                <img src="./images/title5.png" alt="">
+            </div>
+            <div class="flexBox">
+                <div>
+                    <img src="./images/city.jpg" alt="">
+                    <p>自助餐</p>
+                </div>
+                <div>
+                    <img src="./images/city.jpg" alt="">
+                    <p>航班延误</p>
+                </div>
+                <div>
+                    <img src="./images/city.jpg" alt="">
+                    <p>接送机</p>
+                </div>
+                <div>
+                    <img src="./images/city.jpg" alt="">
+                    <p>接送机</p>
+                </div>
+                <div>
+                    <img src="./images/city.jpg" alt="">
+                    <p>自助餐</p>
+                </div>
+                <div>
+                    <img src="./images/city.jpg" alt="">
+                    <p>航班延误</p>
+                </div>
+                <div>
+                    <img src="./images/city.jpg" alt="">
+                    <p>接送机</p>
+                </div>
+                <div>
+                    <img src="./images/city.jpg" alt="">
+                    <p>接送机</p>
+                </div>
+            </div>
+        </div>
+        <!-- 加载中 -->
+        <div id="loadingToast" v-show="loading.status">
+            <div class="weui-mask_transparent"></div>
+            <div class="weui-toast">
+                <i class="weui-loading weui-icon_toast"></i>
+                <p class="weui-toast__content" v-html="loading.txt"></p>
+            </div>
+        </div>
+        <!--按钮提示框-->
+        <!--BEGIN dialog2-->
+        <div class="js_dialog" id="iosDialog2" v-show="dialog.status">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__bd">{{dialog.txt}}</div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click="dialog.status = false">知道了</a>
+                </div>
+            </div>
+        </div>
+        <!-- 提示框，1000消失 -->
+        <div class="tipBox" v-show="alert.status">
+            <div class="tibBox_inner">
+                <p v-html="alert.txt"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/zepto.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script>
+        $(function () {
+            new Vue({
+                el: "#index-box",
+                data: {
+                    
+                    URL:{
+                        getHome:'https://xnt.xhwxpos.com/pingan/weixin/Index/getHome',
+                    },
+                    hot_list:[],      //热门优惠   logo,name,url
+                    car_list:[],      //车主生活   logo,name,url
+                    card_list:[],     //高端卡权益数组    
+                    food_list:[],     //精选美食数组
+                    city_list:[],     //城市优惠数组
+
+                    loading: {        //加载中弹框
+                        status: false,
+                        txt: '加载中...'
+                    },
+                    dialog: {    //带按钮提示框
+                        status: false,
+                        txt: '这里是提示内容'
+                    },
+                    alert: {     //提示自动消失框
+                        status: false,
+                        txt: '这里是提示内容'
+                    },
+                },
+                methods: {
+                    //获取首页数据接口
+                    getHomeFn:function(){
+                        var This = this;
+                        this.loading.status = true;
+                        $.ajax({
+                            url:this.URL['getHome'],
+                            dataType: 'json',
+                            type: 'get',
+                            data: {},
+                            async: true,  //异步请求
+                            success: function (res) {
+                                This.loading.status = false;
+                                if(res.status == 0){
+                                    this.hot_list = res.hot_list;
+                                    this.car_list = res.car_list;
+                                    this.card_list = res.card_list;
+                                    this.food_list = res.food_list;
+                                    this.city_list = res.city_list;
+                                }else{
+                                    This.alertHandle(res.msg)
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                This.alertHandle('服务出错了')
+                                console.log(XMLHttpRequest)
+                            }
+                        })
+                    },
+                    alertHandle:function(msg){
+                        var This = this;
+                        this.alert.status = true;
+                        this.alert.txt = msg;
+                        setTimeout(function(){
+                            This.alert.status = false;
+                            This.alert.txt = '';
+                        },1500)
+                    }
+                },
+                mounted: function () {
+                    
+                }
+            })
+        })
+    </script>
+
+</body>
+
+</html>
