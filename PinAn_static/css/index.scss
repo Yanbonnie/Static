@@ -43,16 +43,21 @@ img{
             display: flex;
             justify-content: space-around;
             align-items: center;
+            width:100%;
             padding: REM(10) 0 REM(30);
             a{
-                flex-grow: 1;
+                width:(100/3)*1%;
                 text-align: center;
+                flex-shrink:0;
+                box-sizing:border-box;
                 img{
                     width: REM(129);
                     margin: 0 auto;
                     display: block;
                 }
                 p{
+                    width:90%;
+                    margin:0 auto;
                     padding-top: 8px;
                     font-size: REM(28);
                     color: #515151;
@@ -72,6 +77,7 @@ img{
                 justify-content: center;
                 align-items: center;
                 padding: REM(30) 0;
+                flex-basis:50%;
                 &:nth-child(1){
                     border-right: 1px #f5f5f5 solid;
                 }
@@ -82,11 +88,14 @@ img{
                     padding-right: REM(10);
                     display: inline-block;
                 }
+                p{
+                    font-size: REM(24);
+                    color: #666666;
+                    width:auto;
+                    margin:0;
+                }
             }
-            P{
-                font-size: REM(24);
-                color: #666666;
-            }
+            
         }
     }
     .panel4{
