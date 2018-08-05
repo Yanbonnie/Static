@@ -77,8 +77,8 @@ img{
                 }
                 img{
                     margin: 0;
-                    width: REM(115);
-                    height: REM(115);
+                    width: REM(155);
+                    height: REM(155);
                     padding-right: REM(10);
                     display: inline-block;
                 }
@@ -100,7 +100,7 @@ img{
                 padding-bottom: REM(20);
                 img{
                     width: REM(160);
-                    height: REM(130);
+                    // height: REM(130);
                     
                 }
                 p{
@@ -128,14 +128,9 @@ img{
                 }
                 img{
                     width: REM(160);
-                    height: REM(160);
+                    margin-right: REM(20);
+                    // height: REM(160);
                     
-                }
-                &:nth-child(1){
-                    img{
-                        margin: 0;
-                        margin-right: REM(20);
-                    }
                 }
                 
             }
@@ -233,6 +228,7 @@ img{
     bottom: 0;
     right: 0;
     background: rgba(0,0,0,0.8);
+    z-index: 10;
     .coverBox{
         position: absolute;
         width: 90%;
@@ -271,12 +267,13 @@ img{
             flex-grow: 1;
             display: block;
             overflow: auto;
+            max-height: 25rem;
             .txtBox{
                 padding:0 REM(50);
-                .itemTxt{
-                    padding-bottom: REM(30);
+                // .itemTxt{
+                //     padding-bottom: REM(30);
                     h3{
-                        font-size: REM(28);
+                        font-size: REM(28); 
                         font-weight: bold;
                         color: #000;
                         line-height: REM(60);
@@ -286,7 +283,7 @@ img{
                         color: #4a4a4a;
                         line-height: REM(50);
                     }
-                }
+                // }
             }
         }
         .bottom{
