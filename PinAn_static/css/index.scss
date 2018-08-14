@@ -208,25 +208,50 @@ img{
 }
 
 .articleList{
-    ul{
-        padding: 0 REM(20);
-        li{
-            border-bottom: 1px #e3e3e3 dashed; 
-            padding: REM(10) 0;
+    // padding-top: REM(30);
+    .flexBox{
+        display:flex;
+        align-items: center;
+        // border-bottom: 1px #f5f5f5 dashed;
+        position: relative;
+        box-shadow: 0 REM(5) REM(25) #ACACAC;
+        margin-bottom: REM(35);
+        max-height: REM(300);
+        overflow: hidden;
+        .imgBox{
+            width: 100%;
+
+        }
+        .txtBox{
+            width: 95%;
+            position: absolute;
+            bottom: 0px;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            padding: 5px 2.5%;
             h3{
                 font-size: REM(28);
-                color: #000;
-                overflow: hidden;
             }
             p{
-                display: flex;
-                justify-content: space-between;
-                span{
-                    text-align: right;
-                    flex-grow: 1;
-                }
+                text-align: right;
+                font-size: REM(24);
             }
         }
+        // .flexL{
+        //     flex-basis: 60px;
+        //     img{
+        //         width:60px;
+        //     }
+        // }
+        // .flexR{
+        //     padding-left: 10px;
+        //     flex-grow: 1;
+        //     overflow: hidden;
+        //     h3{
+        //         padding-bottom: 5px;
+        //         color: #4a4a4a;
+        //     }
+        // }
     }
 }
 .cover{
