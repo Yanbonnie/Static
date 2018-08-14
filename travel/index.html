@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>113家礼品兑换</title>
+    <script src="./js/flexible.js"></script>
+    <script src="./js/zepto.min.js"></script>
+    <script src="./js/vue.min.js"></script>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/weui.css">
+</head>
+<body>
+    <div class="wrap index" id="index-box" v-cloak>
+
+
+        <div class="cover " v-show="imgStatus" @click="imgStatus=false;imgBigUrl=''">
+            <div class="bigImgCover">
+                <div class="bigImgBox">
+                    <img :src="imgBigUrl" alt="">
+                </div>
+            </div>
+        </div>
+
+        <!-- 加载中 -->
+        <div id="loadingToast" v-show="loading.status">
+            <div class="weui-mask_transparent"></div>
+            <div class="weui-toast">
+                <i class="weui-loading weui-icon_toast"></i>
+                <p class="weui-toast__content" v-html="loading.txt"></p>
+            </div>
+        </div>
+        <!--只有一个按钮提示框-->
+        <!--BEGIN dialog2-->
+        <div class="js_dialog" id="iosDialog2" v-show="dialog.status">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__bd">{{dialog.txt}}</div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click="dialog.status = false">知道了</a>
+                </div>
+            </div>
+        </div>
+         <!--两个个按钮提示框-->
+        <div class="js_dialog" id="iosDialog1" v-show="dialog2.status">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__hd"><strong class="weui-dialog__title">提示</strong></div>
+                <div class="weui-dialog__bd">{{dialog2.txt}}</div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" @click="dialog2.status = false">取消</a>
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click="dialogSureHandle">确定</a>
+                </div>
+            </div>
+        </div>
+        <!-- 提示框，1000消失 -->
+        <div class="tipBox" v-show="alert.status">
+            <div class="tibBox_inner">
+                <p v-html="alert.txt"></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        //加载资源数组必须在loading之前进行配置
+        $(function () {
+            new Vue({
+                el: "#index-box",
+                data: { 
+
+                    loading:{        //加载中弹框
+                        status:false,
+                        txt:'加载中...'
+                    },
+                    dialog:{    //带按钮提示框
+                        status:false,
+                        txt:'这里是提示内容'
+                    },
+                    dialog2:{  //带双按钮提示框
+                        status:false,
+                        txt:'这里是提示的内容'
+                    },
+                    alert:{     //提示自动消失框
+                        status:false,
+                        txt:'这里是提示内容'
+                    },
+                    linkHref:{
+                        getGifts:'http://we7.xhwxpos.com/gold/index.php?m=Wap&c=Index&a=get_picList',                              //获取礼品列表
+                        delGifts:'delGifts',                              //删除礼品
+                    },
+                },
+                methods: {
+                   
+                    // 获取首页数据
+                    getGiftsFn:function(){
+                        var This = this;
+                        This.loading.status = true;
+                        $.ajax({
+                            type:'GET',
+                            url:this.linkHref.getGifts,
+                            dataType:'json',
+                            cache:false,
+                            data:{
+                                
+                            },
+                            success:function(res){
+                                This.loading.status = false;
+                                if(res.status == 0){
+                                    This.list = res.data;   
+                                }else{                                    
+                                    This.alertHandle(res.msg)
+                                }
+                            },
+                            error:function (e) {
+                                console.log(e)
+                            }
+                        })
+                    },                    
+                    //处理提示弹框函数
+                    alertHandle:function(msg){
+                        var This = this;
+                        this.alert.status = true;
+                        this.alert.txt = msg;
+                        setTimeout(function(){
+                            This.alert.status = false;
+                            This.alert.txt = '';
+                        },1500)
+                    },
+                    
+                },
+                mounted: function () {
+                    // this.init();
+                    // this.getGiftsFn();
+					
+                }
+            })
+        })
+    </script>
+</body>
+</html>

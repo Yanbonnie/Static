@@ -1,0 +1,168 @@
+@import 'base.scss';
+[v-cloak]{
+    display: none;
+}
+img{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+.wrap{
+    max-width: REM(750);
+    margin: 0 auto;
+}
+.index{
+    padding-top: REM(36);
+    padding-bottom: REM(120);
+    .list{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding: 0 REM(36);
+        .list-item{
+            width: REM(321);
+            margin-bottom: REM(36);
+            box-shadow:0 REM(5) REM(15) #b3b2b2;
+            .imgBox{
+                height:REM(380);
+                overflow: hidden;
+                position: relative;
+                .title{
+                    background: rgba(0,0,0,0.5);
+                    color: #fff;
+                    position: absolute;
+                    right: 0;
+                    left: 0;
+                    bottom: 0;
+                    line-height: REM(60);
+                    text-align: center;
+                }
+            }
+            &:nth-child(n){
+                margin-right: REM(36);
+            }
+            &:nth-child(2n){
+                margin-right: 0;
+            }
+            .txt{
+                height: REM(80);
+                line-height: REM(80);
+                text-align: center;
+            }
+            .btnBox{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: #f5f5f5;
+                height: REM(80);
+                span{
+                    flex-grow: 1;
+                    box-sizing: border-box;
+                    text-align: center;
+                    &:nth-child(1){
+                        line-height: REM(80);
+                    }
+                }
+            }
+        }
+    }
+    .bottomBtn{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(253, 215, 66,1);
+        text-align: center;
+        line-height: REM(80);
+        font-size: REM(30);
+    }
+}
+
+.edit{
+    padding: REM(50) REM(35);
+    .editBox{
+        
+        .item{
+            padding-bottom: REM(35);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .itemL{
+                font-size: REM(28);
+                width: REM(150);
+                align-self: flex-start;
+                line-height: REM(80);
+            }
+            .itemR{
+                flex-grow: 1;
+                input{
+                    height: REM(80);
+                    border: 1px rgba(204,204,204,0.5) solid;
+                    width: 100%;
+                    text-indent: 10px;
+                    font-size: REM(28);
+                    box-sizing: border-box;
+                    border-radius: REM(8);
+                }
+                .add{
+                    width: REM(200);
+                    height: REM(200);
+                    background: #f5f5f5;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    b{
+                        font-size: REM(100);
+                        margin-top:REM(-10);
+                        font-weight: normal;
+                        color: #ccc;
+                    }
+                }
+                .imgBox{
+                    width: REM(525);
+                    display: block;
+                }
+            }
+        }
+        
+    }
+    .bottomBtn{
+        margin-top: REM(10);
+        width: REM(680);
+        background: rgb(253, 215, 66);
+        text-align: center;
+        line-height: REM(80);
+        font-size: REM(30);
+        border-radius: REM(8);
+    }
+}
+
+
+
+.cover{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.bigImgBox{
+    width: REM(750);
+    height: REM(1008);
+    display: table-cell;
+    vertical-align: middle;
+    img{
+        max-width: 100%;
+		max-height: 100%;
+		box-sizing: border-box;
+		margin: 0 auto;
+    }
+}
