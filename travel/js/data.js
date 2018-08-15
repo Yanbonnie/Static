@@ -3,35 +3,35 @@ var earthData = [
     {
         list:[ //欧美地区
             {
-                name:'阿根廷布宜诺斯艾利斯',
+                name:'阿根廷·布宜诺斯艾利斯',
                 url:baseUrl+'zhou1/1.jpg'
             },
             {
-                name:'巴黎埃菲尔铁塔',
+                name:'巴黎·埃菲尔铁塔',
                 url:baseUrl+'zhou1/2.jpg'
             },
             {
-                name:'荷兰阿姆斯特丹',
+                name:'荷兰·阿姆斯特丹',
                 url:baseUrl+'zhou1/3.jpg'
             },
             {
-                name:'加拿大魁北克',
+                name:'加拿大·魁北克',
                 url:baseUrl+'zhou1/4.jpg'
             },
             {
-                name:'罗马-神庙',
+                name:'罗马·神庙',
                 url:baseUrl+'zhou1/5.jpg'
             },
             {
-                name:'墨西哥坎昆',
+                name:'墨西哥·坎昆',
                 url:baseUrl+'zhou1/6.jpg'
             },
             {
-                name:'瑞典-斯德哥尔摩市政厅',
+                name:'瑞典·斯德哥尔摩市政厅',
                 url:baseUrl+'zhou1/7.jpg'
             },
             {
-                name:'乌尤尼盐湖-玻利维亚',
+                name:'玻利维亚·乌尤尼盐湖',
                 url:baseUrl+'zhou1/8.jpg'
             },
         ]
@@ -39,23 +39,23 @@ var earthData = [
     {
         list:[ //非洲
             {
-                name:'埃及开罗',
+                name:'埃及·开罗',
                 url:baseUrl+'zhou2/1.jpg'
             },
             {
-                name:'非洲肯尼亚',
+                name:'非洲·肯尼亚',
                 url:baseUrl+'zhou2/2.jpg'
             },
             {
-                name:'非洲赞比亚',
+                name:'非洲·赞比亚',
                 url:baseUrl+'zhou2/3.jpg'
             },
             {
-                name:'开普敦（南非）',
+                name:'南非·开普敦',
                 url:baseUrl+'zhou2/4.jpg'
             },
             {
-                name:'摩洛哥卡萨布兰卡',
+                name:'摩洛哥·卡萨布兰卡',
                 url:baseUrl+'zhou2/5.jpg'
             },
         ]
@@ -63,11 +63,11 @@ var earthData = [
     {
         list:[ //亚洲地区
             {
-                name:'柬埔寨 暹粒',
+                name:'柬埔寨·暹粒',
                 url:baseUrl+'zhou3/1.jpg'
             },
             {
-                name:'日本东京',
+                name:'日本·东京',
                 url:baseUrl+'zhou3/2.jpg'
             },
             {
@@ -75,23 +75,23 @@ var earthData = [
                 url:baseUrl+'zhou3/3.jpg'
             },
             {
-                name:'亚洲不丹',
+                name:'亚洲·不丹',
                 url:baseUrl+'zhou3/4.jpg'
             },
             {
-                name:'印度尼西亚 巴厘岛',
+                name:'印度尼西亚·巴厘岛',
                 url:baseUrl+'zhou3/5.jpg'
             },
             {
-                name:'中国澳门',
+                name:'中国·澳门',
                 url:baseUrl+'zhou3/6.jpg'
             },
             {
-                name:'中国台湾',
+                name:'中国·台湾',
                 url:baseUrl+'zhou3/7.jpg'
             },
             {
-                name:'中国香港',
+                name:'中国·香港',
                 url:baseUrl+'zhou3/8.jpg'
             },
         ]
@@ -99,19 +99,19 @@ var earthData = [
     {
         list:[ //大洋洲
             {
-                name:'奥克兰（新西兰）',
+                name:'新西兰奥克兰',
                 url:baseUrl+'zhou4/1.jpg'
             },
             {
-                name:'布里斯班（澳大利亚）',
+                name:'澳大利亚·布里斯班',
                 url:baseUrl+'zhou4/2.jpg'
             },
             {
-                name:'凯恩斯（澳大利亚）',
+                name:'澳大利亚·凯恩斯',
                 url:baseUrl+'zhou4/3.jpg'
             },
             {
-                name:'悉尼（澳大利亚）1',
+                name:'澳大利亚·悉尼',
                 url:baseUrl+'zhou4/4.jpg'
             }
         ]

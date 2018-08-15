@@ -319,7 +319,7 @@
                         function startDraw(ctx) {
                             
                             
-                            ctx.fillStyle="#d3cfc8";
+                            ctx.fillStyle="#ffffff";
                             ctx.fillRect(0,0,This.W*2,This.H*2);
 
                             ctx.drawImage(imgObj, 0, 0, This.W * 2, This.H * 2 - This.H * 2 * 0.1);//this即是imgObj,保持图片的原始大小：470*480
@@ -329,7 +329,7 @@
 
                             ctx.font = parseInt(This.Font)*0.7+"px 微软雅黑";
                             ctx.fillStyle = "#53689b";
-                            ctx.fillText(This.selectPlaceData ? This.selectPlaceData.name : '欢迎你', This.W *0.01, This.H * 2 * 0.96);
+                            ctx.fillText(This.selectPlaceData ? This.selectPlaceData.name : '欢迎你', This.W *0.04, This.H * 2 * 0.96);
 
                             ctx.fillStyle = "#ffffff";
                             ctx.font = parseInt(This.Font)*0.6+"px 微软雅黑";
@@ -359,32 +359,7 @@
                         var image = new Image();						
                         image.src = canvas.toDataURL("image/png")
                         $('.canvas').append(image);
-                    },
-                    // 获取首页数据
-                    // getGiftsFn:function(){
-                    //     var This = this;
-                    //     This.loading.status = true;
-                    //     $.ajax({
-                    //         type:'GET',
-                    //         url:this.linkHref.getGifts,
-                    //         dataType:'json',
-                    //         cache:false,
-                    //         data:{
-                                
-                    //         },
-                    //         success:function(res){
-                    //             This.loading.status = false;
-                    //             if(res.status == 0){
-                    //                 This.list = res.data;   
-                    //             }else{                                    
-                    //                 This.alertHandle(res.msg)
-                    //             }
-                    //         },
-                    //         error:function (e) {
-                    //             console.log(e)
-                    //         }
-                    //     })
-                    // },                    
+                    },                  
                     //处理提示弹框函数
                     alertHandle:function(msg){
                         var This = this;
