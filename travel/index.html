@@ -2,26 +2,117 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>113家礼品兑换</title>
+    <title>我的环游世界旅行照</title>
     <script src="./js/flexible.js"></script>
+    <script src="./js/underscore-min.js"></script>
     <script src="./js/zepto.min.js"></script>
     <script src="./js/vue.min.js"></script>
+    <script src="./js/data.js"></script>
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/weui.css">
 </head>
 <body>
     <div class="wrap index" id="index-box" v-cloak>
-        <div></div>
+        <div class="pageSlideBox">
+            <div id="slide01" class="tab">
+                <ul class="content">
+                    <li>
+                        <div class="page1" >
+                            <img :src="radomUrl" alt="">
+                            <div class="cont hide">
+                                <img class="logo fadeInUp" src="./images/logo.png" alt="">
+                                <img class="title fadeInUp" src="./images/title.png" alt="">
+                                <img class="txt fadeInUp" src="./images/txt.png" alt="">
+                                <img class="car drive" src="./images/car.png" alt="">
+                                <img @click="goNext" class="start pulse" src="./images/start.png" alt="">
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="page2" >
+                            <div class="cont hide">
+                                <h3 class="txt">选择你喜欢的旅游目的地</h3>
+                                <div class="map"></div>
+                                <div @click="selectArea(0)" class="zhou1 zhou pulse" :class="[earthIndex == 0 ? 'active':''] "><p>欧美<br/>地区</p></div>
+                                <div @click="selectArea(1)"  class="zhou2 zhou pulse" :class="[earthIndex == 1 ? 'active':''] "><p>非洲<br/>地区</p></div>
+                                <div @click="selectArea(2)"  class="zhou3 zhou pulse" :class="[earthIndex == 2 ? 'active':''] "><p>亚洲<br/>地区</p></div>
+                                <div @click="selectArea(3)" class="zhou4 zhou pulse" :class="[earthIndex == 3 ? 'active':''] "><p>大洋洲<br/>地区</p></div>
+                                <img class="sense" src="./images/page2_txt.png" alt="">
+                                <img class="logo" src="./images/logo.png" alt="">
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="page3 hide">
+            <h3>选择你喜欢的旅游目的地</h3>
+            <h2><span><b></b></span><span>{{earthIndex == 0 ? '欧美地区' : earthIndex == 1 ? '非洲地区' : earthIndex == 2 ? '亚洲地区' : '大洋洲地区'}}</span><span><b></b></span></h2>
+            <div class="list">
+                <div class="item" v-for="(item,index)  in placeList" :key="index" @click="selectPlace(index,item)" :class="[selectIndex == index ? 'active' : '']"> 
+                    <div class="imgBox">
+                        <img :src="item.url" alt="">
+                    </div>
+                    <div class="title">
+                        <p>{{item.name}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="btnBox">
+                <img class="sure" @click="sureSelectPlace" src="./images/sure_btn.png" alt="">
+                <img class="logo" src="./images/logo.png" alt="">
+            </div>
+        </div>
+        <div class="page4 hide">
+            <h3>选择你的旅行心情</h3>
+            <div class="copywriting">
+                <ul class="sign_page_scrollBody">
+                    <li v-for="(item,index) in sloganList" :key="index" @click="selectSloganHandle(item)" :class="[selectSlogan.txt == item.txt ? 'active':'']">
+                        <p>{{item.txt}}</p>
+                    </li>
+                </ul>
+            </div> 
+            <img class="sure" src="./images/sure_btn.png" alt=""  @click="sureSelectSlogan">
+            <img class="again" @click="againSelectPlace" src="./images/again_txt.png" alt="">
+        </div>
+        <div class="page5 hide">
+            <h3>我的环游世界旅行照</h3>
+            <div class="box">
+                <img class="car" src="./images/car.png" alt="">
+                <img class="earth rotate" src="./images/earth.png" alt="">
+                <p>照片生成中...</p>
+            </div>
+            <div class="infoBox">
+                <p>5月起，广东居民可通过“粤省事”小程序在线预约办理/再签注出入境证件</p>
+                <p>详细登录粤省事小程序或关注粤省事公众号进行了解</p>
+            </div>
+            <img class="logo" src="./images/logo.png" alt="">
+        </div>
 
+        <div class="page6" style="opacity: 0;z-index: 0"> <!--style="opacity: 0;z-index: 0"-->
+            <h3>我的环游世界旅行照</h3>
+            <div class="box">
+                <div class="canvas" >
+                    <canvas id="canvas" :width="this.W*2" :height="this.H*2" :style="'width:'+this.W+'px;height:'+this.H+'px'">
+                        <!--width="320" height="180" style="width:160px;height:90px;"-->
+                        当前浏览器不支持canvas
+                    </canvas>
+                </div>
+                    
+            </div>
+            <img class="copy" src="./images/copy_txt.png" alt="">
+            <img class="again" @click="againMake" src="./images/again.png" alt="">
+        </div>
+<!-- 
         <div class="cover " v-show="imgStatus" @click="imgStatus=false;imgBigUrl=''">
             <div class="bigImgCover">
                 <div class="bigImgBox">
                     <img :src="imgBigUrl" alt="">
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- 加载中 -->
         <div id="loadingToast" v-show="loading.status">
@@ -50,7 +141,7 @@
                 <div class="weui-dialog__bd">{{dialog2.txt}}</div>
                 <div class="weui-dialog__ft">
                     <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" @click="dialog2.status = false">取消</a>
-                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click="dialogSureHandle">确定</a>
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" >确定</a>
                 </div>
             </div>
         </div>
@@ -63,11 +154,25 @@
     </div>
     <script>
         //加载资源数组必须在loading之前进行配置
+        console.log(earthData)
+        var radomData = ['./images/1.jpg','./images/2.jpg','./images/3.jpg','./images/4.jpg','./images/5.jpg',];
+        console.log(_.sample(radomData))
         $(function () {
             new Vue({
                 el: "#index-box",
                 data: { 
-
+                    tab1:null,
+                    radomUrl:_.sample(radomData),
+                    placeList:[],
+                    earthIndex:null,
+                    selectPlaceData:null,   //选中的地区
+                    selectIndex:null,       //选中的下标
+                    sloganList:slogan,
+                    selectSlogan:'',        //选中的标语
+                    W:0,
+                    H:0,
+                    Font:0,
+                    ctx:null,
                     loading:{        //加载中弹框
                         status:false,
                         txt:'加载中...'
@@ -90,32 +195,196 @@
                     },
                 },
                 methods: {
-                   
-                    // 获取首页数据
-                    getGiftsFn:function(){
+                    //开始旅行
+                    goNext:function(){
+                        this.tab1.playTo(1)
+                    },
+                    //选择区域
+                    selectArea:function(index){
+                        this.placeList = earthData[index].list;
+                        this.earthIndex = index;
+                        $('.pageSlideBox').fadeOut();
+                        $('.page3').fadeIn();
+                    }, 
+                    //选择地方
+                    selectPlace:function(index,item){
+                        this.selectIndex = index;
+                        this.selectPlaceData = item;
+                    },  
+                    //确认选中地方
+                    sureSelectPlace:function(){
+                        if(!this.selectPlaceData){
+                            this.alertHandle('请选择要一个地点');
+                            return;
+                        }
+                        $('.page3').fadeOut();
+                        $('.page4').fadeIn();
+                    }, 
+                    //选中标语
+                    selectSloganHandle:function(item){
+                        this.selectSlogan = item;
+                    },
+                    //确认选中标语
+                    sureSelectSlogan:function(){
+                        if(!this.selectSlogan){
+                            this.alertHandle('请选择一个标语');
+                            return;
+                        }
                         var This = this;
-                        This.loading.status = true;
-                        $.ajax({
-                            type:'GET',
-                            url:this.linkHref.getGifts,
-                            dataType:'json',
-                            cache:false,
-                            data:{
+                        $('.page4').fadeOut();
+                        $('.page5').fadeIn();
+                        setTimeout(function(){
+                            $('.page5').hide();
+                            $('.page6').show();
+                            This.drawCanvas();
+                            setTimeout(function(){
                                 
-                            },
-                            success:function(res){
-                                This.loading.status = false;
-                                if(res.status == 0){
-                                    This.list = res.data;   
-                                }else{                                    
-                                    This.alertHandle(res.msg)
-                                }
-                            },
-                            error:function (e) {
-                                console.log(e)
-                            }
+                            },2000)
+                        },2000)
+                    },
+                    // 重新选地点
+                    againSelectPlace:function(){
+                        $('.page4').fadeOut();
+                        $('.page3').fadeIn();
+                    },
+                    // 重新制作
+                    againMake:function(){
+                        this.ctx.clearRect(0,0,this.W*2,this.H*2);
+                        $('.canvas img').remove();
+                        $('.page6').css({
+                            opacity:0
                         })
-                    },                    
+                        $('.pageSlideBox').show();
+                        this.tab1.playTo(1);
+                    },
+                    //图片合成
+                    drawCanvas:function() {
+                        var This = this;
+                        var cvs = document.getElementById("canvas");
+                        var ctx = cvs.getContext('2d');
+                        This.ctx = ctx;
+                        ctx.clearRect(0,0,This.W*5,This.H*5);
+                        //创建image对象
+                        var progress = 0;       //总的加载进度
+                        // 背景
+                        var imgObj = new Image();
+                        var imgUrl = This.selectPlaceData.url; 
+                        // var imgUrl = './images/zhou2/1.jpg';
+                        // console.log(This.selectPlaceData.url)
+                        imgObj.src = imgUrl;
+                        imgObj.onload = function(){
+                            progress += 1;
+                            console.log(progress)
+                            if(progress == 4){
+                                startDraw(ctx)
+                            }
+                        }
+                        
+                        // 标语
+                        var imgSlogan = new Image();
+                        var imgSloganUrl = This.selectSlogan.url;
+                        // var imgSloganUrl = './images/slogan/10.png';
+                        imgSlogan.src = imgSloganUrl;
+                        imgSlogan.onload = function(){
+                            progress += 1;
+                            console.log(progress)
+                            if(progress == 4){
+                                startDraw(ctx)
+                            }
+                        }
+
+                        // 二维码
+                        var imgEwm = new Image();
+                        var imgEwmUrl = './images/ewm.png';
+                        imgEwm.src = imgEwmUrl;
+                        imgEwm.onload = function(){
+                            progress += 1;
+                            console.log(progress)
+                            if(progress == 4){
+                                startDraw(ctx)
+                            }
+                        }
+                        
+                        // 微信头像
+                        var imgWx = new  Image();
+                        var imgWxUrl = './images/wx.png';
+                        imgWx.src = imgWxUrl;
+                        imgWx.onload = function(){
+                            progress += 1;
+                            if(progress == 4){
+                                startDraw(ctx)
+                            }
+                        }
+                        //待图片加载完后，将其显示在canvas上
+                        function startDraw(ctx) {
+                            
+                            
+                            ctx.fillStyle="#d3cfc8";
+                            ctx.fillRect(0,0,This.W*2,This.H*2);
+
+                            ctx.drawImage(imgObj, 0, 0, This.W * 2, This.H * 2 - This.H * 2 * 0.1);//this即是imgObj,保持图片的原始大小：470*480
+                            ctx.drawImage(imgSlogan, 0, 0);  
+                            ctx.drawImage(imgEwm, This.W*1.6, This.H * 2* 0.75,This.W * 2 * 0.172,This.H * 2 * 0.137);  
+                            
+
+                            ctx.font = parseInt(This.Font)*0.7+"px 微软雅黑";
+                            ctx.fillStyle = "#53689b";
+                            ctx.fillText(This.selectPlaceData ? This.selectPlaceData.name : '欢迎你', This.W *0.01, This.H * 2 * 0.96);
+
+                            ctx.fillStyle = "#ffffff";
+                            ctx.font = parseInt(This.Font)*0.6+"px 微软雅黑";
+                            ctx.fillText("小妮子", This.W *0.4, This.H * 2 * 0.8);
+                            ctx.fillText("环游世界旅行照", This.W *0.4, This.H * 2 * 0.85);
+                            
+                            ctx.translate(0,This.H*2*0.75);
+                            
+                            var pattern = ctx.createPattern(imgWx, "no-repeat");
+                            // // 绘制一个圆
+                            ctx.arc(This.W*2*0.1, This.W*2*0.1, This.W*2*0.08, 0, 2 * Math.PI);
+                            // // 填充绘制的圆
+                            ctx.fillStyle = pattern;                            
+                            ctx.fill();
+                            
+                            ctx.beginPath();
+                            
+                            ctx.arc(This.W*2*0.1,This.W*2*0.1,This.W*2*0.08,0,2*Math.PI); 
+                            ctx.strokeStyle  = "#ffffff";                           
+                            ctx.stroke();
+                            ctx.translate(0,-This.H*2*0.75);
+                            This.convertCanvasToImage(cvs);
+                        }
+                    },
+                    convertCanvasToImage:function(canvas) {
+					    // console.log(canvas)
+                        var image = new Image();						
+                        image.src = canvas.toDataURL("image/png")
+                        $('.canvas').append(image);
+                    },
+                    // 获取首页数据
+                    // getGiftsFn:function(){
+                    //     var This = this;
+                    //     This.loading.status = true;
+                    //     $.ajax({
+                    //         type:'GET',
+                    //         url:this.linkHref.getGifts,
+                    //         dataType:'json',
+                    //         cache:false,
+                    //         data:{
+                                
+                    //         },
+                    //         success:function(res){
+                    //             This.loading.status = false;
+                    //             if(res.status == 0){
+                    //                 This.list = res.data;   
+                    //             }else{                                    
+                    //                 This.alertHandle(res.msg)
+                    //             }
+                    //         },
+                    //         error:function (e) {
+                    //             console.log(e)
+                    //         }
+                    //     })
+                    // },                    
                     //处理提示弹框函数
                     alertHandle:function(msg){
                         var This = this;
@@ -129,9 +398,27 @@
                     
                 },
                 mounted: function () {
-                    // this.init();
-                    // this.getGiftsFn();
-					
+                    var This = this;
+                    this.tab1 = new mo.PageSlide({
+                        target: $('#slide01 .content li'),
+                        playTo: 0,
+                        touchMove: false,
+                        direction: 'y',
+                        event:{
+                            'change':function(){
+                                var cur = This.tab1.curPage;
+                                $('#slide01 .content').children('li').eq(cur).find('div.cont').addClass('show').removeClass('hide');
+                                $('#slide01 .content').children('li').eq(cur).siblings().find('div.cont').addClass('hide').removeClass('show');
+                            }
+                        }
+                    });
+                    var Html = document.getElementsByTagName("html")[0];
+                    var styleObj = window.getComputedStyle(Html,null);
+                    this.Font = styleObj.fontSize;
+                    this.W= $('.canvas').width();
+                    this.H = $('.canvas').height();
+                
+					// this.drawCanvas();
                 }
             })
         })
