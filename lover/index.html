@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的环游世界旅行照</title>
+    <script src="./js/flexible.js"></script>
+    <script src="./js/underscore-min.js"></script>
+    <script src="./js/zepto.min.js"></script>
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/data.js"></script>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/weui.css">
+</head>
+<body>
+    <div class="wrap index" id="index-box" v-cloak>
+        <div class="pageSlideBox">
+            <div id="slide01" class="tab">
+                <ul class="content">
+                    <li>
+                        <div class="page1">
+                            <div class="cont hide">
+                                <img class="zsqh " src="./images/zsqh.png" alt="">
+                                <img class="xq fly" src="./images/xq.png" alt="">
+                                <div class="imgBox">
+                                    <img class="img img1 fadeInUp" src="./images/page1_1.png" alt="">
+                                    <img class="img img2 fadeInUp" src="./images/page1_1.png" alt="">
+                                    <img class="img img3 fadeInUp" src="./images/page1_1.png" alt="">
+                                    <img class="img img4 fadeInUp" src="./images/page1_1.png" alt="">
+                                    <img class="img img5 fadeInUp" src="./images/page1_1.png" alt="">
+                                    <img class="img img6 fadeInUp" src="./images/page1_1.png" alt="">
+                                    <img class="img img7 fadeInUp" src="./images/page1_1.png" alt="">
+                                    <img class="img img8 fadeInUp" src="./images/page1_1.png" alt="">
+                                    <img class="img img9 fadeInUp" src="./images/page1_1.png" alt="">
+                                </div>
+                                <img src="./images/iconDown.png" class="iconDown overPage" alt="">
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="page2" >
+                            <div class="cont hide">
+                                <img class="title" src="./images/title.png" alt="">
+                                <img src="./images/page2_logo.png" class="logo" alt="">
+                            </div>
+                        </div>
+                    </li>
+                    <!-- <li>
+                        <div class="page3" >
+                            <div class="cont hide">
+                                <div class="inputBox">
+                                    <input type="text" placeholder="输入名字">
+                                    <p>生成你的专属英文情话</p>
+                                </div>
+                                <div class="sureSubmit">确认提交</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="page4" >
+                            <div class="canvasBox"></div>
+                            <div class="canvas">
+                                <canvas id="canvas" :width="this.W*2" :height="this.H*2" :style="'width:'+this.W+'px;height:'+this.H+'px'">
+                                    当前浏览器不支持canvas
+                                </canvas>
+                            </div>
+                        </div>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+        <div class="page3 hide" >
+            <div class="inputBox">
+                <input type="text" placeholder="输入名字" v-model="name">
+                <img class="txt" src="./images/page3_txt.png" alt="">
+            </div>
+            <img class="sureSubmit" @click="sureSubmit" src="./images/sureSubmit.png" alt="">
+        </div>
+        <div class="page4" >
+            <div class="canvasBox"></div>
+            <div class="canvas">
+                <canvas id="canvas" :width="this.W*2" :height="this.H*2" :style="'width:'+this.W+'px;height:'+this.H+'px'">
+                    当前浏览器不支持canvas
+                </canvas>
+            </div>
+            <img src="./images/copy_txt.png" class="copy" alt="">
+        </div>
+        <!-- 加载中 -->
+        <div id="loadingToast" v-show="loading.status">
+            <div class="weui-mask_transparent"></div>
+            <div class="weui-toast">
+                <i class="weui-loading weui-icon_toast"></i>
+                <p class="weui-toast__content" v-html="loading.txt"></p>
+            </div>
+        </div>
+        <!--只有一个按钮提示框-->
+        <!--BEGIN dialog2-->
+        <div class="js_dialog" id="iosDialog2" v-show="dialog.status">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__bd">{{dialog.txt}}</div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click="dialog.status = false">知道了</a>
+                </div>
+            </div>
+        </div>
+         <!--两个个按钮提示框-->
+        <div class="js_dialog" id="iosDialog1" v-show="dialog2.status">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__hd"><strong class="weui-dialog__title">提示</strong></div>
+                <div class="weui-dialog__bd">{{dialog2.txt}}</div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" @click="dialog2.status = false">取消</a>
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" >确定</a>
+                </div>
+            </div>
+        </div>
+        <!-- 提示框，1000消失 -->
+        <div class="tipBox" v-show="alert.status">
+            <div class="tibBox_inner">
+                <p v-html="alert.txt"></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        //加载资源数组必须在loading之前进行配置
+        var radomData = ['./images/1.jpg','./images/2.jpg','./images/3.jpg','./images/4.jpg','./images/5.jpg',];
+        console.log(_.sample(radomData))
+        $(function () {
+            new Vue({
+                el: "#index-box",
+                data: { 
+                    tab1:null,
+                    radomUrl:_.sample(radomData),
+                    W:0,
+                    H:0,
+                    Font:0,
+                    ctx:null,
+                    name:'',
+                    count:0,
+                    loading:{        //加载中弹框
+                        status:false,
+                        txt:'加载中...'
+                    },
+                    dialog:{    //带按钮提示框
+                        status:false,
+                        txt:'这里是提示内容'
+                    },
+                    dialog2:{  //带双按钮提示框
+                        status:false,
+                        txt:'这里是提示的内容'
+                    },
+                    alert:{     //提示自动消失框
+                        status:false,
+                        txt:'这里是提示内容'
+                    },
+                    linkHref:{
+                        getGifts:'http://we7.xhwxpos.com/gold/index.php?m=Wap&c=Index&a=get_picList',                              //获取礼品列表
+                        delGifts:'delGifts',                              //删除礼品
+                    },
+                },
+                methods: {
+                    //确认提交
+                    sureSubmit:function(){
+                        if(!this.name){
+                            this.alertHandle("请输入您的姓名");
+                            return;
+                        }
+                        $('.page3').fadeOut();
+                        $('.page4').removeClass('.opacity');
+                        $('.page4').fadeIn();
+                        this.drawCanvas();
+                    },
+                    //图片合成
+                    drawCanvas:function() {
+                        var This = this;
+                        var cvs = document.getElementById("canvas");
+                        var ctx = cvs.getContext('2d');
+                        This.ctx = ctx;
+                        ctx.clearRect(0,0,This.W*2,This.H*2);
+                        //创建image对象
+                        // 背景
+                        var imgObj = new Image();
+                        var imgUrl = './images/canvas.jpg';
+                        imgObj.src = imgUrl;
+                        imgObj.onload = function(){
+                            startDraw(ctx)
+                        }
+                        //待图片加载完后，将其显示在canvas上
+                        function startDraw(ctx) {
+                            
+                            var Height = $('.canvasBox').height();
+                            ctx.fillStyle="#0b3468";
+                            ctx.fillRect(0,0,This.W*2,This.H*2);
+                            ctx.drawImage(imgObj, 0, 0, This.W * 2,parseInt(Height)*2);//this即是imgObj,保持图片的原始大小：470*480
+                            
+
+                            ctx.font = parseInt(This.Font)+"px 微软雅黑";
+                            ctx.fillStyle = "#FFFFFF";
+                            ctx.fillText(This.name ? This.name : '你好', This.W *0.22, This.H * 2 * 0.12);
+
+                            // ctx.fillStyle = "#ffffff";
+                            // ctx.font = parseInt(This.Font)*0.6+"px 微软雅黑";
+                            // ctx.fillText("小妮子", This.W *0.4, This.H * 2 * 0.8);
+                            // ctx.fillText("环游世界旅行照", This.W *0.4, This.H * 2 * 0.85);
+                            
+                            // ctx.translate(0,This.H*2*0.75);
+                            
+                            // var pattern = ctx.createPattern(imgWx, "no-repeat");
+                            // // // 绘制一个圆
+                            // ctx.arc(This.W*2*0.1, This.W*2*0.1, This.W*2*0.08, 0, 2 * Math.PI);
+                            // // // 填充绘制的圆
+                            // ctx.fillStyle = pattern;                            
+                            // ctx.fill();
+                            
+                            // ctx.beginPath();
+                            
+                            // ctx.arc(This.W*2*0.1,This.W*2*0.1,This.W*2*0.08,0,2*Math.PI); 
+                            // ctx.strokeStyle  = "#ffffff";                           
+                            // ctx.stroke();
+                            // ctx.translate(0,-This.H*2*0.75);
+                            This.convertCanvasToImage(cvs);
+                        }
+                    },
+                    convertCanvasToImage:function(canvas) {
+					    // console.log(canvas)
+                        var image = new Image();						
+                        image.src = canvas.toDataURL("image/png")
+                        $('.canvas').append(image);
+                    },
+                    
+                    //处理提示弹框函数
+                    alertHandle:function(msg){
+                        var This = this;
+                        this.alert.status = true;
+                        this.alert.txt = msg;
+                        setTimeout(function(){
+                            This.alert.status = false;
+                            This.alert.txt = '';
+                        },1500)
+                    },
+                    
+                },
+                mounted: function () {
+                    var This = this;
+                    this.tab1 = new mo.PageSlide({
+                        target: $('#slide01 .content li'),
+                        playTo: 2,
+                        // touchMove: false,
+                        direction: 'y',
+                        easing:'linear',
+                        event:{
+                            'change':function(){
+                                var cur = This.tab1.curPage;
+                                $('#slide01 .content').children('li').eq(cur).find('div.cont').addClass('show').removeClass('hide');
+                                $('#slide01 .content').children('li').eq(cur).siblings().find('div.cont').addClass('hide').removeClass('show');
+                                if(cur==1){
+                                    This.count = This.count + 1;
+                                }else if(cur == 0){
+                                    This.count = 0;
+                                }
+                                if(This.count > 1){
+                                    $('.page3').show();
+                                    $('.pageSlideBox').fadeOut(300);
+                                }
+                                
+                            }
+                        }
+                    });
+                    var Html = document.getElementsByTagName("html")[0];
+                    var styleObj = window.getComputedStyle(Html,null);
+                    this.Font = styleObj.fontSize;
+                    this.W= $(document).width();
+                    this.H = $(document).height();
+                    
+					
+                }
+            })
+        })
+    </script>
+</body>
+</html>
