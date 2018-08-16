@@ -1,0 +1,103 @@
+@charset "UTF-8";
+@-webkit-keyframes mapAnimate {
+  0% {
+    background-position: 0rem 0rem;
+  }
+  100% {
+    background-position: 0 REM(-1122);
+  }
+}
+
+@keyframes mapAnimate {
+  0% {
+    background-position: 0rem 0rem;
+  }
+  100% {
+    background-position: 0 REM(-1122);
+  }
+}
+
+/*类似心跳*/
+@keyframes pulse {
+  0% {
+    -webkit-transform: scale3d(1, 1, 1);
+    -ms-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+  50% {
+    -webkit-transform: scale3d(1.05, 1.05, 1.05);
+    -ms-transform: scale3d(1.05, 1.05, 1.05);
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+    -ms-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.pulse {
+  -webkit-animation: pulse 1s ease-in infinite;
+  animation: pulse 1s ease-in infinite;
+}
+
+@keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.rotate {
+  -webkit-animation: rotate 2s linear infinite;
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes drive {
+  0% {
+    left: REM(800);
+  }
+  100% {
+    left: REM(-100);
+  }
+}
+
+.drive {
+  animation: drive 3s linear infinite;
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fadeInDown {
+  animation: fadeInDown 0.5s ease-in both;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fadeInUp {
+  animation: fadeInUp 0.5s ease-in both;
+}

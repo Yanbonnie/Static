@@ -16,7 +16,7 @@
 <body>
     <div class="wrap index" id="index-box" v-cloak>
         <div class="musicBtn" :class="[music ? '' : 'musicClose']" @click="operMusic"> <audio style="display:none" src="./images/5018.mp3" id="music_id"  controls="controls" loop></audio></div>
-        <div class="pageSlideBox hide">
+        <div class="pageSlideBox">
             <div id="slide01" class="tab">
                 <ul class="content">
                     <li>
@@ -92,7 +92,7 @@
             <img class="logo" src="./images/logo.png" alt="">
         </div>
 
-        <div class="page6"> <!--style="opacity: 0;z-index: 0"-->
+        <div class="page6" style="opacity: 0;z-index: 0"> <!---->
             <h3>我的环游世界旅行照</h3>
             <div class="box">
                 <div class="canvas" >
@@ -100,6 +100,7 @@
                         <!--width="320" height="180" style="width:160px;height:90px;"-->
                         当前浏览器不支持canvas
                     </canvas>
+                    <span class="head"></span>
                 </div>
                     
             </div>
@@ -373,51 +374,30 @@
                             
 
                             ctx.font = parseInt(This.Font)*0.7+"px 微软雅黑";
-                            ctx.fillStyle = "#53689b";
+                            ctx.fillStyle = "#4a4a4a";
                             ctx.fillText(This.selectPlaceData ? This.selectPlaceData.name : '欢迎你', This.W *0.04, This.H * 2 * 0.96);
 
                             ctx.fillStyle = "#ffffff";
                             ctx.font = parseInt(This.Font)*0.6+"px 微软雅黑";
                             ctx.fillText("小妮子", This.W *0.4, This.H * 2 * 0.8);
                             ctx.fillText("环游世界旅行照", This.W *0.4, This.H * 2 * 0.85);
+
+                            var headW = parseInt($('.head').width());
+                            var headH = parseInt($('.head').height());
+                            var headTop = parseInt($('.head').offset().top);
+                            ctx.save();
+                            ctx.arc(headW*1.2, headTop * 1.54, headW, 0, 2 * Math.PI);
+                            // ctx.fillStyle = '#ffffff';                            
+                            // ctx.fill();
+                            // 从画布上裁剪出这个圆形
+                            ctx.clip();
+                            ctx.drawImage(imgWx, headW*1.2 - headW, headTop * 1.54 - headW, headW*2, headW*2);
                             
-
-                            // ctx.arc(This.W*2*0.1,This.W*2*0.1,This.W*2*0.08,0,2*Math.PI); 
-                            // ctx.strokeStyle  = "#ffffff";                           
-                            // ctx.stroke();
-
-
-                            
-                            // ctx.save();
-                            // ctx.arc(This.W*2*0.1, This.H*2*0.1, This.W*2*0.05, 0, 2 * Math.PI);  // 中心x ,中心y , r , 弧度  弧度
-                            // // ctx.fillStyle = '#ffffff';                            
-                            // // ctx.fill();
-                            // // 从画布上裁剪出这个圆形
-                            // ctx.clip();
-                            // ctx.drawImage(imgWx, This.W*2*0.1 - This.W*2*0.05 , This.H*2*0.1 - This.W*2*0.05, This.W*2*0.1, This.W*2*0.1);   //图片  在画布上放置图像的 x 坐标位置。 在画布上放置图像的 y 坐标位置。  图片宽度  图片高度
-
-
-                            // ctx.save();
-                            // ctx.arc(100, 100, 50, 0, 2 * Math.PI);
-                            // // 从画布上裁剪出这个圆形
-                            // ctx.clip();
-                            // ctx.drawImage(imgWx, 50, 50, 100, 100);
-
-
-                            ctx.translate(0,This.H*2*0.75);
-                            
-                            var pattern = ctx.createPattern(imgWx, "no-repeat");
-                            // // 绘制一个圆
-                            ctx.arc(This.W*2*0.1, This.W*2*0.1, This.W*2*0.08, 0, 2 * Math.PI);
-                            // // 填充绘制的圆
-                            ctx.fillStyle = pattern;                            
-                            ctx.fill();
-                            
-                            ctx.beginPath();                            
-                            ctx.arc(This.W*2*0.1,This.W*2*0.1,This.W*2*0.08,0,2*Math.PI); 
+                            ctx.arc(headW*1.2, headTop * 1.54, headW, 0, 2 * Math.PI);
+                            ctx.lineWidth = 4;   
                             ctx.strokeStyle  = "#ffffff";                           
                             ctx.stroke();
-                            ctx.translate(0,-This.H*2*0.75);
+
                             This.convertCanvasToImage(cvs);
                         }
                     },

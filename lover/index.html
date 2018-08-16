@@ -14,7 +14,7 @@
 </head>
 <body>
     <div class="wrap index" id="index-box" v-cloak>
-        <!-- <div class="musicBtn"></div> -->
+        <div class="musicBtn" :class="[music ? '' : 'musicClose']" @click="operMusic"> <audio style="display:none" src="./images/5018.mp3" id="music_id"  controls="controls" loop></audio></div>
         <div class="pageSlideBox">
             <div id="slide01" class="tab">
                 <div class="page2Cover hide" id="page2Cover"></div>
@@ -42,34 +42,12 @@
                     <li>
                         <div class="page2" >
                             <div class="cont hide">
-                                <img class="title" src="./images/title.png" alt="">
-                                <img src="./images/page2_logo.png" class="logo" alt="">
+                                <img class="title bounceIn" src="./images/title.png" alt="">
+                                <img src="./images/page2_logo.png" class="logo " alt="">
                                 <img src="./images/iconDown.png" class="iconDown overPage" alt="">
                             </div>
                         </div>
                     </li>
-
-                    <!-- <li>
-                        <div class="page3" >
-                            <div class="cont hide">
-                                <div class="inputBox">
-                                    <input type="text" placeholder="输入名字">
-                                    <p>生成你的专属英文情话</p>
-                                </div>
-                                <div class="sureSubmit">确认提交</div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="page4" >
-                            <div class="canvasBox"></div>
-                            <div class="canvas">
-                                <canvas id="canvas" :width="this.W*2" :height="this.H*2" :style="'width:'+this.W+'px;height:'+this.H+'px'">
-                                    当前浏览器不支持canvas
-                                </canvas>
-                            </div>
-                        </div>
-                    </li> -->
                 </ul>
             </div>
         </div>
@@ -127,6 +105,15 @@
     </script>
     <script src="js/loading.js"></script>
     <script>
+        var isPhonex = false;
+        var u = navigator.userAgent;
+        var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isIOS) {     
+            if (screen.height > 700){
+                //是iphoneX
+                isPhonex = true;
+            }
+        }
         var baseUrl = './images/canvas/';
         var imgUrlData = [baseUrl+'1.jpg',baseUrl+'2.jpg',baseUrl+'3.jpg',baseUrl+'4.jpg',baseUrl+'5.jpg',baseUrl+'6.jpg',baseUrl+'7.jpg',baseUrl+'8.jpg',baseUrl+'9.jpg',baseUrl+'10.jpg',baseUrl+'11.jpg',baseUrl+'12.jpg',baseUrl+'13.jpg',baseUrl+'14.jpg',baseUrl+'15.jpg',baseUrl+'16.jpg',baseUrl+'17.jpg',baseUrl+'18.jpg',baseUrl+'19.jpg',]
         //加载资源数组必须在loading之前进行配置
@@ -139,9 +126,10 @@
                     H:0,
                     Font:0,
                     ctx:null,
-                    name:'您',
+                    name:'',
                     count:0,
                     ewmState:false,
+                    music:true,
                     loading:{        //加载中弹框
                         status:false,
                         txt:'加载中...'
@@ -160,6 +148,17 @@
                     },
                 },
                 methods: {
+                    
+                    //播放音乐
+                    operMusic:function(){
+                        this.music = this.music == true ? false : true;
+                        var music_id = document.getElementById('music_id');
+                        if(this.music){
+                            music_id.play();
+                        }else{
+                            music_id.pause();
+                        }
+                    },
                     //确认提交
                     sureSubmit:function(){
                         if(!this.name){
@@ -182,11 +181,10 @@
                         //创建image对象
                         // 背景
                         var imgObj = new Image();
-                        // var imgUrl = _.sample(imgUrlData);
-                        var imgUrl = './images/canvas/14.jpg';
+                        var imgUrl = _.sample(imgUrlData);
+                        // var imgUrl = './images/canvas/14.jpg';
                         imgObj.src = imgUrl;
                         imgObj.onload = function(){
-                            console.log(imgObj)
                             progress = progress+1;
                             
                             if(progress == 2){
@@ -207,19 +205,30 @@
 
                         //待图片加载完后，将其显示在canvas上
                         function startDraw(ctx) {        
-                            console.log($('.ewm').offset().top);
                             var top =  $('.ewm').offset().top                 
                             var Height = $('.canvasBox').height();
                             var EwmHeight = $('.ewmBox').height();
-                            ctx.fillStyle="#0b3468";
+                            ctx.fillStyle="#061430";
                             ctx.fillRect(0,0,This.W*2,This.H*2);
-                            ctx.drawImage(imgObj, 0, 0, This.W * 2,parseInt(Height)*2);//this即是imgObj,保持图片的原始大小：470*480
+                            ctx.fillStyle="#0d3369";
+                            ctx.fillRect(0,This.H,This.W*2,This.H);
+                            if(isPhonex){
+                                ctx.drawImage(imgObj, 0, This.H * 2 * 0.1, This.W * 2,parseInt(Height)*2);//this即是imgObj,保持图片的原始大小：470*480
+                            }else{
+                                ctx.drawImage(imgObj, 0, 0, This.W * 2,parseInt(Height)*2);//this即是imgObj,保持图片的原始大小：470*480
+                            }
+                            
                             ctx.drawImage(ewmImgObj, 0, top * 2, This.W * 2,parseInt(EwmHeight)*2);//this即是imgObj,保持图片的原始大小：470*480
                             
 
                             ctx.font = parseInt(This.Font)+"px 微软雅黑";
                             ctx.fillStyle = "#FFFFFF";
-                            ctx.fillText(This.name ? This.name+'，' : '你好', This.W *0.15, This.H * 2 * 0.09);
+                            if(isPhonex){
+                                ctx.fillText(This.name ? This.name+'，' : '你好', This.W *0.15, This.H * 2 * 0.15);
+                            }else{
+                                ctx.fillText(This.name ? This.name+'，' : '你好', This.W *0.15, This.H * 2 * 0.09);
+                            }
+                            
                             This.convertCanvasToImage(cvs);
                         }
                     },

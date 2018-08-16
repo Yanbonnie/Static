@@ -64,8 +64,9 @@ img{
                 .car{
                     width: REM(55);
                     position: absolute;
-                    left: REMTWO(55);
+                    left: REM(800);
                     bottom: REM(220);
+                    
                     animation-delay: 0.8s;
                 }
                 .start{
@@ -411,6 +412,15 @@ img{
                 left: 0;
                 top: 0;
                 z-index: 2;
+            }
+            .head{
+                width: REM(70);
+                height: REM(70);
+                // background: rgba(0,0,0,0.5);
+                position: absolute;
+                left: REM(10);
+                bottom: REM(90);
+                z-index: 8;
             }
         }
     }
