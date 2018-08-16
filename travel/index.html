@@ -16,7 +16,7 @@
 <body>
     <div class="wrap index" id="index-box" v-cloak>
         <div class="musicBtn" :class="[music ? '' : 'musicClose']" @click="operMusic"> <audio style="display:none" src="./images/5018.mp3" id="music_id"  controls="controls" loop></audio></div>
-        <div class="pageSlideBox">
+        <div class="pageSlideBox hide">
             <div id="slide01" class="tab">
                 <ul class="content">
                     <li>
@@ -92,7 +92,7 @@
             <img class="logo" src="./images/logo.png" alt="">
         </div>
 
-        <div class="page6" style="opacity: 0;z-index: 0"> <!--style="opacity: 0;z-index: 0"-->
+        <div class="page6"> <!--style="opacity: 0;z-index: 0"-->
             <h3>我的环游世界旅行照</h3>
             <div class="box">
                 <div class="canvas" >
@@ -313,8 +313,8 @@
                         var progress = 0;       //总的加载进度
                         // 背景
                         var imgObj = new Image();
-                        var imgUrl = This.selectPlaceData.url; 
-                        // var imgUrl = './images/zhou2/1.jpg';
+                        // var imgUrl = This.selectPlaceData.url; 
+                        var imgUrl = './images/zhou2/1.jpg';
                         // console.log(This.selectPlaceData.url)
                         imgObj.src = imgUrl;
                         imgObj.onload = function(){
@@ -327,8 +327,8 @@
                         
                         // 标语
                         var imgSlogan = new Image();
-                        var imgSloganUrl = This.selectSlogan.url;
-                        // var imgSloganUrl = './images/slogan/10.png';
+                        // var imgSloganUrl = This.selectSlogan.url;
+                        var imgSloganUrl = './images/slogan/10.png';
                         imgSlogan.src = imgSloganUrl;
                         imgSlogan.onload = function(){
                             progress += 1;
@@ -352,7 +352,7 @@
                         
                         // 微信头像
                         var imgWx = new  Image();
-                        var imgWxUrl = './images/wx.png';
+                        var imgWxUrl = './images/wx.jpg';
                         imgWx.src = imgWxUrl;
                         imgWx.onload = function(){
                             progress += 1;
@@ -381,6 +381,29 @@
                             ctx.fillText("小妮子", This.W *0.4, This.H * 2 * 0.8);
                             ctx.fillText("环游世界旅行照", This.W *0.4, This.H * 2 * 0.85);
                             
+
+                            // ctx.arc(This.W*2*0.1,This.W*2*0.1,This.W*2*0.08,0,2*Math.PI); 
+                            // ctx.strokeStyle  = "#ffffff";                           
+                            // ctx.stroke();
+
+
+                            
+                            // ctx.save();
+                            // ctx.arc(This.W*2*0.1, This.H*2*0.1, This.W*2*0.05, 0, 2 * Math.PI);  // 中心x ,中心y , r , 弧度  弧度
+                            // // ctx.fillStyle = '#ffffff';                            
+                            // // ctx.fill();
+                            // // 从画布上裁剪出这个圆形
+                            // ctx.clip();
+                            // ctx.drawImage(imgWx, This.W*2*0.1 - This.W*2*0.05 , This.H*2*0.1 - This.W*2*0.05, This.W*2*0.1, This.W*2*0.1);   //图片  在画布上放置图像的 x 坐标位置。 在画布上放置图像的 y 坐标位置。  图片宽度  图片高度
+
+
+                            // ctx.save();
+                            // ctx.arc(100, 100, 50, 0, 2 * Math.PI);
+                            // // 从画布上裁剪出这个圆形
+                            // ctx.clip();
+                            // ctx.drawImage(imgWx, 50, 50, 100, 100);
+
+
                             ctx.translate(0,This.H*2*0.75);
                             
                             var pattern = ctx.createPattern(imgWx, "no-repeat");
@@ -390,8 +413,7 @@
                             ctx.fillStyle = pattern;                            
                             ctx.fill();
                             
-                            ctx.beginPath();
-                            
+                            ctx.beginPath();                            
                             ctx.arc(This.W*2*0.1,This.W*2*0.1,This.W*2*0.08,0,2*Math.PI); 
                             ctx.strokeStyle  = "#ffffff";                           
                             ctx.stroke();
@@ -441,14 +463,14 @@
                     // var music_id = document.getElementById('music_id');
                     // music_id.src="./images/5018.mp3";
                     // music_id.play();
-                    wx.ready(function () {
-                        var music_id = document.getElementById('music_id');
-                        music_id.src="__STATIC__/images/5018.mp3";
-                        music_id.play();
+                    // wx.ready(function () {
+                    //     var music_id = document.getElementById('music_id');
+                    //     music_id.src="__STATIC__/images/5018.mp3";
+                    //     music_id.play();
                         
-                    });
+                    // });
                 
-					// this.drawCanvas();
+					this.drawCanvas();
                 }
             })
         })

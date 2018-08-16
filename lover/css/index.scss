@@ -216,6 +216,13 @@ input::-webkit-input-placeholder{
         left: 0;
         top: 0
     }
+    .ewmBox{
+        width: 100%;
+        height: REM(149);
+        position: absolute;
+        left: 0;
+        bottom: 0;
+    }
     .canvas{
         width: 100%;
         height: 100%;
@@ -232,8 +239,17 @@ input::-webkit-input-placeholder{
         position: absolute;
         width: REM(200);
         position: absolute;
-        top: REM(850);
+        bottom: REM(160);
         left: REMTWO(200);
+    }
+    .gzBtn{
+        position:absolute;
+        width:REM(200);
+        height:REM(80);
+        bottom:REM(10);
+        left:50%;
+        margin-left:REM(-100);
+        background:rgba(0,0,0,0);
     }
 }
 
@@ -243,4 +259,40 @@ input::-webkit-input-placeholder{
     position: relative;
     z-index: 2;
 
+}
+
+.cover{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.coverBox{
+    background:#fff;
+    border-radius:REM(10);
+    padding:REM(50);
+    position:relative;
+    img{
+        width:REM(400);
+    }
+    p{
+        padding-top:REM(20);
+        font-size:REM(28);
+        text-align:center;
+    }
+    .close{
+        width:REM(50);
+        height:REM(50);
+        position:absolute;
+        left:50%;
+        margin-left:REM(-25);
+        bottom:REM(-80);
+    }
 }

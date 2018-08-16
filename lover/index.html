@@ -82,42 +82,22 @@
         </div>
         <div class="page4 opacity" >
             <div class="canvasBox"></div>
+            <div class="ewmBox"></div>
             <div class="canvas">
                 <canvas id="canvas" :width="this.W*2" :height="this.H*2" :style="'width:'+this.W+'px;height:'+this.H+'px'">
                     当前浏览器不支持canvas
                 </canvas>
             </div>
             <img src="./images/copy_txt.png" class="copy" alt="">
+            <span class="gzBtn" @click="ewmState = true">
+                
+            </span>
         </div>
-        <!-- 加载中 -->
-        <div id="loadingToast" v-show="loading.status">
-            <div class="weui-mask_transparent"></div>
-            <div class="weui-toast">
-                <i class="weui-loading weui-icon_toast"></i>
-                <p class="weui-toast__content" v-html="loading.txt"></p>
-            </div>
-        </div>
-        <!--只有一个按钮提示框-->
-        <!--BEGIN dialog2-->
-        <div class="js_dialog" id="iosDialog2" v-show="dialog.status">
-            <div class="weui-mask"></div>
-            <div class="weui-dialog">
-                <div class="weui-dialog__bd">{{dialog.txt}}</div>
-                <div class="weui-dialog__ft">
-                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click="dialog.status = false">知道了</a>
-                </div>
-            </div>
-        </div>
-         <!--两个个按钮提示框-->
-        <div class="js_dialog" id="iosDialog1" v-show="dialog2.status">
-            <div class="weui-mask"></div>
-            <div class="weui-dialog">
-                <div class="weui-dialog__hd"><strong class="weui-dialog__title">提示</strong></div>
-                <div class="weui-dialog__bd">{{dialog2.txt}}</div>
-                <div class="weui-dialog__ft">
-                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" @click="dialog2.status = false">取消</a>
-                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" >确定</a>
-                </div>
+        <div class="cover" v-show="ewmState">
+            <div class="coverBox">
+                <img src="./images/close.png" class="close" @click="ewmState=false">
+                <img src="./images/ewm.jpg">
+                <p>长按识别二维码关注我们</p>
             </div>
         </div>
         <!-- 提示框，1000消失 -->
@@ -150,6 +130,8 @@
     </script>
     <script src="js/loading.js"></script>
     <script>
+        var baseUrl = './images/canvas/';
+        var imgUrlData = [baseUrl+'1.jpg',baseUrl+'2.jpg',baseUrl+'3.jpg',baseUrl+'4.jpg',baseUrl+'5.jpg',baseUrl+'6.jpg',baseUrl+'7.jpg',baseUrl+'8.jpg',baseUrl+'9.jpg',baseUrl+'10.jpg',baseUrl+'11.jpg',baseUrl+'12.jpg',baseUrl+'13.jpg',baseUrl+'14.jpg',baseUrl+'15.jpg',baseUrl+'16.jpg',baseUrl+'17.jpg',baseUrl+'18.jpg',baseUrl+'19.jpg',]
         //加载资源数组必须在loading之前进行配置
         $(function () {
             new Vue({
@@ -162,6 +144,7 @@
                     ctx:null,
                     name:'',
                     count:0,
+                    ewmState:false,
                     loading:{        //加载中弹框
                         status:false,
                         txt:'加载中...'
@@ -178,10 +161,6 @@
                         status:false,
                         txt:'这里是提示内容'
                     },
-                    linkHref:{
-                        getGifts:'http://we7.xhwxpos.com/gold/index.php?m=Wap&c=Index&a=get_picList',                              //获取礼品列表
-                        delGifts:'delGifts',                              //删除礼品
-                    },
                 },
                 methods: {
                     //确认提交
@@ -197,6 +176,7 @@
                     },
                     //图片合成
                     drawCanvas:function() {
+                        var progress = 0;
                         var This = this;
                         var cvs = document.getElementById("canvas");
                         var ctx = cvs.getContext('2d');
@@ -205,23 +185,40 @@
                         //创建image对象
                         // 背景
                         var imgObj = new Image();
-                        var imgUrl = './images/canvas.jpg';
+                        var imgUrl = _.sample(imgUrlData);
                         imgObj.src = imgUrl;
                         imgObj.onload = function(){
-                            startDraw(ctx)
-                        }
-                        //待图片加载完后，将其显示在canvas上
-                        function startDraw(ctx) {
+                            console.log(imgObj)
+                            progress = progress+1;
                             
+                            if(progress == 2){
+                                startDraw(ctx)
+                            }
+                        }
+                        // 二维码
+                        var ewmImgObj = new Image();
+                        var ewmImgUrl = './images/ewm.png';
+                        ewmImgObj.src = ewmImgUrl;
+                        ewmImgObj.onload = function(){
+                            progress = progress+1;
+                            if(progress == 2){
+                                startDraw(ctx)
+                            }
+                        }
+
+                        //待图片加载完后，将其显示在canvas上
+                        function startDraw(ctx) {                            
                             var Height = $('.canvasBox').height();
+                            var EwmHeight = $('.ewmBox').height();
                             ctx.fillStyle="#0b3468";
                             ctx.fillRect(0,0,This.W*2,This.H*2);
                             ctx.drawImage(imgObj, 0, 0, This.W * 2,parseInt(Height)*2);//this即是imgObj,保持图片的原始大小：470*480
+                            ctx.drawImage(ewmImgObj, 0, This.H  * 2 *0.83, This.W * 2,parseInt(EwmHeight)*2);//this即是imgObj,保持图片的原始大小：470*480
                             
 
                             ctx.font = parseInt(This.Font)+"px 微软雅黑";
                             ctx.fillStyle = "#FFFFFF";
-                            ctx.fillText(This.name ? This.name : '你好', This.W *0.22, This.H * 2 * 0.12);
+                            ctx.fillText(This.name ? This.name+'，' : '你好', This.W *0.15, This.H * 2 * 0.09);
                             This.convertCanvasToImage(cvs);
                         }
                     },
