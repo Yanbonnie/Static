@@ -9,12 +9,12 @@
     <script src="./js/underscore-min.js"></script>
     <script src="./js/zepto.min.js"></script>
     <script src="./js/vue.min.js"></script>
-    <script src="./js/data.js"></script>
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/weui.css">
 </head>
 <body>
     <div class="wrap index" id="index-box" v-cloak>
+        <!-- <div class="musicBtn"></div> -->
         <div class="pageSlideBox">
             <div id="slide01" class="tab">
                 <div class="page2Cover hide" id="page2Cover"></div>
@@ -126,16 +126,35 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        var basep = "images/", //图片目录
+            preLoadSource = [ //背景资源
+                basep + "canvas.jpg",
+                basep + "copy_txt.png",
+                basep + "iconDown.png",
+                basep + "music.png",
+                basep + "music_CLOSE.png",
+                basep + "page1.jpg",
+                basep + "page1_1.png",
+                basep + "page2.jpg",
+                basep + "page2_logo.png",
+                basep + "page3.jpg",
+                basep + "page3_txt.png",
+                basep + "sureSubmit.png",
+                basep + "title.png",
+                basep + "xq.png",
+                basep + "zsqh.png"
+
+            ];
+    </script>
+    <script src="js/loading.js"></script>
     <script>
         //加载资源数组必须在loading之前进行配置
-        var radomData = ['./images/1.jpg','./images/2.jpg','./images/3.jpg','./images/4.jpg','./images/5.jpg',];
-        console.log(_.sample(radomData))
         $(function () {
             new Vue({
                 el: "#index-box",
                 data: { 
                     tab1:null,
-                    radomUrl:_.sample(radomData),
                     W:0,
                     H:0,
                     Font:0,
@@ -202,32 +221,10 @@
                             ctx.font = parseInt(This.Font)+"px 微软雅黑";
                             ctx.fillStyle = "#FFFFFF";
                             ctx.fillText(This.name ? This.name : '你好', This.W *0.22, This.H * 2 * 0.12);
-
-                            // ctx.fillStyle = "#ffffff";
-                            // ctx.font = parseInt(This.Font)*0.6+"px 微软雅黑";
-                            // ctx.fillText("小妮子", This.W *0.4, This.H * 2 * 0.8);
-                            // ctx.fillText("环游世界旅行照", This.W *0.4, This.H * 2 * 0.85);
-                            
-                            // ctx.translate(0,This.H*2*0.75);
-                            
-                            // var pattern = ctx.createPattern(imgWx, "no-repeat");
-                            // // // 绘制一个圆
-                            // ctx.arc(This.W*2*0.1, This.W*2*0.1, This.W*2*0.08, 0, 2 * Math.PI);
-                            // // // 填充绘制的圆
-                            // ctx.fillStyle = pattern;                            
-                            // ctx.fill();
-                            
-                            // ctx.beginPath();
-                            
-                            // ctx.arc(This.W*2*0.1,This.W*2*0.1,This.W*2*0.08,0,2*Math.PI); 
-                            // ctx.strokeStyle  = "#ffffff";                           
-                            // ctx.stroke();
-                            // ctx.translate(0,-This.H*2*0.75);
                             This.convertCanvasToImage(cvs);
                         }
                     },
                     convertCanvasToImage:function(canvas) {
-					    // console.log(canvas)
                         var image = new Image();						
                         image.src = canvas.toDataURL("image/png")
                         $('.canvas').append(image);
@@ -311,15 +308,12 @@
                         }
                     })
 
-
-
                     var Html = document.getElementsByTagName("html")[0];
                     var styleObj = window.getComputedStyle(Html,null);
                     this.Font = styleObj.fontSize;
                     this.W= $(document).width();
                     this.H = $(document).height();
-                    
-					
+
                 }
             })
         })

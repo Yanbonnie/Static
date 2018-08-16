@@ -1,4 +1,5 @@
 @import 'base.scss';
+@import '_loading_22.scss';
 @import '_animation.scss';
 [v-cloak]{
     display: none;
@@ -19,6 +20,7 @@ img{
 }
 .wrap{
     margin: 0 auto;
+    visibility: hidden;
 }
 
 .hide{
@@ -444,5 +446,21 @@ img{
 		max-height: 100%;
 		box-sizing: border-box;
 		margin: 0 auto;
+    }
+}
+
+
+.musicBtn{
+    width: REM(44);
+    height: REM(44);
+    position: fixed;
+    z-index: 50;
+    right: REM(30);
+    top: REM(30);
+    background: url(../images/music.png) no-repeat;
+    background-size: 100% 100%;
+    &.musicClose{
+        background: url(../images/music_CLOSE.png) no-repeat;
+    background-size: 100% 100%;
     }
 }

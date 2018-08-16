@@ -15,6 +15,7 @@
 </head>
 <body>
     <div class="wrap index" id="index-box" v-cloak>
+        <div class="musicBtn" :class="[music ? '' : 'musicClose']" @click="operMusic"> <audio style="display:none" src="./images/5018.mp3" id="music_id"  controls="controls" loop></audio></div>
         <div class="pageSlideBox">
             <div id="slide01" class="tab">
                 <ul class="content">
@@ -152,6 +153,40 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        var basep = "images/", //图片目录
+            preLoadSource = [ //背景资源
+                basep + "1.jpg",
+                basep + "2.jpg",
+                basep + "3.jpg",
+                basep + "4.jpg",
+                basep + "5.jpg",
+                basep + "again.png",
+                basep + "again_txt.png",
+                basep + "area.png",
+                basep + "area_on.png",
+                basep + "car.png",
+                basep + "copy_txt.png",
+                basep + "earth.png",
+                basep + "ewm.png",
+                basep + "logo.png",
+                basep + "map.png",
+                basep + "page2.jpg",
+                basep + "page2_txt.png",
+                basep + "page3.jpg",
+                basep + "page4.jpg",
+                basep + "page5.jpg",
+                basep + "page6.jpg",
+                basep + "start.png",
+                basep + "sure_btn.png",
+                basep + "title.png",
+                basep + "txt.png",
+                basep + "underscore.jpg",
+                basep + "wx.png",
+            ];
+    </script>
+    <script src="js/loading.js"></script>
+    <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
     <script>
         //加载资源数组必须在loading之前进行配置
         console.log(earthData)
@@ -161,6 +196,7 @@
             new Vue({
                 el: "#index-box",
                 data: { 
+                    music:true,
                     tab1:null,
                     radomUrl:_.sample(radomData),
                     placeList:[],
@@ -195,6 +231,15 @@
                     },
                 },
                 methods: {
+                    operMusic:function(){
+                        this.music = this.music == true ? false : true;
+                        var music_id = document.getElementById('music_id');
+                        if(this.music){
+                            music_id.play();
+                        }else{
+                            music_id.pause();
+                        }
+                    },
                     //开始旅行
                     goNext:function(){
                         this.tab1.playTo(1)
@@ -392,6 +437,16 @@
                     this.Font = styleObj.fontSize;
                     this.W= $('.canvas').width();
                     this.H = $('.canvas').height();
+
+                    // var music_id = document.getElementById('music_id');
+                    // music_id.src="./images/5018.mp3";
+                    // music_id.play();
+                    wx.ready(function () {
+                        var music_id = document.getElementById('music_id');
+                        music_id.src="__STATIC__/images/5018.mp3";
+                        music_id.play();
+                        
+                    });
                 
 					// this.drawCanvas();
                 }
