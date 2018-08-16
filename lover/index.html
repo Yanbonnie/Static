@@ -83,15 +83,15 @@
         <div class="page4 opacity" >
             <div class="canvasBox"></div>
             <div class="ewmBox"></div>
+            
             <div class="canvas">
                 <canvas id="canvas" :width="this.W*2" :height="this.H*2" :style="'width:'+this.W+'px;height:'+this.H+'px'">
                     当前浏览器不支持canvas
                 </canvas>
             </div>
             <img src="./images/copy_txt.png" class="copy" alt="">
-            <span class="gzBtn" @click="ewmState = true">
-                
-            </span>
+            <span class="gzBtn" @click="ewmState = true"></span>
+            <div class="ewm"></div>
         </div>
         <div class="cover" v-show="ewmState">
             <div class="coverBox">
@@ -110,11 +110,8 @@
     <script type="text/javascript">
         var basep = "images/", //图片目录
             preLoadSource = [ //背景资源
-                basep + "canvas.jpg",
                 basep + "copy_txt.png",
                 basep + "iconDown.png",
-                basep + "music.png",
-                basep + "music_CLOSE.png",
                 basep + "page1.jpg",
                 basep + "page1_1.png",
                 basep + "page2.jpg",
@@ -142,7 +139,7 @@
                     H:0,
                     Font:0,
                     ctx:null,
-                    name:'',
+                    name:'您',
                     count:0,
                     ewmState:false,
                     loading:{        //加载中弹框
@@ -185,7 +182,8 @@
                         //创建image对象
                         // 背景
                         var imgObj = new Image();
-                        var imgUrl = _.sample(imgUrlData);
+                        // var imgUrl = _.sample(imgUrlData);
+                        var imgUrl = './images/canvas/14.jpg';
                         imgObj.src = imgUrl;
                         imgObj.onload = function(){
                             console.log(imgObj)
@@ -202,18 +200,21 @@
                         ewmImgObj.onload = function(){
                             progress = progress+1;
                             if(progress == 2){
-                                startDraw(ctx)
+                                startDraw(ctx);
+                                
                             }
                         }
 
                         //待图片加载完后，将其显示在canvas上
-                        function startDraw(ctx) {                            
+                        function startDraw(ctx) {        
+                            console.log($('.ewm').offset().top);
+                            var top =  $('.ewm').offset().top                 
                             var Height = $('.canvasBox').height();
                             var EwmHeight = $('.ewmBox').height();
                             ctx.fillStyle="#0b3468";
                             ctx.fillRect(0,0,This.W*2,This.H*2);
                             ctx.drawImage(imgObj, 0, 0, This.W * 2,parseInt(Height)*2);//this即是imgObj,保持图片的原始大小：470*480
-                            ctx.drawImage(ewmImgObj, 0, This.H  * 2 *0.83, This.W * 2,parseInt(EwmHeight)*2);//this即是imgObj,保持图片的原始大小：470*480
+                            ctx.drawImage(ewmImgObj, 0, top * 2, This.W * 2,parseInt(EwmHeight)*2);//this即是imgObj,保持图片的原始大小：470*480
                             
 
                             ctx.font = parseInt(This.Font)+"px 微软雅黑";

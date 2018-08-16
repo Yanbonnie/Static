@@ -218,7 +218,7 @@ input::-webkit-input-placeholder{
     }
     .ewmBox{
         width: 100%;
-        height: REM(149);
+        height: REM(134);
         position: absolute;
         left: 0;
         bottom: 0;
@@ -229,6 +229,7 @@ input::-webkit-input-placeholder{
         position: absolute;
         left: 0;
         top: 0;
+        z-index: 1;
         img{
             position: absolute;
             left: 0;
@@ -239,18 +240,31 @@ input::-webkit-input-placeholder{
         position: absolute;
         width: REM(200);
         position: absolute;
-        bottom: REM(160);
+        bottom: REM(180);
         left: REMTWO(200);
+        z-index: 2;
+    }
+    .ewm{
+        // background: url('../images/ewm.png');
+        // background-size: 100% auto;
+        width: 100%;
+        height: REM(134);
+        position: absolute;
+        left: 0;
+        bottom: REM(60);
+        z-index: 0;
     }
     .gzBtn{
         position:absolute;
-        width:REM(200);
-        height:REM(80);
-        bottom:REM(10);
+        width:REM(250);
+        height:REM(44);
+        bottom:REM(50);
         left:50%;
-        margin-left:REM(-100);
-        background:rgba(0,0,0,0);
-    }
+        margin-left:REM(-125);
+        background:url(../images/gz_btn.png) no-repeat;
+        background-size: 100% 100%;
+        z-index: 2;
+    } 
 }
 
 .pageSlideBox{
