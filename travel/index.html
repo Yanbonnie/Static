@@ -26,8 +26,8 @@
                                 <img class="logo fadeInUp" src="./images/logo.png" alt="">
                                 <img class="title fadeInUp" src="./images/title.png" alt="">
                                 <img class="txt fadeInUp" src="./images/txt.png" alt="">
-                                <img class="car drive" src="./images/car.png" alt="">
-                                <img @click="goNext" class="start pulse" src="./images/start.png" alt="">
+                                <img class="car drive" :class="[isPhonex ? 'phoneX':'']" src="./images/car.gif" alt="">
+                                <img @click="goNext" :class="[isPhonex ? 'phoneX':'']" class="start pulse" src="./images/start.png" alt="">
                             </div>
                         </div>
                     </li>
@@ -81,7 +81,7 @@
         <div class="page5 hide">
             <h3>我的环游世界旅行照</h3>
             <div class="box">
-                <img class="car" src="./images/car.png" alt="">
+                <img class="car" src="./images/car.gif" alt="">
                 <img class="earth rotate" src="./images/earth.png" alt="">
                 <p>照片生成中...</p>
             </div>
@@ -157,6 +157,7 @@
     <script type="text/javascript">
         var basep = "images/", //图片目录
             preLoadSource = [ //背景资源
+                basep + "loading.gif",
                 basep + "1.jpg",
                 basep + "2.jpg",
                 basep + "3.jpg",
@@ -190,9 +191,16 @@
     <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
     <script>
         //加载资源数组必须在loading之前进行配置
-        console.log(earthData)
+        var isPhonex = false;
+        var u = navigator.userAgent;
+        var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isIOS) {
+            if (screen.height > 700){
+                //是iphoneX
+                isPhonex = true;
+            }
+        }
         var radomData = ['./images/1.jpg','./images/2.jpg','./images/3.jpg','./images/4.jpg','./images/5.jpg',];
-        console.log(_.sample(radomData))
         $(function () {
             new Vue({
                 el: "#index-box",
@@ -210,6 +218,7 @@
                     H:0,
                     Font:0,
                     ctx:null,
+                    isPhonex:isPhonex,
                     loading:{        //加载中弹框
                         status:false,
                         txt:'加载中...'
@@ -283,15 +292,20 @@
                             $('.page5').hide();
                             $('.page6').show();
                             This.drawCanvas();
-                            setTimeout(function(){
-                                
-                            },2000)
                         },2000)
                     },
                     // 重新选地点
                     againSelectPlace:function(){
                         $('.page4').fadeOut();
-                        $('.page3').fadeIn();
+                        // $('.page3').fadeIn();
+                        $('.pageSlideBox').show();
+                        this.tab1.playTo(1);
+                        // 数据初始化
+                        this.placeList = [];
+                        this.earthIndex = null;
+                        this.selectIndex = null;
+                        this.selectPlaceData = null;
+                        this.selectSlogan = '';
                     },
                     // 重新制作
                     againMake:function(){
@@ -302,6 +316,12 @@
                         })
                         $('.pageSlideBox').show();
                         this.tab1.playTo(1);
+
+                        this.placeList = [];
+                        this.earthIndex = null;
+                        this.selectIndex = null;
+                        this.selectPlaceData = null;
+                        this.selectSlogan = '';
                     },
                     //图片合成
                     drawCanvas:function() {
@@ -314,8 +334,8 @@
                         var progress = 0;       //总的加载进度
                         // 背景
                         var imgObj = new Image();
-                        // var imgUrl = This.selectPlaceData.url; 
-                        var imgUrl = './images/zhou2/1.jpg';
+                        var imgUrl = This.selectPlaceData.url; 
+                        // var imgUrl = './images/zhou2/1.jpg';
                         // console.log(This.selectPlaceData.url)
                         imgObj.src = imgUrl;
                         imgObj.onload = function(){
@@ -328,8 +348,8 @@
                         
                         // 标语
                         var imgSlogan = new Image();
-                        // var imgSloganUrl = This.selectSlogan.url;
-                        var imgSloganUrl = './images/slogan/10.png';
+                        var imgSloganUrl = This.selectSlogan.url;
+                        // var imgSloganUrl = './images/slogan/10.png';
                         imgSlogan.src = imgSloganUrl;
                         imgSlogan.onload = function(){
                             progress += 1;
@@ -392,7 +412,8 @@
                             // 从画布上裁剪出这个圆形
                             ctx.clip();
                             ctx.drawImage(imgWx, headW*1.2 - headW, headTop * 1.54 - headW, headW*2, headW*2);
-                            
+                            ctx.restore();
+
                             ctx.arc(headW*1.2, headTop * 1.54, headW, 0, 2 * Math.PI);
                             ctx.lineWidth = 4;   
                             ctx.strokeStyle  = "#ffffff";                           
@@ -446,11 +467,10 @@
                     // wx.ready(function () {
                     //     var music_id = document.getElementById('music_id');
                     //     music_id.src="__STATIC__/images/5018.mp3";
-                    //     music_id.play();
-                        
+                    //     music_id.play();                        
                     // });
-                
-					this.drawCanvas();
+
+					// this.drawCanvas();
                 }
             })
         })

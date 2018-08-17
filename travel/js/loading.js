@@ -54,17 +54,10 @@ var loading = (function(c){
 	         });
 	    }
 		loading_dom.className = "loading";
-		for (var i = 0;i < loadType[ index ].nodes;i++) {
-			str += '<div></div>';
-		}
-		loading_dom.innerHTML = '<div class="loader">' + 
-							        '<div class="loader-inner '+type+'">' +
-							          str +
-							      	'</div>' + 
-						        '</div>'+
-								'<p class="progress">'+
-									'<span id="pro">0</span><span>%</span>'+
-								'</p>';
+		// for (var i = 0;i < loadType[ index ].nodes;i++) {
+		// 	str += '<div></div>';
+		// }
+		loading_dom.innerHTML = '<div class="img"></div><p>加载中<span id="pro"></span>%</p>';
 		
 		var first=document.body.firstChild; //得到第一个元素
 		document.body.insertBefore(loading_dom,first);

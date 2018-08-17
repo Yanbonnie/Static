@@ -50,16 +50,18 @@
 
 @keyframes drive {
     0% {
-          left: REM(800);
+          left: REM(600);
     }
-
+    50%{
+        left: REM(100);
+    }
     100% {
 
-        left: REM(-100);
+        left: REM(600);
     }
 }
 .drive{
-    animation:drive 3s linear infinite;
+    animation:drive 6s linear infinite;
 }
 
 
