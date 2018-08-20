@@ -3,7 +3,7 @@
 @import '_animation.scss';
 
 .loading{
-    background: #0c3468;
+    background: #f5f5f5;
     position: fixed;
     left: 0;
     top: 0;
@@ -21,7 +21,7 @@
         background-size: 100% 100%;
     }
     p{
-        color: #ffffff;
+        color: #0c3468;
     };
 }
 [v-cloak]{
@@ -171,9 +171,9 @@ img{
                     }
                 }
                 .sense{
-                    width: REM(118);
+                    width: REM(168);
                     position: absolute;
-                    left: REMTWO(118);
+                    left: REMTWO(168);
                     bottom: REM(280);  
                 }
                 .logo{

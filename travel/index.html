@@ -40,7 +40,7 @@
                                 <div @click="selectArea(1)"  class="zhou2 zhou pulse" :class="[earthIndex == 1 ? 'active':''] "><p>非洲<br/>地区</p></div>
                                 <div @click="selectArea(2)"  class="zhou3 zhou pulse" :class="[earthIndex == 2 ? 'active':''] "><p>亚洲<br/>地区</p></div>
                                 <div @click="selectArea(3)" class="zhou4 zhou pulse" :class="[earthIndex == 3 ? 'active':''] "><p>大洋洲<br/>地区</p></div>
-                                <img class="sense" src="./images/page2_txt.png" alt="">
+                                <img class="sense bounceIn" src="./images/page2_txt.png" alt="">
                                 <img class="logo" src="./images/logo.png" alt="">
                             </div>
                         </div>
@@ -393,9 +393,9 @@
                             ctx.drawImage(imgEwm, This.W*1.6, This.H * 2* 0.75,This.W * 2 * 0.172,This.H * 2 * 0.137);  
                             
 
-                            ctx.font = parseInt(This.Font)*0.7+"px 微软雅黑";
-                            ctx.fillStyle = "#4a4a4a";
-                            ctx.fillText(This.selectPlaceData ? This.selectPlaceData.name : '欢迎你', This.W *0.04, This.H * 2 * 0.96);
+                            ctx.font = parseInt(This.Font)+"px 微软雅黑";
+                            ctx.fillStyle = "#6e6e6e";
+                            ctx.fillText(This.selectPlaceData ? This.selectPlaceData.name : '欢迎你', This.W *0.04, This.H * 2 * 0.97);
 
                             ctx.fillStyle = "#ffffff";
                             ctx.font = parseInt(This.Font)*0.6+"px 微软雅黑";
