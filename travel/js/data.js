@@ -7,7 +7,7 @@ var earthData = [
                 url:baseUrl+'zhou1/1.jpg'
             },
             {
-                name:'巴黎·埃菲尔铁塔',
+                name:'法国·巴黎',
                 url:baseUrl+'zhou1/2.jpg'
             },
             {
@@ -146,7 +146,7 @@ var slogan = [
     },
     {
         id:5,
-        txt:'一个人旅行也很好，难得的时光，和自己独处',
+        txt:'独自旅行也很好，难得的时光，和自己独处',
         url:baseUrl+'slogan/6.png'
     },
     {

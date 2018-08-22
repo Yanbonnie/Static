@@ -16,7 +16,7 @@
 <body>
     <div class="wrap index" id="index-box" v-cloak>
         <div class="musicBtn" :class="[music ? '' : 'musicClose']" @click="operMusic"> <audio style="display:none" src="./images/5018.mp3" id="music_id"  controls="controls" loop></audio></div>
-        <div class="pageSlideBox">
+        <div class="pageSlideBox hide">
             <div id="slide01" class="tab">
                 <ul class="content">
                     <li>
@@ -69,7 +69,7 @@
         <div class="page4 hide">
             <h3>选择你的旅行心情</h3>
             <div class="copywriting">
-                <ul class="sign_page_scrollBody">
+                <ul class="sign_page_scrollBody" :class="[isPhonex ? 'phoneX':'']">
                     <li v-for="(item,index) in sloganList" :key="index" @click="selectSloganHandle(item)" :class="[selectSlogan.txt == item.txt ? 'active':'']">
                         <p>{{item.txt}}</p>
                     </li>
@@ -78,7 +78,7 @@
             <img class="sure" src="./images/sure_btn.png" alt=""  @click="sureSelectSlogan">
             <img class="again" @click="againSelectPlace" src="./images/again_txt.png" alt="">
         </div>
-        <div class="page5 hide">
+        <div class="page5 hide" :class="[isPhonex ? 'phoneX':'']">
             <h3>我的环游世界旅行照</h3>
             <div class="box">
                 <img class="car" src="./images/car.gif" alt="">
@@ -92,7 +92,8 @@
             <img class="logo" src="./images/logo.png" alt="">
         </div>
 
-        <div class="page6" style="opacity: 0;z-index: 0"> <!---->
+        <div class="page6" :class="[isPhonex ? 'phoneX':'']" > <!--style="opacity: 0;z-index: 0"-->
+            <div class="blank"></div>
             <h3>我的环游世界旅行照</h3>
             <div class="box">
                 <div class="canvas" >
@@ -106,6 +107,9 @@
             </div>
             <img class="copy" src="./images/copy_txt.png" alt="">
             <img class="again" @click="againMake" src="./images/again.png" alt="">
+            <div class="canvas2">
+                <canvas id="canvas2" :width="this.W2" :height="this.H2"></canvas>
+            </div>
         </div>
 <!-- 
         <div class="cover " v-show="imgStatus" @click="imgStatus=false;imgBigUrl=''">
@@ -216,8 +220,11 @@
                     selectSlogan:'',        //选中的标语
                     W:0,
                     H:0,
+                    W2:0,
+                    H2:0,
                     Font:0,
                     ctx:null,
+                    ctx2:null,
                     isPhonex:isPhonex,
                     loading:{        //加载中弹框
                         status:false,
@@ -292,7 +299,7 @@
                             $('.page5').hide();
                             $('.page6').show();
                             This.drawCanvas();
-                        },2000)
+                        },3500)
                     },
                     // 重新选地点
                     againSelectPlace:function(){
@@ -326,16 +333,19 @@
                     //图片合成
                     drawCanvas:function() {
                         var This = this;
-                        var cvs = document.getElementById("canvas");
-                        var ctx = cvs.getContext('2d');
+                        var cvs = document.getElementById("canvas"),cvs2=document.getElementById('canvas2');
+                        var ctx = cvs.getContext('2d'),ctx2 = cvs2.getContext('2d');
                         This.ctx = ctx;
-                        ctx.clearRect(0,0,This.W*5,This.H*5);
+                        This.ctx2 = ctx2;
+                        
+                        ctx.clearRect(0,0,This.W*2,This.H*2);
+                        ctx2.clearRect(0,0,This.W2,This.H2);
                         //创建image对象
                         var progress = 0;       //总的加载进度
                         // 背景
                         var imgObj = new Image();
-                        var imgUrl = This.selectPlaceData.url; 
-                        // var imgUrl = './images/zhou2/1.jpg';
+                        // var imgUrl = This.selectPlaceData.url; 
+                        var imgUrl = './images/zhou1/5.jpg';
                         // console.log(This.selectPlaceData.url)
                         imgObj.src = imgUrl;
                         imgObj.onload = function(){
@@ -343,19 +353,21 @@
                             console.log(progress)
                             if(progress == 4){
                                 startDraw(ctx)
+                                startDraw2(ctx2)
                             }
                         }
                         
                         // 标语
                         var imgSlogan = new Image();
-                        var imgSloganUrl = This.selectSlogan.url;
-                        // var imgSloganUrl = './images/slogan/10.png';
+                        // var imgSloganUrl = This.selectSlogan.url;
+                        var imgSloganUrl = './images/slogan/10.png';
                         imgSlogan.src = imgSloganUrl;
                         imgSlogan.onload = function(){
                             progress += 1;
                             console.log(progress)
                             if(progress == 4){
                                 startDraw(ctx)
+                                startDraw2(ctx2)
                             }
                         }
 
@@ -368,6 +380,7 @@
                             console.log(progress)
                             if(progress == 4){
                                 startDraw(ctx)
+                                startDraw2(ctx2)
                             }
                         }
                         
@@ -379,6 +392,7 @@
                             progress += 1;
                             if(progress == 4){
                                 startDraw(ctx)
+                                startDraw2(ctx2)
                             }
                         }
                         //待图片加载完后，将其显示在canvas上
@@ -388,11 +402,9 @@
                             ctx.fillStyle="#ffffff";
                             ctx.fillRect(0,0,This.W*2,This.H*2);
 
-                            ctx.drawImage(imgObj, 0, 0, This.W * 2, This.H * 2 - This.H * 2 * 0.1);//this即是imgObj,保持图片的原始大小：470*480
+                            ctx.drawImage(imgObj, 0, 0,This.W * 2, This.H * 2 - This.H * 2 * 0.1);//this即是imgObj,保持图片的原始大小：470*480
                             ctx.drawImage(imgSlogan, 0, 0);  
-                            // ctx.drawImage(imgEwm, This.W*1.6, This.H * 2* 0.75,This.W * 2 * 0.172,This.H * 2 * 0.137);  
-                            ctx.drawImage(imgEwm, This.W*1.38, This.H * 2* 0.68,This.W * 2 * 0.250,This.H * 2 * 0.199);  
-                            
+                            ctx.drawImage(imgEwm, This.W*1.62, This.H * 2* 0.76,This.W * 2 * 0.150,This.H * 2 * 0.119);                              
 
                             ctx.font = parseInt(This.Font)+"px 微软雅黑";
                             ctx.fillStyle = "#6e6e6e";
@@ -407,12 +419,65 @@
                             var headH = parseInt($('.head').height());
                             var headTop = parseInt($('.head').offset().top);
                             ctx.save();
-                            ctx.arc(headW*1.2, headTop * 1.54, headW, 0, 2 * Math.PI);
+                            if(isPhonex){
+                                ctx.arc(headW*1.2, headTop * 1.32, headW, 0, 2 * Math.PI);
+                                ctx.clip();
+                                ctx.drawImage(imgWx, headW*1.2 - headW, headTop * 1.32 - headW, headW*2, headW*2);
+                            }else{
+                                ctx.arc(headW*1.2, headTop * 1.54, headW, 0, 2 * Math.PI);
+                                ctx.clip();
+                                ctx.drawImage(imgWx, headW*1.2 - headW, headTop * 1.54 - headW, headW*2, headW*2);
+                            }
+                            
                             // ctx.fillStyle = '#ffffff';                            
                             // ctx.fill();
                             // 从画布上裁剪出这个圆形
-                            ctx.clip();
-                            ctx.drawImage(imgWx, headW*1.2 - headW, headTop * 1.54 - headW, headW*2, headW*2);
+                           
+                            ctx.restore();
+
+                            ctx.arc(headW*1.2, headTop * 1.54, headW, 0, 2 * Math.PI);
+                            ctx.lineWidth = 4;   
+                            ctx.strokeStyle  = "#ffffff";                           
+                            ctx.stroke();
+
+                            // This.convertCanvasToImage(cvs);
+                        }
+
+                         //待图片加载完后，将其显示在canvas上
+                         function startDraw2(ctx) {                            
+                            
+                            ctx.fillStyle="#ffffff";
+                            ctx.fillRect(0,0,This.W2,This.H2);
+
+                            ctx.drawImage(imgObj, 0, 0,This.W2, This.H2 - This.H2* 0.1);//this即是imgObj,保持图片的原始大小：470*480
+                            ctx.drawImage(imgSlogan, 0, 0);  
+                            ctx.drawImage(imgEwm, This.W2*1.6, This.H2 * 0.75,This.W2 * 0.172,This.H2 * 0.137);  
+                            // ctx.drawImage(imgEwm, This.W*1.38, This.H * 2* 0.68,This.W * 2 * 0.250,This.H * 2 * 0.199);  
+                            
+
+                            ctx.font = parseInt(This.Font)+"px 微软雅黑";
+                            ctx.fillStyle = "#6e6e6e";
+                            ctx.fillText(This.selectPlaceData ? This.selectPlaceData.name : '欢迎你', This.W2 *0.04, This.H2* 0.97);
+
+                            ctx.fillStyle = "#ffffff";
+                            ctx.font = parseInt(This.Font)*0.6+"px 微软雅黑";
+                            ctx.fillText("小妮子", This.W2 *0.4, This.H2 * 0.8);
+                            ctx.fillText("环游世界旅行照", This.W2 *0.4, This.H2 * 0.85);
+
+                            var headW = parseInt($('.head').width());
+                            var headH = parseInt($('.head').height());
+                            var headTop = parseInt($('.head').offset().top);
+                            ctx.save();
+                            if(isPhonex){
+                                ctx.arc(headW*1.2, headTop * 1.32, headW, 0, 2 * Math.PI);
+                                ctx.clip();
+                                ctx.drawImage(imgWx, headW*1.2 - headW, headTop * 1.32 - headW, headW*2, headW*2);
+                            }else{
+                                ctx.arc(headW*1.2, headTop * 1.54, headW, 0, 2 * Math.PI);
+                                ctx.clip();
+                                ctx.drawImage(imgWx, headW*1.2 - headW, headTop * 1.54 - headW, headW*2, headW*2);
+                            }
+                           
                             ctx.restore();
 
                             ctx.arc(headW*1.2, headTop * 1.54, headW, 0, 2 * Math.PI);
@@ -427,7 +492,7 @@
 					    // console.log(canvas)
                         var image = new Image();						
                         image.src = canvas.toDataURL("image/png")
-                        $('.canvas').append(image);
+                        $('.canvas2').append(image);
                     },                  
                     //处理提示弹框函数
                     alertHandle:function(msg){
@@ -461,6 +526,8 @@
                     this.Font = styleObj.fontSize;
                     this.W= $('.canvas').width();
                     this.H = $('.canvas').height();
+                    this.W2 = $('.canvas2').width();
+                    this.H2 = $('.canvas2').height();
 
                     // var music_id = document.getElementById('music_id');
                     // music_id.src="./images/5018.mp3";
@@ -471,7 +538,7 @@
                     //     music_id.play();                        
                     // });
 
-					// this.drawCanvas();
+					this.drawCanvas();
                 }
             })
         })

@@ -204,7 +204,7 @@ img{
     background-size: 100% auto;
     min-height: 100%;
     h3{
-        padding-top: REM(200);
+        padding-top: 1.2rem;
         color: #fff;
         text-align: center;
         font-size: REM(36);
@@ -310,6 +310,9 @@ img{
         width: REM(680);
         margin: REM(50) auto;
         ul{
+            &.phoneX{
+                max-height: 12rem;
+            }
             max-height: REM(700);
             overflow-y: auto;
             li{
@@ -365,6 +368,17 @@ img{
     overflow: hidden;
     background: url(../images/page5.jpg) center center no-repeat;
     background-size: 100% auto;
+    &.phoneX{
+        h3{
+            padding-top: REM(250);
+        }
+        .infoBox{
+            margin: REM(100) auto 0;
+        }
+        .logo{
+            padding-top: REM(120)
+        }
+    }
     h3{
         padding-top: REM(100);
         font-size: REM(36);
@@ -416,6 +430,14 @@ img{
     left: 0;
     right: 0;
     bottom: 0;
+    &.phoneX{
+        // h3{
+        //     margin-top: REM(120);
+        // }
+        .blank{
+            height: REM(120);
+        }
+    }
     h3{
         padding-top: REM(80);
         font-size: REM(36);
@@ -429,7 +451,7 @@ img{
         padding: REM(15) REM(15) 0;
         background: #ffffff;
         border-radius: REM(10);
-        overflow: hidden;
+        overflow: hidden;        
         .canvas{
             width: REM(442);
             height: REM(685);
@@ -454,6 +476,23 @@ img{
             }
         }
     }
+    .canvas2{
+        width: REM(750);
+        height: REM(1162);
+        position: absolute;
+        opacity: 0;
+        left: 0;
+        top:0;
+        img{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 20;
+
+        }
+    }
     .copy{
         width: REM(409);
         margin: REM(40) auto;
@@ -461,6 +500,8 @@ img{
     .again{
         width: REM(353);
         margin: REM(30) auto 0;
+        position: relative;
+        z-index: 30;
     }
 }
 .cover{
