@@ -323,7 +323,6 @@
                         })
                         $('.pageSlideBox').show();
                         this.tab1.playTo(1);
-
                         this.placeList = [];
                         this.earthIndex = null;
                         this.selectIndex = null;
@@ -370,7 +369,6 @@
                                 startDraw2(ctx2)
                             }
                         }
-
                         // 二维码
                         var imgEwm = new Image();
                         var imgEwmUrl = './images/ewm.png';
@@ -401,29 +399,28 @@
                             
                             ctx.fillStyle="#ffffff";
                             ctx.fillRect(0,0,This.W*2,This.H*2);
-
                             ctx.drawImage(imgObj, 0, 0,This.W * 2, This.H * 2 - This.H * 2 * 0.1);//this即是imgObj,保持图片的原始大小：470*480
                             ctx.drawImage(imgSlogan, 0, 0);  
                             ctx.drawImage(imgEwm, This.W*1.62, This.H * 2* 0.76,This.W * 2 * 0.150,This.H * 2 * 0.119);                              
-
                             ctx.font = parseInt(This.Font)+"px 微软雅黑";
                             ctx.fillStyle = "#6e6e6e";
                             ctx.fillText(This.selectPlaceData ? This.selectPlaceData.name : '欢迎你', This.W *0.04, This.H * 2 * 0.97);
-
                             ctx.fillStyle = "#ffffff";
                             ctx.font = parseInt(This.Font)*0.6+"px 微软雅黑";
                             ctx.fillText("小妮子", This.W *0.4, This.H * 2 * 0.8);
                             ctx.fillText("环游世界旅行照", This.W *0.4, This.H * 2 * 0.85);
-
                             var headW = parseInt($('.head').width());
                             var headH = parseInt($('.head').height());
                             var headTop = parseInt($('.head').offset().top);
                             ctx.save();
+                            let R = 0;
                             if(isPhonex){
+                                R = 1.32;
                                 ctx.arc(headW*1.2, headTop * 1.32, headW, 0, 2 * Math.PI);
                                 ctx.clip();
                                 ctx.drawImage(imgWx, headW*1.2 - headW, headTop * 1.32 - headW, headW*2, headW*2);
                             }else{
+                                R = 1.54;
                                 ctx.arc(headW*1.2, headTop * 1.54, headW, 0, 2 * Math.PI);
                                 ctx.clip();
                                 ctx.drawImage(imgWx, headW*1.2 - headW, headTop * 1.54 - headW, headW*2, headW*2);
@@ -434,57 +431,51 @@
                             // 从画布上裁剪出这个圆形
                            
                             ctx.restore();
-
-                            ctx.arc(headW*1.2, headTop * 1.54, headW, 0, 2 * Math.PI);
+                            ctx.arc(headW*1.2, headTop * R, headW, 0, 2 * Math.PI);
                             ctx.lineWidth = 4;   
                             ctx.strokeStyle  = "#ffffff";                           
                             ctx.stroke();
-
                             // This.convertCanvasToImage(cvs);
                         }
-
                          //待图片加载完后，将其显示在canvas上
                          function startDraw2(ctx) {                            
                             
                             ctx.fillStyle="#ffffff";
                             ctx.fillRect(0,0,This.W2,This.H2);
-
                             ctx.drawImage(imgObj, 0, 0,This.W2, This.H2 - This.H2* 0.1);//this即是imgObj,保持图片的原始大小：470*480
                             ctx.drawImage(imgSlogan, 0, 0);  
                             ctx.drawImage(imgEwm, This.W2*1.6, This.H2 * 0.75,This.W2 * 0.172,This.H2 * 0.137);  
                             // ctx.drawImage(imgEwm, This.W*1.38, This.H * 2* 0.68,This.W * 2 * 0.250,This.H * 2 * 0.199);  
                             
-
                             ctx.font = parseInt(This.Font)+"px 微软雅黑";
                             ctx.fillStyle = "#6e6e6e";
                             ctx.fillText(This.selectPlaceData ? This.selectPlaceData.name : '欢迎你', This.W2 *0.04, This.H2* 0.97);
-
                             ctx.fillStyle = "#ffffff";
                             ctx.font = parseInt(This.Font)*0.6+"px 微软雅黑";
                             ctx.fillText("小妮子", This.W2 *0.4, This.H2 * 0.8);
                             ctx.fillText("环游世界旅行照", This.W2 *0.4, This.H2 * 0.85);
-
                             var headW = parseInt($('.head').width());
                             var headH = parseInt($('.head').height());
                             var headTop = parseInt($('.head').offset().top);
                             ctx.save();
+                            var R = 0;
                             if(isPhonex){
+                                R = 1.32;
                                 ctx.arc(headW*1.2, headTop * 1.32, headW, 0, 2 * Math.PI);
                                 ctx.clip();
                                 ctx.drawImage(imgWx, headW*1.2 - headW, headTop * 1.32 - headW, headW*2, headW*2);
                             }else{
+                                R = 1.54;
                                 ctx.arc(headW*1.2, headTop * 1.54, headW, 0, 2 * Math.PI);
                                 ctx.clip();
                                 ctx.drawImage(imgWx, headW*1.2 - headW, headTop * 1.54 - headW, headW*2, headW*2);
                             }
                            
                             ctx.restore();
-
-                            ctx.arc(headW*1.2, headTop * 1.54, headW, 0, 2 * Math.PI);
+                            ctx.arc(headW*1.2, headTop * R, headW, 0, 2 * Math.PI);
                             ctx.lineWidth = 4;   
                             ctx.strokeStyle  = "#ffffff";                           
                             ctx.stroke();
-
                             This.convertCanvasToImage(cvs);
                         }
                     },
@@ -528,7 +519,6 @@
                     this.H = $('.canvas').height();
                     this.W2 = $('.canvas2').width();
                     this.H2 = $('.canvas2').height();
-
                     // var music_id = document.getElementById('music_id');
                     // music_id.src="./images/5018.mp3";
                     // music_id.play();
@@ -537,7 +527,6 @@
                     //     music_id.src="__STATIC__/images/5018.mp3";
                     //     music_id.play();                        
                     // });
-
 					this.drawCanvas();
                 }
             })
