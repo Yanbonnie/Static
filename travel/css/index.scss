@@ -379,6 +379,7 @@ img{
         }
         .infoBox{
             margin: REM(100) auto 0;
+            
         }
         .logo{
             padding-top: REM(120)
@@ -404,18 +405,24 @@ img{
         p{
             text-align: center;
             color: #fff;
+            
         }
     }
     .infoBox{
-        width: REM(600);
+        width: REM(500);
         margin: REM(50) auto 0;
         padding: REM(20);
         color: #fff;
         background: rgba(0,0,0,0.4);
-        border-radius: REM(10);
+        border-radius: REM(20);
+        border: 3px #96a5d5 solid;
         p{
             font-size: REM(28);
-            padding-bottom: REM(10);
+            padding-bottom: REM(15);
+            padding-left: 0.6rem;
+            &:nth-child(1){
+                padding-top: REM(15);
+            }
         }
     }
     .logo{
