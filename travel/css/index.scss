@@ -287,10 +287,15 @@ img{
             display: block;
             margin: 0 auto;
         }
-        .logo{
-            width: REM(128);
+        // .logo{
+        //     width: REM(128);
+        //     margin: 0 auto;
+        //     margin-top: REM(40);
+        // }
+        .again{
+            width: REM(253);
             margin: 0 auto;
-            margin-top: REM(40);
+            padding-top: REM(40);
         }
     }
 }
@@ -498,10 +503,15 @@ img{
         margin: REM(40) auto;
     }
     .again{
-        width: REM(353);
+        width: REM(120);
         margin: REM(30) auto 0;
         position: relative;
         z-index: 30;
+    }
+    .logo{
+        padding-top: REM(30);
+        width: REM(158);
+        margin: 0 auto;
     }
 }
 .cover{

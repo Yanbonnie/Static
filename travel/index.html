@@ -63,7 +63,8 @@
             </div>
             <div class="btnBox">
                 <img class="sure" @click="sureSelectPlace" src="./images/sure_btn.png" alt="">
-                <img class="logo" src="./images/logo.png" alt="">
+                <img class="again" @click="againSelectPlace" src="./images/again_txt.png" alt="">
+                <!-- <img class="logo" src="./images/logo.png" alt=""> -->
             </div>
         </div>
         <div class="page4 hide">
@@ -107,6 +108,7 @@
             </div>
             <img class="copy" src="./images/copy_txt.png" alt="">
             <img class="again" @click="againMake" src="./images/again.png" alt="">
+            <img class="logo" src="./images/logo.png" alt="">
             <div class="canvas2">
                 <canvas id="canvas2" :width="this.W2" :height="this.H2"></canvas>
             </div>
@@ -299,11 +301,12 @@
                             $('.page5').hide();
                             $('.page6').show();
                             This.drawCanvas();
-                        },3500)
+                        },4000)
                     },
                     // 重新选地点
                     againSelectPlace:function(){
                         $('.page4').fadeOut();
+                        $('.page3').fadeOut();
                         // $('.page3').fadeIn();
                         $('.pageSlideBox').show();
                         this.tab1.playTo(1);
@@ -344,7 +347,8 @@
                         // 背景
                         var imgObj = new Image();
                         // var imgUrl = This.selectPlaceData.url; 
-                        var imgUrl = './images/zhou1/5.jpg';
+                        // var imgUrl = './images/zhou1/5.jpg';
+                        var imgUrl = './images/test.jpg';
                         // console.log(This.selectPlaceData.url)
                         imgObj.src = imgUrl;
                         imgObj.onload = function(){
@@ -404,7 +408,7 @@
                             ctx.drawImage(imgEwm, This.W*1.62, This.H * 2* 0.76,This.W * 2 * 0.150,This.H * 2 * 0.119);                              
                             ctx.font = parseInt(This.Font)+"px 微软雅黑";
                             ctx.fillStyle = "#6e6e6e";
-                            ctx.fillText(This.selectPlaceData ? This.selectPlaceData.name : '欢迎你', This.W *0.04, This.H * 2 * 0.97);
+                            ctx.fillText(This.selectPlaceData ? This.selectPlaceData.name : '欢迎你', 0, This.H * 2 * 0.97);
                             ctx.fillStyle = "#ffffff";
                             ctx.font = parseInt(This.Font)*0.6+"px 微软雅黑";
                             ctx.fillText("小妮子", This.W *0.4, This.H * 2 * 0.8);
@@ -449,7 +453,7 @@
                             
                             ctx.font = parseInt(This.Font)+"px 微软雅黑";
                             ctx.fillStyle = "#6e6e6e";
-                            ctx.fillText(This.selectPlaceData ? This.selectPlaceData.name : '欢迎你', This.W2 *0.04, This.H2* 0.97);
+                            ctx.fillText(This.selectPlaceData ? This.selectPlaceData.name : '欢迎你', 0, This.H2* 0.97);
                             ctx.fillStyle = "#ffffff";
                             ctx.font = parseInt(This.Font)*0.6+"px 微软雅黑";
                             ctx.fillText("小妮子", This.W2 *0.4, This.H2 * 0.8);
