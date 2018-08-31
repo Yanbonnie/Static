@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/flexible.js"></script>
+    <link rel="stylesheet" href="css/course.css">
+    <title>Document</title>
+
+</head>
+<body>
+    <div class="course" id="course">
+            <div id="slide01" class="tab">					 
+                <ul class="content">
+                    <li style="display:block"></li>
+                    <li></li>
+                </ul>
+            </div>
+    </div>
+    <script src="js/zepto.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script>
+        $(function () {
+            new Vue({
+                el: "#course",
+                data: {
+                    detailState:false
+                },
+                methods: {
+                    init: function () {
+
+                    }
+                },
+                mounted: function () {
+                    this.init();
+                    window.tab1 = new mo.PageSlide({
+                        target: $('#slide01 .content li'),
+                        direction:'x',
+                        controller:true
+                    });
+                    console.log(tab1)
+                }
+            })
+        })
+    </script>
+</body>
