@@ -6,40 +6,130 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="js/flexible.js"></script>
     <link rel="stylesheet" href="css/course.css">
+    <link rel="stylesheet" href="css/weui.css">
     <title>Document</title>
 
 </head>
 <body>
-    <div class="course" id="course">
-            <div id="slide01" class="tab">					 
-                <ul class="content">
-                    <li style="display:block"></li>
-                    <li></li>
-                </ul>
+    <div class="course" id="course" v-cloak>
+        <div id="slide01" class="tab">					 
+            <ul class="content">
+                <li style="display:block">
+                    <img src="./images/banner.jpg" alt="">
+                </li>
+                <li>
+                    <img src="./images/banner.jpg" alt="">
+                </li>
+            </ul>
+        </div>
+        <div class="list">
+            <ul>
+                <li v-for="(item,index) in list">
+                    <div>
+                        <img :src="item.imgSrc" alt="">
+                    </div>
+                    <div>
+                        <h3 class="shengl">{{item.title}}</h3>
+                        <p>{{item.desc}}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- 加载中 -->
+        <div id="loadingToast" v-show="loading.status">
+            <div class="weui-mask_transparent"></div>
+            <div class="weui-toast">
+                <i class="weui-loading weui-icon_toast"></i>
+                <p class="weui-toast__content" v-html="loading.txt"></p>
             </div>
+        </div>
     </div>
     <script src="js/zepto.min.js"></script>
     <script src="js/vue.min.js"></script>
     <script>
+        var data = [{
+                title:"信用卡进行礼品信用卡",
+                desc:'大杭州寿险渠道8月份激励方案',
+                imgSrc:'./images/c_card.jpg'
+            },
+            {
+                title:"必看，信用卡开卡三部曲",
+                desc:'大杭州寿险渠道8月份激励方案',
+                imgSrc:'./images/c_card.jpg'
+            },
+            {
+                title:"信用卡进行礼品信用卡",
+                desc:'大杭州寿险渠道8月份激励方案',
+                imgSrc:'./images/c_card.jpg'
+            },
+            {
+                title:"必看，信用卡开卡三部曲",
+                desc:'大杭州寿险渠道8月份激励方案',
+                imgSrc:'./images/c_card.jpg'
+            },
+            {
+                title:"信用卡进行礼品信用卡",
+                desc:'大杭州寿险渠道8月份激励方案',
+                imgSrc:'./images/c_card.jpg'
+            },
+            {
+                title:"必看，信用卡开卡三部曲",
+                desc:'大杭州寿险渠道8月份激励方案',
+                imgSrc:'./images/c_card.jpg'
+            },
+            {
+                title:"信用卡进行礼品信用卡",
+                desc:'大杭州寿险渠道8月份激励方案',
+                imgSrc:'./images/c_card.jpg'
+            },
+            {
+                title:"必看，信用卡开卡三部曲",
+                desc:'大杭州寿险渠道8月份激励方案',
+                imgSrc:'./images/c_card.jpg'
+            }
+        ]
         $(function () {
             new Vue({
                 el: "#course",
                 data: {
-                    detailState:false
+                    detailState:false,
+                    clientH:0,
+                    docH:0,
+                    list:[],
+                    loading: {        //加载中弹框
+                        status: false,
+                        txt: '加载中...'
+                    },
                 },
                 methods: {
-                    init: function () {
-
+                    getData:function(){
+                        var This = this;
+                        var list = this.list;
+                        this.loading.status = true;
+                        setTimeout(function(){
+                            This.loading.status = false;
+                            This.list = [...list,...data]
+                        },1000)
                     }
                 },
                 mounted: function () {
-                    this.init();
+                    var This = this;
+                    this.getData();
                     window.tab1 = new mo.PageSlide({
                         target: $('#slide01 .content li'),
                         direction:'x',
                         controller:true
                     });
-                    console.log(tab1)
+                   
+                    this.clientH = $(window).height();
+                    
+                    $(document).on('scroll',function(e){
+                        This.docH = $(document).height();
+                        if(e.target.scrollingElement.scrollTop + This.clientH  == This.docH){
+                            console.log("到底了")
+                            This.getData();
+                        }
+                    })
                 }
             })
         })
