@@ -12,6 +12,14 @@
 </head>
 <body>
     <div class="course" id="course" v-cloak>
+        <div class="form">
+            <p class="tipPsw" v-show="alert.status" v-html="alert.txt">密码不能为空</p>
+            <p>请输入密码</p>
+            <div>
+                <input type="password" v-model="psw">
+            </div>
+            <div class="surebtn" @click="sureHandle">确定</div>
+        </div>
         <div id="slide01" class="tab">					 
             <ul class="content">
                 <li style="display:block">
@@ -92,6 +100,7 @@
             new Vue({
                 el: "#course",
                 data: {
+                    psw:'',
                     detailState:false,
                     clientH:0,
                     docH:0,
@@ -100,8 +109,27 @@
                         status: false,
                         txt: '加载中...'
                     },
+                    alert: {     //提示自动消失框
+                        status: false,
+                        txt: '这里是提示内容'
+                    },
                 },
                 methods: {
+                    sureHandle:function(){
+                        var This = this;
+                        if(!this.psw){
+                            this.alertHandle("密码不能为空");
+                            return;
+                        }
+                        this.loading.status = true;
+                        this.loading.txt="处理中...";
+                        setTimeout(function(){
+                            $('.form').remove();
+                            This.loading.status = false;
+                            This.loading.txt="加载中...";
+                            This.getData();
+                        },1000)
+                    },
                     getData:function(){
                         var This = this;
                         var list = this.list;
@@ -110,11 +138,20 @@
                             This.loading.status = false;
                             This.list = [...list,...data]
                         },1000)
+                    },
+                    alertHandle:function(msg){
+                        var This = this;
+                        this.alert.status = true;
+                        this.alert.txt = msg;
+                        setTimeout(function(){
+                            This.alert.status = false;
+                            This.alert.txt = '';
+                        },1500)
                     }
                 },
                 mounted: function () {
                     var This = this;
-                    this.getData();
+                    // this.getData();
                     window.tab1 = new mo.PageSlide({
                         target: $('#slide01 .content li'),
                         direction:'x',
