@@ -451,22 +451,27 @@ img{
         }
     }
     h3{
-        padding-top: REM(80);
+        padding-top: REM(0);
         font-size: REM(36);
         color: #ffffff;
         text-align: center;
+        opacity: 0;
     }
     .box{
-        width: REM(442);
-        height: REM(685);
+        // width: REM(442);
+        // height: REM(685);
+        width: REM(602);
+        height: REM(932);
         margin:REM(50) auto 0;
         padding: REM(15) REM(15) 0;
         background: #ffffff;
         border-radius: REM(10);
         overflow: hidden;        
         .canvas{
-            width: REM(442);
-            height: REM(685);
+            width: REM(602);
+            height: REM(932);
+            // width: REM(442);
+            // height: REM(685);
             margin: 0 auto;
             position: relative;
             img{
@@ -478,8 +483,8 @@ img{
                 z-index: 2;
             }
             .head{
-                width: REM(70);
-                height: REM(70);
+                width: REM(80);
+                height: REM(80);
                 // background: rgba(0,0,0,0.5);
                 position: absolute;
                 left: REM(10);
