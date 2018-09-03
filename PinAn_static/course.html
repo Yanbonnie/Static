@@ -133,6 +133,7 @@
                     getData:function(){
                         var This = this;
                         var list = this.list;
+                        if(this.loading.status) return;
                         this.loading.status = true;
                         setTimeout(function(){
                             This.loading.status = false;
@@ -144,7 +145,7 @@
                         this.alert.status = true;
                         this.alert.txt = msg;
                         setTimeout(function(){
-                            This.alert.status = false;
+                            This.alert.status = false; 
                             This.alert.txt = '';
                         },1500)
                     }
