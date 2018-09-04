@@ -255,7 +255,7 @@ img{
                 p{
                     line-height: REM(70);
                     color: #303748;
-                    font-size: REM(24);
+                    font-size: 0.45rem;
                     font-weight: bold;
                     text-align: center;
                 }
@@ -318,7 +318,7 @@ img{
             &.phoneX{
                 max-height: 12rem;
             }
-            max-height: REM(700);
+            max-height: 8rem;
             overflow-y: auto;
             li{
                 line-height: REM(70);

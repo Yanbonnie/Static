@@ -407,7 +407,7 @@
                             ctx.drawImage(imgObj, 0, 0,This.W * 2, This.H * 2 - This.H * 2 * 0.1);//this即是imgObj,保持图片的原始大小：470*480
                             ctx.drawImage(imgSlogan, 0, 0);  
                             ctx.drawImage(imgEwm, This.W*1.62, This.H * 2* 0.76,This.W * 2 * 0.150,This.H * 2 * 0.119);                              
-                            ctx.font = parseInt(This.Font)+"px 微软雅黑";
+                            ctx.font = parseInt(This.Font)*1.6+"px 微软雅黑";
                             ctx.fillStyle = "#6e6e6e";
                             ctx.fillText(This.selectPlaceData ? This.selectPlaceData.name : '欢迎你', 0, This.H * 2 * 0.97);
                             ctx.fillStyle = "#ffffff";
