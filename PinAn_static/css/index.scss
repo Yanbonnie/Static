@@ -32,11 +32,33 @@ img{
         background: #fff;
         margin-bottom:REM(20);
         .title{
-            padding: REM(25) 0;
-            img{
-                display: block;
-                margin: 0 auto;
-                width: REM(445);
+            height: REM(85);
+            line-height: REM(85);
+            border-bottom: 1px #f5f5f5 solid;
+            position: relative;
+            span{
+                width: REM(5);
+                height: REM(30);                
+                left: REM(30);
+                top: 50%;
+                margin-top: REMTWO(30);
+                position: absolute;
+                &.orange{
+                    background: #f98200;
+                }
+                &.blue{
+                    background: #00abf9;
+                }
+                &.yellow{
+                    background: #fab700;
+                }
+            }
+            h3{
+                font-size: REM(30);
+                margin-left: REM(30);
+                color: #424040;
+                font-weight: bold;
+                padding-left: REM(20);
             }
         }
         .flexBox{
@@ -44,14 +66,14 @@ img{
             justify-content: space-around;
             align-items: center;
             width:100%;
-            padding: REM(10) 0 REM(30);
+            padding: REM(20) 0 REM(20);
             a{
                 width:(100/3)*1%;
                 text-align: center;
                 flex-shrink:0;
                 box-sizing:border-box;
                 img{
-                    width: REM(129);
+                    width: REM(180);
                     margin: 0 auto;
                     display: block;
                 }
@@ -67,32 +89,33 @@ img{
     }
     .panel1{
         margin-top: 10px;
+        .flexBox{
+            width: 90%;
+            margin: 0 auto;
+            padding: REM(21) 0 REM(20);
+            a{
+                img{
+                    width: REM(180);
+                }
+            }
+        }
     }
     .panel2{
         .flexBox{
             padding:  0;
             border-top: 1px #f5f5f5 solid;
+            padding: REM(30) REM(10);
+            width: auto;
             a{
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                padding: REM(30) 0;
-                flex-basis:50%;
-                &:nth-child(1){
-                    border-right: 1px #f5f5f5 solid;
-                }
+                flex:1;
                 img{
-                    margin: 0;
-                    width: REM(155);
-                    height: REM(155);
-                    padding-right: REM(10);
+                    margin: 0 auto;
+                    width: REM(348);
+                    height: REM(127);
                     display: inline-block;
-                }
-                p{
-                    font-size: REM(28);
-                    color: #666666;
-                    width:auto;
-                    margin:0;
                 }
             }
             
@@ -103,42 +126,15 @@ img{
             flex-wrap: wrap;
             padding: 0;
             border-top: 1px #f5f5f5 solid;
+            width: auto;
+            padding: REM(20) REM(10) 0;
+            border-bottom: 1px #f5f5f5 solid;
             a{
                 overflow: hidden;
-                border-right: 1px #f5f5f5 solid;
-                padding-bottom: REM(20);
+                flex-basis:50%;
+                margin-bottom: REM(20);
                 img{
-                    width: REM(160);
-                    // height: REM(130);
-                    
-                }
-                p{
-                    // margin-top:REMTWO(80);
-                    padding-top: 0;
-                    height: REM(40);
-                    line-height: REM(40);
-                }
-                
-            }
-            .item{
-                flex-basis: 50%;
-                display: flex;
-                height: REM(190);
-                align-items: center;
-                justify-content: space-between;
-                border-bottom: 1px #f5f5f5 solid;
-                border-right: 1px #f5f5f5 solid;
-                box-sizing: border-box;
-                padding: 0;
-                p{
-                    text-align: center;
-                    flex-grow: 1;
-                    margin-top: 0;
-                }
-                img{
-                    width: REM(160);
-                    margin-right: REM(20);
-                    // height: REM(160);
+                    width: REM(348);
                     
                 }
                 
