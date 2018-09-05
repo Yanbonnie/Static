@@ -193,7 +193,7 @@
         var u = navigator.userAgent;
         var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
         if (isIOS) {
-            if (screen.height > 700){
+            if (screen.height > 736){
                 //是iphoneX
                 isPhonex = true;
             }
@@ -367,7 +367,7 @@
                         }
                         // 二维码
                         var imgEwm = new Image();
-                        var imgEwmUrl = './images/ewm.png';
+                        var imgEwmUrl = './images/ewm.png?v=1';
                         imgEwm.src = imgEwmUrl;
                         imgEwm.onload = function(){
                             progress += 1;
@@ -390,14 +390,14 @@
                             }
                         }
                         //待图片加载完后，将其显示在canvas上
-                        function startDraw(ctx) {
-                            
+                        function startDraw(ctx) {                           
                             
                             ctx.fillStyle="#ffffff";
                             ctx.fillRect(0,0,This.W*2,This.H*2);
                             ctx.drawImage(imgObj, 0, 0,This.W * 2, This.H * 2 - This.H * 2 * 0.1);//this即是imgObj,保持图片的原始大小：470*480
                             ctx.drawImage(imgSlogan, 0, 0,This.W * 2 * 0.701,This.H * 2 *0.378);  
-                            ctx.drawImage(imgEwm, This.W*1.62, This.H * 2* 0.76,This.W * 2 * 0.150,This.H * 2 * 0.119);                              
+                            // ctx.drawImage(imgEwm, This.W*1.62, This.H * 2* 0.76,This.W * 2 * 0.150,This.H * 2 * 0.119);     
+                            ctx.drawImage(imgEwm, This.W*1.62, This.H * 2* 0.76,This.W * 2 * 0.170,This.H * 2 * 0.135);                           
                             ctx.font = parseInt(This.Font)*1.6+"px 微软雅黑";
                             ctx.fillStyle = "#6e6e6e";
                             ctx.fillText(This.selectPlaceData ? This.selectPlaceData.name : '欢迎你', 0, This.H * 2 * 0.97);
