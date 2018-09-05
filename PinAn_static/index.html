@@ -48,6 +48,16 @@
                 </a>
             </div>
         </div>
+        <div id="slide01" class="tab">					 
+            <ul class="content">
+                <li style="display:block">
+                    <img src="./images/banner.jpg" alt="">
+                </li>
+                <li>
+                    <img src="./images/banner.jpg" alt="">
+                </li>
+            </ul>
+        </div>
         <div class="panel panel3">
             <div class="title">
                 <span class="orange"></span>
@@ -241,7 +251,11 @@
                     }
                 },
                 mounted: function () {
-                    
+                    window.tab1 = new mo.PageSlide({
+                        target: $('#slide01 .content li'),
+                        direction:'x',
+                        controller:true
+                    });
                 }
             })
         })

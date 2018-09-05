@@ -26,6 +26,21 @@ img{
     display: none;
 }
 
+#slide01 {position:relative; width:100%; height:REM(180);margin: 0 auto REM(20);}
+#slide01 .controller{position:absolute;bottom:REM(10);left:50%;transform: translateX(-50%); z-index:2;height:REM(24);}
+#slide01 .controller li{display: inline-block;width: REM(15);height: REM(15);margin: REM(5);border-radius: 10px;background-color: #fff;line-height: 100px;overflow: hidden;}
+#slide01 .controller li.current{background-color: #f98200;}
+#slide01 .content{overflow: hidden;width:200%;height: REM(180)}
+#slide01 .content li{width: 50%;height: REM(180);}
+#slide01 .content li img{
+    width: 100%;
+    height: REM(180);
+}
+
+#slide01 .controller a:hover, #slide01 .controller .current a{background:#000; color:#fff; }
+#btnLeftSlide01, #btnRightSlide01{position:absolute;top:50%;height:20px;border-radius:3px;margin-top:-10px;padding:5px;background:#fff;z-index:3;}
+
+
 .index_page{
     padding-bottom: REM(120);
     .panel{
@@ -34,6 +49,7 @@ img{
         .title{
             height: REM(85);
             line-height: REM(85);
+            box-sizing: border-box;
             border-bottom: 1px #f5f5f5 solid;
             position: relative;
             span{
@@ -41,7 +57,7 @@ img{
                 height: REM(30);                
                 left: REM(30);
                 top: 50%;
-                margin-top: REMTWO(30);
+                margin-top: REMTWO(35);
                 position: absolute;
                 &.orange{
                     background: #f98200;
@@ -59,6 +75,7 @@ img{
                 color: #424040;
                 font-weight: bold;
                 padding-left: REM(20);
+                line-height: REM(88);
             }
         }
         .flexBox{
@@ -103,7 +120,6 @@ img{
     .panel2{
         .flexBox{
             padding:  0;
-            border-top: 1px #f5f5f5 solid;
             padding: REM(30) REM(10);
             width: auto;
             a{
@@ -125,7 +141,6 @@ img{
         .flexBox{
             flex-wrap: wrap;
             padding: 0;
-            border-top: 1px #f5f5f5 solid;
             width: auto;
             padding: REM(20) REM(10) 0;
             border-bottom: 1px #f5f5f5 solid;
@@ -137,7 +152,6 @@ img{
                     width: REM(348);
                     
                 }
-                
             }
         }
     }
