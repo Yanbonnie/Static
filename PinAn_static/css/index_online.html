@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>平安信用卡浙江</title>
+    <link rel="stylesheet" href="__TMPL__/public/home/css/index.css?v=9">
+    <link rel="stylesheet" href="__TMPL__/public/home/css/weui.css">
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrap index_page" id="index-box" v-cloak>
+        <div class="panel panel1">
+            <div class="title">
+                <!--<img src="__TMPL__/public/home/images/title1.png" alt="">-->
+                <span class="orange"></span>
+                <h3>热门优惠</h3>
+            </div>
+
+            <div class="flexBox">
+                <a :href="item.url" v-for="(item,index) in hot_list" :key="index">
+                    <img :src="item.logo" alt="">
+                    <p class="shengl">{{item.title}}</p>
+                </a>
+            </div>
+        </div>
+        <div class="panel panel2">
+            <div class="title">
+                <!--<img src="__TMPL__/public/home/images/title2.png" alt="">-->
+                <span class="blue"></span>
+                <h3>车主生活</h3>
+            </div>
+            <div class="flexBox">
+                <a :href="item.url" v-for="(item,index) in car_list" :key="index">
+                    <img :src="item.logo" alt="">
+                    <!--<p>{{item.title}}</p>-->
+                </a>
+            </div>
+        </div>
+        <div id="slide01" class="tab">
+            <ul class="content" v-if="banner.length > 0" :style="{width:100*banner.length+'%'}">
+                <li  v-for="(item,index) in banner" :key="index"  :style="{width:100/banner.length+'%'}" @click="goDetail(item.url)">
+                    <img :src="item.pic" alt="">
+                </li>
+                <!--<li>-->
+                <!--<img src="__TMPL__/public/home/images/banner.jpg" alt="">-->
+                <!--</li>-->
+            </ul>
+        </div>
+        <div class="panel panel3">
+            <div class="title">
+                <span class="orange"></span>
+                <h3>高端权益卡</h3>
+            </div>
+            <div class="flexBox">
+                <a :href="item.url" v-for="(item,index) in card_list" :key="index">
+                    <img :src="item.logo" alt="">
+                    <p class="shengl">{{item.title}}</p>
+                </a>
+            </div>
+        </div>
+        <div class="panel panel4">
+            <div class="title">
+                <span class="yellow"></span>
+                <h3>精选美食</h3>
+            </div>
+            <div class="flexBox">
+                <a :href="item.url" class="item" v-for="(item,index) in food_list1" :key="index">
+                    <!--<p>{{item.title}}</p>-->
+                    <img :src="item.logo" alt="">
+                </a>
+            </div>
+        </div>
+        <div class="panel panel5">
+            <div class="title">
+                <span class="blue"></span>
+                <h3>城市优惠</h3>
+            </div>
+            <div class="flexBox">
+                <a :href="item.url ? item.url :'javascript:;'"  v-for="(item,index) in city_list" :key="index" @click="goArticle(item)"> <!--:href="item.url"-->
+                    <img :src="item.logo" alt="">
+                    <p>{{item.title}}</p>
+                </a>
+                <!-- <a>
+                    <img src="__TMPL__/public/home/images/city.jpg" alt="">
+                    <p>航班延误</p>
+                </a>
+                <a>
+                    <img src="__TMPL__/public/home/images/city.jpg" alt="">
+                    <p>接送机</p>
+                </a> -->
+                <!-- <div>
+                    <img src="__TMPL__/public/home/images/city.jpg" alt="">
+                    <p>接送机</p>
+                </div>
+                <div>
+                    <img src="__TMPL__/public/home/images/city.jpg" alt="">
+                    <p>自助餐</p>
+                </div>
+                <div>
+                    <img src="__TMPL__/public/home/images/city.jpg" alt="">
+                    <p>航班延误</p>
+                </div>
+                <div>
+                    <img src="__TMPL__/public/home/images/city.jpg" alt="">
+                    <p>接送机</p>
+                </div>
+                <div>
+                    <img src="__TMPL__/public/home/images/city.jpg" alt="">
+                    <p>接送机</p>
+                </div> -->
+            </div>
+        </div>
+        <!-- 加载中 -->
+        <div id="loadingToast" v-show="loading.status">
+            <div class="weui-mask_transparent"></div>
+            <div class="weui-toast">
+                <i class="weui-loading weui-icon_toast"></i>
+                <p class="weui-toast__content" v-html="loading.txt"></p>
+            </div>
+        </div>
+        <!--按钮提示框-->
+        <!--BEGIN dialog2-->
+        <div class="js_dialog" id="iosDialog2" v-show="dialog.status">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__bd">{{dialog.txt}}</div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click="dialog.status = false">知道了</a>
+                </div>
+            </div>
+        </div>
+        <!-- 提示框，1000消失 -->
+        <div class="tipBox" v-show="alert.status">
+            <div class="tibBox_inner">
+                <p v-html="alert.txt"></p>
+            </div>
+        </div>
+        <div class="navBottom">
+            <a class="active" href="javascript:;">
+                <img src="__TMPL__/public/home/images/home_on.png" alt="">
+                <span>首页</span>
+            </a>
+            <a href={:url("weixin/Home/cardList")}>
+                <img src="__TMPL__/public/home/images/card.png" alt="">
+                <span>卡片介绍</span>
+            </a>
+            <a href={:url("weixin/Home/morelist")}>
+                <img src="__TMPL__/public/home/images/more.png" alt="">
+                <span>更多</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="__TMPL__/public/home/js/zepto.min.js"></script>
+    <script src="__TMPL__/public/home/js/vue.min.js"></script>
+    <script>
+        $(function () {
+            new Vue({
+                el: "#index-box",
+                data: {
+                    
+                    URL:{
+                        getHome:'{:url("weixin/Home/getHome")}',
+                    },
+                    hot_list:[],      //热门优惠   logo,name,url
+                    car_list:[],      //车主生活   logo,name,url
+                    card_list:[],     //高端卡权益数组    
+                    food_list1:[],     //精选美食数组
+                    food_list2:[],     //精选美食数组
+                    city_list:[],     //城市优惠数组
+                    banner:'',
+                    loading: {        //加载中弹框
+                        status: false,
+                        txt: '加载中...'
+                    },
+                    dialog: {    //带按钮提示框
+                        status: false,
+                        txt: '这里是提示内容'
+                    },
+                    alert: {     //提示自动消失框
+                        status: false,
+                        txt: '这里是提示内容'
+                    },
+                },
+                methods: {
+                    goDetail:function(url){
+                        window.location.href=url;
+                    },
+                    goArticle:function(item){
+                        if(item.url) return;
+                        window.location.href='{:url("weixin/Home/article")}?id='+item.id;
+                    },
+                    //获取首页数据接口
+                    getHomeFn:function(){
+                        var This = this;
+                        this.loading.status = true;
+                        $.ajax({
+                            url:this.URL['getHome'],
+                            dataType: 'json',
+                            type: 'get',
+                            data: {},
+                            async: true,  //异步请求
+                            success: function (res) {
+                                This.loading.status = false;
+                                if(res.status == 0){
+                                    This.hot_list = res.hot_list;
+                                    This.car_list = res.car_list;
+                                    This.card_list = res.card_list;
+                                    This.food_list1 = res.food_list;
+                                    // This.food_list1 = res.food_list.slice(0,2);
+                                    // This.food_list2 = res.food_list.slice(2);
+                                    This.city_list = res.city_list;
+                                    This.banner = res.banner_list;
+                                }else{
+                                    This.alertHandle(res.msg)
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                This.alertHandle('服务出错了')
+                                console.log(XMLHttpRequest)
+                            }
+                        })
+                    },
+                    alertHandle:function(msg){
+                        var This = this;
+                        this.alert.status = true;
+                        this.alert.txt = msg;
+                        setTimeout(function(){
+                            This.alert.status = false;
+                            This.alert.txt = '';
+                        },1500)
+                    }
+                },
+                mounted: function () {
+                    this.getHomeFn();
+                    window.tab1 = new mo.PageSlide({
+                        target: $('#slide01 .content li'),
+                        direction:'x',
+                        controller:true
+                    });
+                }
+            })
+        })
+    </script>
+    <if condition="($is_wechat eq 1)">
+
+
+        <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+        <script type="application/javascript">
+            var title="{$js_data['title']}";
+            var desc="{$js_data['desc']}";
+            var link="{$js_data['share_url']}";
+            var imgUrl="{$js_data['imgUrl']}";
+            wx.config({
+                debug: false,
+                appId:"{$signPackage['appId']}",
+                timestamp:"{$signPackage['timestamp']}",
+                nonceStr:"{$signPackage['nonceStr']}",
+                signature:"{$signPackage['signature']}",
+                jsApiList: [
+                    // 所有要调用的 API 都要加到这个列表中
+                    'checkJsApi',
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'startRecord',
+                    'stopRecord',
+                    'onVoiceRecordEnd',
+                    'playVoice',
+                    'pauseVoice',
+                    'stopVoice',
+                    'onVoicePlayEnd',
+                    'uploadVoice',
+                    'downloadVoice',
+                    'chooseImage',
+                    'previewImage',
+                    'uploadImage',
+                    'downloadImage',
+                    'translateVoice',
+                    'getNetworkType',
+                    'openLocation',
+                    'getLocation',
+                    'hideOptionMenu',
+                    'showOptionMenu',
+                    'hideMenuItems',
+                    'showMenuItems',
+                    'hideAllNonBaseMenuItem',
+                    'showAllNonBaseMenuItem',
+                    'closeWindow',
+                    'scanQRCode'
+                ]
+            });
+            wx.ready(function () {
+                wx.showOptionMenu();
+
+                wx.hideMenuItems({
+                    menuList: [
+                        "menuItem:copyUrl",
+                        "menuItem:openWithQQBrowser",
+                        "menuItem:openWithSafari",
+                        "menuItem:share:email"
+                    ] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
+                });
+                // 在这里调用 API
+                //分享到朋友圈
+                wx.onMenuShareTimeline({
+                    title: title, // 分享标题
+                    link:link, // 分享链接
+                    imgUrl: imgUrl, // 分享图标
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+                //分享给朋友
+                wx.onMenuShareAppMessage({
+                    title: title, // 分享标题
+                    desc: desc, // 分享描述
+                    link: link, // 分享链接
+                    imgUrl: imgUrl, // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+
+
+
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+            });
+
+        </script>
+    </if>
+</body>
+
+</html>

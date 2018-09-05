@@ -95,8 +95,8 @@
         </div>
 
         <div class="page6" :class="[isPhonex ? 'phoneX':'']" > <!--style="opacity: 0;z-index: 0"-->
-            <!-- <div class="blank"></div> -->
-            <h3>我的环游世界旅行照</h3>
+            <div class="blank"></div>
+            <h3><img class="copy" src="./images/copy_txt.png" alt=""></h3>
             <div class="box">
                 <div class="canvas" >
                     <canvas id="canvas" :width="this.W*2" :height="this.H*2" :style="'width:'+this.W+'px;height:'+this.H+'px'">
@@ -107,22 +107,13 @@
                 </div>
                     
             </div>
-            <img class="copy" src="./images/copy_txt.png" alt="">
+            <!-- <img class="copy" src="./images/copy_txt.png" alt=""> -->
             <img class="again" @click="againMake" src="./images/again.png" alt="">
             <img class="logo" src="./images/logo.png" alt="">
             <div class="canvas2">
-                <canvas id="canvas2" :width="this.W2" :height="this.H2"></canvas>
+                <canvas id="canvas2" :width="this.W2*2" :height="this.H2*2" :style="'width:'+this.W2+'px;height:'+this.H2+'px'"></canvas>
             </div>
         </div>
-<!-- 
-        <div class="cover " v-show="imgStatus" @click="imgStatus=false;imgBigUrl=''">
-            <div class="bigImgCover">
-                <div class="bigImgBox">
-                    <img :src="imgBigUrl" alt="">
-                </div>
-            </div>
-        </div> -->
-
         <!-- 加载中 -->
         <div id="loadingToast" v-show="loading.status">
             <div class="weui-mask_transparent"></div>
@@ -302,7 +293,7 @@
                             $('.page5').hide();
                             $('.page6').show();
                             This.drawCanvas();
-                        },40000)
+                        },4000)
                     },
                     // 重新选地点
                     againSelectPlace:function(){
@@ -405,7 +396,7 @@
                             ctx.fillStyle="#ffffff";
                             ctx.fillRect(0,0,This.W*2,This.H*2);
                             ctx.drawImage(imgObj, 0, 0,This.W * 2, This.H * 2 - This.H * 2 * 0.1);//this即是imgObj,保持图片的原始大小：470*480
-                            ctx.drawImage(imgSlogan, 0, 0);  
+                            ctx.drawImage(imgSlogan, 0, 0,This.W * 2 * 0.701,This.H * 2 *0.378);  
                             ctx.drawImage(imgEwm, This.W*1.62, This.H * 2* 0.76,This.W * 2 * 0.150,This.H * 2 * 0.119);                              
                             ctx.font = parseInt(This.Font)*1.6+"px 微软雅黑";
                             ctx.fillStyle = "#6e6e6e";
@@ -420,12 +411,12 @@
                             ctx.save();
                             let R = 0;
                             if(isPhonex){
-                                R = 1.52;
+                                R = 1.53;
                                 ctx.arc(headW*1.42, headTop * R, headW, 0, 2 * Math.PI);
                                 ctx.clip();
                                 ctx.drawImage(imgWx, headW*1.4 - headW, headTop * R - headW, headW*2, headW*2);
                             }else{
-                                R = 1.72;
+                                R = 1.76;
                                 ctx.arc(headW*1.42, headTop * R, headW, 0, 2 * Math.PI);
                                 ctx.clip();
                                 ctx.drawImage(imgWx, headW*1.4 - headW, headTop * R - headW, headW*2, headW*2);

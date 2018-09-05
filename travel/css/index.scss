@@ -255,7 +255,7 @@ img{
                 p{
                     line-height: REM(70);
                     color: #303748;
-                    font-size: 0.45rem;
+                    font-size: 0.3rem;
                     font-weight: bold;
                     text-align: center;
                 }
@@ -443,11 +443,14 @@ img{
     right: 0;
     bottom: 0;
     &.phoneX{
-        // h3{
-        //     margin-top: REM(120);
-        // }
+        h3{
+            top:REM(-20);
+        }
         .blank{
-            height: REM(120);
+            height: REM(100);
+        }
+        .box{
+            margin-top:0;
         }
     }
     h3{
@@ -455,18 +458,21 @@ img{
         font-size: REM(36);
         color: #ffffff;
         text-align: center;
-        opacity: 0;
+        opacity: 1;
+        position: relative;
+        top:-0.2rem;
     }
     .box{
         // width: REM(442);
         // height: REM(685);
         width: REM(602);
         height: REM(932);
-        margin:REM(50) auto 0;
+        margin:REM(0) auto 0;
         padding: REM(15) REM(15) 0;
         background: #ffffff;
         border-radius: REM(10);
-        overflow: hidden;        
+        overflow: hidden; 
+        margin-top: -0.4rem;       
         .canvas{
             width: REM(602);
             height: REM(932);
