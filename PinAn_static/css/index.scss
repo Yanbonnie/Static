@@ -76,7 +76,25 @@ img{
                 font-weight: bold;
                 padding-left: REM(20);
                 line-height: REM(88);
+                position: relative;
+                .more{
+                    color: #ccc;
+                    font-size: REM(24);
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    padding-right: REM(40);
+                    img{
+                        width: REM(13);
+                        height: REM(21);
+                        position: absolute;
+                        right: REM(20);
+                        top: 50%;
+                        margin-top: REM(-10);
+                    }
+                }
             }
+            
         }
         .flexBox{
             display: flex;
