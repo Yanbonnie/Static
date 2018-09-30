@@ -23,7 +23,8 @@
                             <div class="item-inner">
                                 <div class="item-title label">上传行驶证</div>
                                 <div class="item-input picture">
-                                    <span>+</span>
+                                    <span @click="uploadImg(0)" v-show="!imgArr[0]">+</span>
+                                    <span @click="uploadImg(0)" v-show="imgArr[0]"><img :src="imgArr[0]" alt=""></span>
                                 </div>
                             </div>
                         </div>
@@ -34,7 +35,8 @@
                             <div class="item-inner">
                                 <div class="item-title label">上传驾驶证</div>
                                 <div class="item-input picture">
-                                    <span>+</span>
+                                    <span @click="uploadImg(1)" v-show="!imgArr[1]">+</span>
+                                    <span @click="uploadImg(1)" v-show="imgArr[1]"><img :src="imgArr[1]" alt=""></span>
                                 </div>
                             </div>
                         </div>
@@ -45,7 +47,8 @@
                             <div class="item-inner">
                                 <div class="item-title label">上传保单</div>
                                 <div class="item-input picture">
-                                    <span>+</span>
+                                    <span @click="uploadImg(3)" v-show="!imgArr[3]">+</span>
+                                    <span @click="uploadImg(3)" v-show="imgArr[3]"><img :src="imgArr[3]" alt=""></span>
                                 </div>
                             </div>
                         </div>
@@ -56,8 +59,10 @@
                             <div class="item-inner">
                                 <div class="item-title label">上传车辆前后照片</div>
                                 <div class="item-input picture">
-                                    <span>+</span>
-                                    <span>+</span>
+                                    <span @click="uploadImg(4)" v-show="!imgArr[4]">+</span>
+                                    <span @click="uploadImg(4)" v-show="imgArr[4]"><img :src="imgArr[4]" alt=""></span>
+                                    <span @click="uploadImg(5)" v-show="!imgArr[5]">+</span>
+                                    <span @click="uploadImg(5)" v-show="imgArr[5]"><img :src="imgArr[5]" alt=""></span>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +70,7 @@
                 </ul>
             </div>
             <p class="btnBox">
-                <a href="#" class="button button-big">确认，下一步 </a>
+                <a href="#" class="button button-big" @click="submitHandle">确认，下一步 </a>
             </p>
         </div>
     </div>
@@ -77,9 +82,32 @@
             el: '#page',
             data: {
                 car_num: '',
-                time: ''
+                time: '',
+                imgArr:['','','','','']
             },
             methods: {
+                submitHandle:function(){
+                    window.location.href="./step3.html"
+                },
+                uploadImg(index){
+                    var This = this;
+                    wx.chooseImage({
+                        count: 1, // 默认9
+                        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                        success: function (res) {
+                            var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                            This.imgArr[index] = localIds[0]
+                            wx.uploadImage({
+                                localId: localIds[0], // 需要上传的图片的本地ID，由chooseImage接口获得
+                                isShowProgressTips: 1, // 默认为1，显示进度提示
+                                success: function (res2) {
+                                    var serverId = res2.serverId; // 返回图片的服务器端ID
+                                }
+                            });
+                        }
+                    });
+                },
                 init() {
                     $("#datetime-picker").datetimePicker({
                         value: ['1985', '12', '04', '9', '34']

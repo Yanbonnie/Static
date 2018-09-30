@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <div class="page" id="page" style="background:#ffffff;">
+    <div class="page step3" id="page" style="background:#ffffff;">
         <header class="bar bar-nav">
             <h1 class='title'>选择行驶路线</h1>
         </header>
@@ -26,7 +26,12 @@
             </div>
         </div>
         <div class="content" style="top:7.4rem;">
-
+            <ul class="rolesList">
+                <li v-for="(item,index) in roles">
+                    <span>{{item.road}}</span>
+                    <span class="icon"></span>
+                </li>
+            </ul>
             <p class="btnBox">
                 <a href="#" class="button button-big">确认，提交 </a>
             </p>
@@ -35,18 +40,45 @@
     <script type='text/javascript' src='js/zepto.min.js' charset='utf-8'></script>
     <script type='text/javascript' src='js/sm.min.js' charset='utf-8'></script>
     <script type='text/javascript' src='js/vue.min.js' charset='utf-8'></script>
+    <script type="text/javascript" src="js/sort.js"></script>
     <script>
         new Vue({
             el: '#page',
             data: {
                 car_num: '',
-                time: ''
+                time: '',
+                roles:[]
             },
             methods: {
                 init() {
+                    var This = this;
                     $("#datetime-picker").datetimePicker({
                         value: ['1985', '12', '04', '9', '34']
                     });
+                    let arr2 = [ //cityName
+                        { "id": "v1", "road": "北京" },
+                        { "id": "v2", "road": "上海" },
+                        { "id": "v5", "road": "天津" },
+                        { "id": "v7", "road": "安徽" },
+                        { "id": "v3", "road": "呼和浩特" },
+                        { "id": "v4", "road": "杭州" },
+                        { "id": "v9", "road": "海南" },
+                        { "id": "v8", "road": "张家口" },
+                        { "id": "v1", "road": "北京" },
+                        { "id": "v2", "road": "上海" },
+                        { "id": "v5", "road": "天津" },
+                        { "id": "v7", "road": "安徽" },
+                        { "id": "v3", "road": "呼和浩特" },
+                        { "id": "v4", "road": "杭州" },
+                        { "id": "v9", "road": "海南" },
+                        { "id": "v8", "road": "张家口" }
+                    ];
+                    pySegSort(arr2).filter(function(item){
+                        return item.data.length>0
+                    }).forEach(element => {
+                        This.roles = [...This.roles,...element.data]
+                    });
+                    console.log(this.roles)
                 },
             },
             mounted() {

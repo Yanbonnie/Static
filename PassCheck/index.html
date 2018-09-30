@@ -17,7 +17,7 @@
             <div class="areaSelect">
                 <h3 class="Title">请选择区域</h3>
                 <ul class="areaList">
-                    <li v-for="item in 5">
+                    <li v-for="item in 5" class="active">
                         <img src="images/picture.jpg" alt="">
                         <p>市区</p>
                     </li>
@@ -33,7 +33,7 @@
                 <p class="p_input"><input type="text" v-model='time' placeholder="请选择日期" id="datetime-picker"></p>
             </div>
             <p class="btnBox">
-                <a href="#" class="button button-big">确认，下一步 </a>
+                <a href="#" class="button button-big" @click="submitHandle">确认，下一步 </a>
             </p>
         </div>
     </div>
@@ -41,16 +41,64 @@
     <script type='text/javascript' src='js/sm.min.js' charset='utf-8'></script>
     <script type='text/javascript' src='js/vue.min.js' charset='utf-8'></script>
     <script>
+        Date.prototype.format = function(fmt) { 
+            var o = { 
+                "M+" : this.getMonth()+1,                 //月份 
+                "d+" : this.getDate(),                    //日 
+                "h+" : this.getHours(),                   //小时 
+                "m+" : this.getMinutes(),                 //分 
+                "s+" : this.getSeconds(),                 //秒 
+                "q+" : Math.floor((this.getMonth()+3)/3), //季度 
+                "S"  : this.getMilliseconds()             //毫秒 
+            }; 
+            if(/(y+)/.test(fmt)) {
+                    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+            }
+            for(var k in o) {
+                if(new RegExp("("+ k +")").test(fmt)){
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+                }
+            }
+            return fmt; 
+        }      
         new Vue({
             el: '#page',
             data: {
-                car_num:'',
-                time:''
+                car_num:'aaa',
+                time:'2018-09-30',
+                id:1
             },
             methods: {
+                submitHandle(){
+                    if(!this.id){
+                        $.toast("请选择区域");
+                        return;
+                    }
+                    if(!this.car_num){
+                        $.toast("请输入车牌号码");
+                        return;
+                    }
+                    if(!this.time){
+                        $.toast("请选择通行日期");
+                        return;
+                    }
+                    
+                    window.location.href="./step1.html";
+                    sessionStorage.setItem("info", JSON.stringify({
+                        car_num:this.car_num,
+                        time:this.time,
+                        id:this.id
+                    })); 
+                },
                 init(){
-                    $("#datetime-picker").datetimePicker({
-                        value: ['1985', '12', '04', '9', '34']
+                    var This = this;
+                    $("#datetime-picker").calendar({
+                        value: [new Date().format("yyyy-MM-dd")],
+                        dateFormat:'yyyy-mm-dd',
+                        minDate:new Date().format("yyyy-MM-dd"),
+                        onChange:function(p, values, displayValues){
+                            This.time = displayValues;
+                        }
                     });
                 },
             },
