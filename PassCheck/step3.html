@@ -11,29 +11,24 @@
     <link rel="stylesheet" href="css/index.css">
 </head>
 
-<body >
+<body>
     <div class="page" id="page" style="background:#ffffff;">
-        <div class="content">
-            <div class="areaSelect">
-                <h3 class="Title">请选择区域</h3>
-                <ul class="areaList">
-                    <li v-for="item in 5">
-                        <img src="images/picture.jpg" alt="">
-                        <p>市区</p>
-                    </li>
-                </ul>
+        <header class="bar bar-nav">
+            <h1 class='title'>选择行驶路线</h1>
+        </header>
+        <div class="bar bar-header-secondary">
+            <div class="searchbar">
+                <a class="searchbar-cancel">取消</a>
+                <div class="search-input">
+                    <label class="icon icon-search" for="search"></label>
+                    <input type="search" id='search' placeholder='输入关键字...' />
+                </div>
             </div>
-            <div class="plate">
-                <h3 class="Title">请输入车牌</h3>
-                <p class="tip">车牌格式提醒【例：苏AP2834】</p>
-                <p class="p_input"><input type="text" v-model='car_num' placeholder="请输入车牌"></p>
-            </div>
-            <div class="plate">
-                <h3 class="Title">请选择通行日期</h3>
-                <p class="p_input"><input type="text" v-model='time' placeholder="请选择日期" id="datetime-picker"></p>
-            </div>
+        </div>
+        <div class="content" style="top:7.4rem;">
+
             <p class="btnBox">
-                <a href="#" class="button button-big">确认，下一步 </a>
+                <a href="#" class="button button-big">确认，提交 </a>
             </p>
         </div>
     </div>
@@ -44,11 +39,11 @@
         new Vue({
             el: '#page',
             data: {
-                car_num:'',
-                time:''
+                car_num: '',
+                time: ''
             },
             methods: {
-                init(){
+                init() {
                     $("#datetime-picker").datetimePicker({
                         value: ['1985', '12', '04', '9', '34']
                     });

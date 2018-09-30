@@ -54,7 +54,7 @@
           animation-direction: @direction;
 }
 */
-/* html {
+html {
   font-size: 20px;
 }
 @media only screen and (min-width: 400px) {
@@ -71,13 +71,13 @@
   html {
     font-size: 25.6px !important;
   }
-} */
+}
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
-/* html {
+html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
-} */
+}
 body {
   margin: 0;
 }
@@ -885,7 +885,7 @@ a:active {
   right: 0;
   left: 0;
   z-index: 10;
-  height: 2.2rem;
+  height: 3.2rem;
   padding-right: 0.5rem;
   padding-left: 0.5rem;
   background-color: #f7f7f8;
@@ -920,7 +920,7 @@ a:active {
   }
 }
 .bar-header-secondary {
-  top: 2.2rem;
+  top: 3.2rem;
 }
 .bar-footer {
   bottom: 0;
@@ -980,7 +980,7 @@ a:active {
   margin: 0 -0.5rem;
   font-size: 0.85rem;
   font-weight: 500;
-  line-height: 2.2rem;
+  line-height: 3.2rem;
   color: #3d4145;
   text-align: center;
   white-space: nowrap;
@@ -2044,7 +2044,7 @@ label.label-checkbox.active-state .item-inner:after {
 .searchbar {
   padding: 8px 0;
   overflow: hidden;
-  height: 2.2rem;
+  height: 3.2rem;
   -webkit-box-align: center;
   -webkit-align-items: center;
   align-items: center;
@@ -2053,8 +2053,8 @@ label.label-checkbox.active-state .item-inner:after {
   margin-right: -3rem;
   width: 2.2rem;
   float: right;
-  height: 1.4rem;
-  line-height: 1.4rem;
+  height: 2.4rem;
+  line-height: 2.4rem;
   text-align: center;
   -webkit-transition: all .3s;
           transition: all .3s;
@@ -2071,7 +2071,7 @@ label.label-checkbox.active-state .item-inner:after {
 }
 .searchbar .search-input input {
   margin: 0;
-  height: 1.4rem;
+  height: 2.4rem;
 }
 .searchbar.searchbar-active .searchbar-cancel {
   margin-right: 0;

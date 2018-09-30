@@ -93,8 +93,9 @@ $REM:            24;//rem unit
 
 input {-webkit-appearance:none; /*去除input默认样式*/}
 .page{
-    background: #fff;
+    background: #f1f1f1;
 }
+
 .Title{
     font-size: REM(30);
     line-height: REM(100);
@@ -138,5 +139,41 @@ input {-webkit-appearance:none; /*去除input默认样式*/}
         line-height: REM(30);
         border: 0;
         width: 100%;
+    }
+}
+.btnBox{
+    width: 80%;
+    margin: REM(20) auto;
+}
+
+
+.step2{
+    .list-block .item-inner:after,.list-block .item-inner:before{
+        background-color:#ffffff;
+    }
+    .list-block ul:before,.list-block ul:after{
+        background: #ffffff;
+    }
+}
+
+.pictureItem{
+    margin: REM(10) 0;
+    .picture {
+        display: flex;        
+        span{
+            width: REM(150);
+            height: REM(150);
+            display: block;
+            background: #F5F5F5;
+            line-height: REM(150);
+            font-size: REM(100);
+            text-align: center;
+            margin-right: REM(20);
+        }
+    }
+}
+.step3{
+    h3{
+        
     }
 }
