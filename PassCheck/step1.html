@@ -196,7 +196,8 @@
                         $.toast("请选择车辆类型");
                         return;
                     }
-                    if(!this.is_danger){
+                    console.log(this.is_danger)
+                    if(this.is_danger != 0 && this.is_danger != 1){
                         $.toast("请选择是否是危险车辆");
                         return;
                     }
