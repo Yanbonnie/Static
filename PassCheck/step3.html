@@ -13,28 +13,34 @@
 
 <body>
     <div class="page step3" id="page" style="background:#ffffff;">
-        <header class="bar bar-nav">
-            <h1 class='title'>选择行驶路线</h1>
-        </header>
-        <div class="bar bar-header-secondary">
-            <div class="searchbar">
-                <a class="searchbar-cancel">取消</a>
-                <div class="search-input">
-                    <label class="icon icon-search" for="search"></label>
-                    <input type="search" id='search' v-on:input="searchHandle" v-model="searchTitle" placeholder='输入关键字...' />
+        <div v-show="!submitStatus">
+            <header class="bar bar-nav">
+                <h1 class='title'>选择行驶路线</h1>
+            </header>
+            <div class="bar bar-header-secondary">
+                <div class="searchbar">
+                    <a class="searchbar-cancel">取消</a>
+                    <div class="search-input">
+                        <label class="icon icon-search" for="search"></label>
+                        <input type="search" id='search' v-on:input="searchHandle" v-model="searchTitle" placeholder='输入关键字...' />
+                    </div>
                 </div>
             </div>
+            <div class="content" style="top:7.4rem;">
+                <ul class="rolesList">
+                    <li v-for="(item,index) in roles" :class="[item.name == travel_line ? 'active':'']" @click="travel_line=item.name">
+                        <span>{{item.name}}</span>
+                        <span class="icon"></span>
+                    </li>
+                </ul>
+                <p class="btnBox">
+                    <a href="javascript:;" @click="submitHandle" class="button button-big">确认，提交 </a>
+                </p>
+            </div>
         </div>
-        <div class="content" style="top:7.4rem;">
-            <ul class="rolesList">
-                <li v-for="(item,index) in roles" :class="[item.name == travel_line ? 'active':'']" @click="travel_line=item.name">
-                    <span>{{item.name}}</span>
-                    <span class="icon"></span>
-                </li>
-            </ul>
-            <p class="btnBox">
-                <a href="javascript:;" @click="submitHandle" class="button button-big">确认，提交 </a>
-            </p>
+        <div v-show="submitStatus" class="successBox">
+            <p>提交成功</p>
+            <p>请等候管理审核结果</p>
         </div>
     </div>
     <script type='text/javascript' src='js/zepto.min.js' charset='utf-8'></script>
@@ -71,7 +77,8 @@
                 linkHref:{
                     getTravelLine:'getTravelLine',
                     ajax_post_apply:'ajax_post_apply'
-                }
+                },
+                submitStatus:true
             },
             methods: {
                 submitHandle:function(){
