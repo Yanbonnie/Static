@@ -17,9 +17,9 @@
             <div class="areaSelect">
                 <h3 class="Title">请选择区域</h3>
                 <ul class="areaList">
-                    <li v-for="(item,index) in cityList" :class="[id==item.id?'active':'']" @click="id=item.id">
-                        <img :src="item.pic" alt="">
-                        <p>{{item.name}}</p>
+                    <li v-for="item in 5" class="active">
+                        <img src="images/picture.jpg" alt="">
+                        <p>市区</p>
                     </li>
                 </ul>
             </div>
@@ -30,7 +30,7 @@
             </div>
             <div class="plate">
                 <h3 class="Title">请选择通行日期</h3>
-                <p class="p_input"><input type="text" v-model='pass_time' placeholder="请选择日期" id="datetime-picker"></p>
+                <p class="p_input"><input type="text" v-model='time' placeholder="请选择日期" id="datetime-picker"></p>
             </div>
             <p class="btnBox">
                 <a href="#" class="button button-big" @click="submitHandle">确认，下一步 </a>
@@ -64,16 +64,12 @@
         new Vue({
             el: '#page',
             data: {
-                car_num:'',
-                pass_time:'',
-                id:1,
-                cityList:[],                //区域数组
-                linkHref:{
-                    getRegion:'getRegion',  //获取区域接口
-                }
+                car_num:'aaa',
+                time:'2018-09-30',
+                id:1
             },
             methods: {
-                submitHandle:function(){
+                submitHandle(){
                     if(!this.id){
                         $.toast("请选择区域");
                         return;
@@ -82,7 +78,7 @@
                         $.toast("请输入车牌号码");
                         return;
                     }
-                    if(!this.pass_time){
+                    if(!this.time){
                         $.toast("请选择通行日期");
                         return;
                     }
@@ -90,40 +86,18 @@
                     window.location.href="./step1.html";
                     sessionStorage.setItem("info", JSON.stringify({
                         car_num:this.car_num,
-                        pass_time:this.pass_time,
+                        time:this.time,
                         id:this.id
                     })); 
                 },
-                getRegionHandle:function(){
+                init(){
                     var This = this;
-                    $.showPreloader();
-                    $.ajax({
-                        url:this.linkHref.getRegion,
-                        dataType: 'json',
-                        type: 'get',
-                        async: true,
-                        success:function(res){
-                            $.hidePreloader();
-                            if(res.status == 0){
-                                This.cityList = res.data;
-                            }else{
-                                $.toast(res.msg);
-                            }
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            console.log(errorThrown)
-                        }
-                    })
-                },
-                init:function(){
-                    var This = this;
-                    // this.getRegionHandle();  //获取区域
                     $("#datetime-picker").calendar({
                         value: [new Date().format("yyyy-MM-dd")],
                         dateFormat:'yyyy-mm-dd',
                         minDate:new Date().format("yyyy-MM-dd"),
                         onChange:function(p, values, displayValues){
-                            This.pass_time = displayValues[0];
+                            This.time = displayValues;
                         }
                     });
                 },

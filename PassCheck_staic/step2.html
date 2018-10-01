@@ -77,26 +77,19 @@
     <script type='text/javascript' src='js/zepto.min.js' charset='utf-8'></script>
     <script type='text/javascript' src='js/sm.min.js' charset='utf-8'></script>
     <script type='text/javascript' src='js/vue.min.js' charset='utf-8'></script>
-    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script>
         new Vue({
             el: '#page',
             data: {
-                imgArr:['','','','',''],
-                picIdArr:[],                   //传微信上传后返回的ID
+                car_num: '',
+                time: '',
+                imgArr:['','','','','']
             },
             methods: {
                 submitHandle:function(){
-                    sessionStorage.setItem("picId", JSON.stringify({
-                        driving_id:picIdArr[0],
-                        travel_id:picIdArr[1],
-                        policy_id:picIdArr[2],
-                        car_front_id:picIdArr[3],
-                        car_after_id:picIdArr[4]
-                    }));
                     window.location.href="./step3.html"
                 },
-                uploadImg:function(index){
+                uploadImg(index){
                     var This = this;
                     wx.chooseImage({
                         count: 1, // 默认9
@@ -110,19 +103,18 @@
                                 isShowProgressTips: 1, // 默认为1，显示进度提示
                                 success: function (res2) {
                                     var serverId = res2.serverId; // 返回图片的服务器端ID
-                                    This.picIdArr[index] = serverId;
                                 }
                             });
                         }
                     });
                 },
-                init:function() {
+                init() {
                     $("#datetime-picker").datetimePicker({
                         value: ['1985', '12', '04', '9', '34']
                     });
                 },
             },
-            mounted:function() {
+            mounted() {
                 this.init();
             },
         })

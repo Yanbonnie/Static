@@ -45,47 +45,16 @@
         new Vue({
             el: '#page',
             data: {
-                // 基础数据
-                car_num: '',        //车牌号码
-                pass_time: '',      //通行时间
-                name:'',            //姓名
-                mobile:'',          //手机号码
-                driving_num:'',     //驾驶证号
-                car_type:'',        //车辆类型
-                is_danger:'',       //是否危险品车辆
-                travel_time:'',
-                drive_time:'',
-                policy_time:'',
-                // 照片数据
-                driving_id:'',
-                travel_id:'',
-                policy_id:'',
-                car_front_id:'',
-                car_after_id:'',
-                // 路段
+                car_num: '',
+                time: '',
                 roles:[]
             },
             methods: {
-                init:function() {
+                init() {
                     var This = this;
-                    var info = JSON.parse(sessionStorage.getItem('info'));
-                    this.car_num = info.car_num;
-                    this.pass_time = info.pass_time;
-                    this.name = info.name;
-                    this.mobile = info.mobile;
-                    this.driving_num = info.driving_num;
-                    this.car_type = info.car_type;
-                    this.is_danger = info.is_danger;
-                    this.travel_time = info.travel_time;
-                    this.policy_time = info.policy_time;
-
-                    var picId = JSON.parse(sessionStorage.getItem('picId'));
-                    this.driving_id=picId.driving_id;
-                    this.travel_id = picId.travel_id;
-                    this.policy_id = picId.policy_id;
-                    this.car_front_id = picId.car_front_id;
-                    this.car_after_id = picId.car_after_id;
-
+                    $("#datetime-picker").datetimePicker({
+                        value: ['1985', '12', '04', '9', '34']
+                    });
                     let arr2 = [ //cityName
                         { "id": "v1", "road": "北京" },
                         { "id": "v2", "road": "上海" },
@@ -109,9 +78,10 @@
                     }).forEach(element => {
                         This.roles = [...This.roles,...element.data]
                     });
+                    console.log(this.roles)
                 },
             },
-            mounted:function() {
+            mounted() {
                 this.init();
             },
         })
