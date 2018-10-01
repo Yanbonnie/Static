@@ -47,7 +47,7 @@ function pySegSort(arr, empty) {
             data: []
         };
         arr.forEach((v,k)=>{   //当前元素，下标
-            let LetterFirst = codefans_net_CC2PY(v.road)[0].charAt(0);
+            let LetterFirst = codefans_net_CC2PY(v.name)[0].charAt(0);
             // let LetterFirst = codefans_net_CC2PY(v.name)[0].charAt(0);
             if (LetterFirst == item){
                 curr.data.push(v) 

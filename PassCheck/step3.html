@@ -21,19 +21,19 @@
                 <a class="searchbar-cancel">取消</a>
                 <div class="search-input">
                     <label class="icon icon-search" for="search"></label>
-                    <input type="search" id='search' placeholder='输入关键字...' />
+                    <input type="search" id='search' v-on:input="searchHandle" v-model="searchTitle" placeholder='输入关键字...' />
                 </div>
             </div>
         </div>
         <div class="content" style="top:7.4rem;">
             <ul class="rolesList">
-                <li v-for="(item,index) in roles">
-                    <span>{{item.road}}</span>
+                <li v-for="(item,index) in roles" :class="[item.name == travel_line ? 'active':'']" @click="travel_line=item.name">
+                    <span>{{item.name}}</span>
                     <span class="icon"></span>
                 </li>
             </ul>
             <p class="btnBox">
-                <a href="#" class="button button-big">确认，提交 </a>
+                <a href="javascript:;" @click="submitHandle" class="button button-big">确认，提交 </a>
             </p>
         </div>
     </div>
@@ -45,17 +45,19 @@
         new Vue({
             el: '#page',
             data: {
+                searchTitle:'',
                 // 基础数据
                 car_num: '',        //车牌号码
                 pass_time: '',      //通行时间
+                area_id:'',
                 name:'',            //姓名
                 mobile:'',          //手机号码
                 driving_num:'',     //驾驶证号
                 car_type:'',        //车辆类型
                 is_danger:'',       //是否危险品车辆
-                travel_time:'',
-                drive_time:'',
-                policy_time:'',
+                driving_validity:'',  //行驶
+                drive_validity:'',    //驾驶
+                policy_validity:'',   //保单
                 // 照片数据
                 driving_id:'',
                 travel_id:'',
@@ -63,21 +65,106 @@
                 car_front_id:'',
                 car_after_id:'',
                 // 路段
-                roles:[]
+                travel_line:'北京', //行驶路线
+                roles:[],
+                allRoles:[],
+                linkHref:{
+                    getTravelLine:'getTravelLine',
+                    ajax_post_apply:'ajax_post_apply'
+                }
             },
             methods: {
+                submitHandle:function(){
+                    $.ajax({
+                        url:this.linkHref.getTravelLine,
+                        dataType: 'json',
+                        type: 'get',
+                        async: true,
+                        data:{
+                            
+                        },
+                        success:function(res){
+                            $.hidePreloader();
+                            if(res.status == 0){
+                                This.roles = [];
+                                pySegSort(res.data).filter(function(item){
+                                    return item.data.length>0
+                                }).forEach(element => {
+                                    This.roles = [...This.roles,...element.data]
+                                });
+                                This.allRoles = This.roles;
+                            }else{
+                                $.toast(res.msg);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown)
+                        }
+                    })
+                },
+                searchHandle:function(){
+                    var This = this;
+                    // 失去焦点
+                    This.roles = This.allRoles.filter(function(item){
+                        return item.name.indexOf(This.searchTitle) >= 0;
+                    })
+                },
+                getTravelLine:function(){
+                    var This = this;
+                    if(!this.travel_line){
+                        $.toast("请选择线路");
+                        return;
+                    }
+                    $.showPreloader();
+                    $.ajax({
+                        url:this.linkHref.getTravelLine,
+                        dataType: 'json',
+                        type: 'get',
+                        async: true,
+                        data:{
+                            car_num : this.car_num,
+                            pass_time : this.pass_time,
+                            name : this.name,
+                            mobile : this.mobile,
+                            driving_num : this.driving_num,
+                            car_type : this.car_type,
+                            is_danger : this.is_danger,
+                            driving_validity : this.driving_validity,
+                            drive_validity:this.drive_validity,
+                            policy_validity : this.policy_validity,
+                            travel_id:this.travel_id,
+                            policy_id:this.policy_id,
+                            car_front_id:this.car_front_id,
+                            car_after_id:this.car_after_id,
+                            travel_line:this.travel_line
+                        },
+                        success:function(res){
+                            $.hidePreloader();
+                            if(res.status == 0){
+                                $.toast('提交成功');
+                            }else{
+                                $.toast(res.msg);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown)
+                        }
+                    })
+                },
                 init:function() {
                     var This = this;
                     var info = JSON.parse(sessionStorage.getItem('info'));
                     this.car_num = info.car_num;
                     this.pass_time = info.pass_time;
+                    this.area_id = info.area_id;
                     this.name = info.name;
                     this.mobile = info.mobile;
                     this.driving_num = info.driving_num;
                     this.car_type = info.car_type;
                     this.is_danger = info.is_danger;
-                    this.travel_time = info.travel_time;
-                    this.policy_time = info.policy_time;
+                    this.driving_validity = info.driving_validity;
+                    this.drive_validity = info.drive_validity;
+                    this.policy_validity = info.policy_validity;
 
                     var picId = JSON.parse(sessionStorage.getItem('picId'));
                     this.driving_id=picId.driving_id;
@@ -85,30 +172,24 @@
                     this.policy_id = picId.policy_id;
                     this.car_front_id = picId.car_front_id;
                     this.car_after_id = picId.car_after_id;
+                    this.getTravelLine();
 
-                    let arr2 = [ //cityName
-                        { "id": "v1", "road": "北京" },
-                        { "id": "v2", "road": "上海" },
-                        { "id": "v5", "road": "天津" },
-                        { "id": "v7", "road": "安徽" },
-                        { "id": "v3", "road": "呼和浩特" },
-                        { "id": "v4", "road": "杭州" },
-                        { "id": "v9", "road": "海南" },
-                        { "id": "v8", "road": "张家口" },
-                        { "id": "v1", "road": "北京" },
-                        { "id": "v2", "road": "上海" },
-                        { "id": "v5", "road": "天津" },
-                        { "id": "v7", "road": "安徽" },
-                        { "id": "v3", "road": "呼和浩特" },
-                        { "id": "v4", "road": "杭州" },
-                        { "id": "v9", "road": "海南" },
-                        { "id": "v8", "road": "张家口" }
-                    ];
-                    pySegSort(arr2).filter(function(item){
-                        return item.data.length>0
-                    }).forEach(element => {
-                        This.roles = [...This.roles,...element.data]
-                    });
+                    // let arr2 = [ //cityName
+                    //     {"name": "北京" },
+                    //     {"name": "上海" },
+                    //     {"name": "天津" },
+                    //     {"name": "安徽" },
+                    //     {"name": "呼和浩特"},
+                    //     {"name": "杭州" },
+                    //     {"name": "海南" },
+                    //     {"name": "张家口" }
+                    // ];
+                    // pySegSort(arr2).filter(function(item){
+                    //     return item.data.length>0
+                    // }).forEach(element => {
+                    //     This.roles = [...This.roles,...element.data]
+                    // });
+                    // This.allRoles = This.roles;
                 },
             },
             mounted:function() {

@@ -109,8 +109,8 @@
                             <div class="item-inner">
                                 <div class="item-title label">行驶证有效期</div>
                                 <div class="item-input">
-                                    <!-- <input type="date" placeholder="Birth day" v-model="travel_time"> -->
-                                    <p class="p_input"><input type="text" placeholder="请选择日期" id="travel_time"></p>
+                                    <!-- <input type="date" placeholder="Birth day" v-model="driving_validity"> -->
+                                    <p class="p_input"><input type="text" placeholder="请选择日期" id="driving_validity"></p>
                                 </div>
                             </div>
                         </div>
@@ -121,8 +121,8 @@
                             <div class="item-inner">
                                 <div class="item-title label">驾驶证有效期</div>
                                 <div class="item-input">
-                                    <!-- <input type="date" placeholder="Birth day" v-modle="drive_time"> -->
-                                    <p class="p_input"><input type="text"  placeholder="请选择日期" id="drive_time"></p>
+                                    <!-- <input type="date" placeholder="Birth day" v-modle="drive_validity"> -->
+                                    <p class="p_input"><input type="text"  placeholder="请选择日期" id="drive_validity"></p>
                                 </div>
                             </div>
                         </div>
@@ -133,8 +133,8 @@
                             <div class="item-inner">
                                 <div class="item-title label">保单有效期</div>
                                 <div class="item-input">
-                                    <!-- <input type="date" placeholder="Birth day" v-model="policy_time"> -->
-                                    <p class="p_input"><input type="text" placeholder="请选择日期" id="policy_time"></p>
+                                    <!-- <input type="date" placeholder="Birth day" v-model="policy_validity"> -->
+                                    <p class="p_input"><input type="text" placeholder="请选择日期" id="policy_validity"></p>
                                 </div>
                             </div>
                         </div>
@@ -155,14 +155,15 @@
             data: {
                 car_num: '',        //车牌号码
                 pass_time: '',      //通行时间
+                area_id:'',         //区域id
                 name:'',            //姓名
                 mobile:'',          //手机号码
                 driving_num:'',     //驾驶证号
                 car_type:'',        //车辆类型
                 is_danger:'',       //是否危险品车辆
-                travel_time:'',
-                drive_time:'',
-                policy_time:'',
+                driving_validity:'',  //行驶证有效期
+                drive_validity:'',   //驾驶证
+                policy_validity:'',  //保单
                 
             },
             methods: {
@@ -201,30 +202,30 @@
                         $.toast("请选择是否是危险车辆");
                         return;
                     }
-                    if(!this.travel_time){
+                    if(!this.driving_validity){
                         $.toast("请选择行驶证有效期");
                         return;
                     }
-                    if(!this.drive_time){
+                    if(!this.drive_validity){
                         $.toast("请选择驾驶证有效期");
                         return;
                     }
-                    if(!this.policy_time){
+                    if(!this.policy_validity){
                         $.toast("请选择保单有效期");
                         return;
                     }
                     sessionStorage.setItem("info", JSON.stringify({
                         car_num:this.car_num,
                         pass_time:this.pass_time,
-                        id:this.id,         //区域id
-                        name:'',            //姓名
-                        mobile:'',          //手机号码
-                        driving_num:'',     //驾驶证号
-                        car_type:'',        //车辆类型
-                        is_danger:'',       //是否危险品车辆
-                        travel_time:'',
-                        drive_time:'',
-                        policy_time:'',
+                        area_id:this.area_id,         //区域id
+                        name:this.name,            //姓名
+                        mobile:this.mobile,          //手机号码
+                        driving_num:this.driving_num,     //驾驶证号
+                        car_type:this.car_type,        //车辆类型
+                        is_danger:this.is_danger,       //是否危险品车辆
+                        driving_validity:this.driving_validity,
+                        drive_validity:this.drive_validity,
+                        policy_validity:this.policy_validity,
                     })); 
 
                     window.location.href="./step2.html";
@@ -240,6 +241,7 @@
                     var info = JSON.parse(sessionStorage.getItem('info'));
                     this.car_num = info.car_num;
                     this.pass_time = info.pass_time;
+                    this.area_id = info.area_id;
 
                     // 车辆类型选择
                     $("#picker_car").picker({
@@ -281,24 +283,24 @@
                         }
                     });
                     // 行驶证有效期
-                    $("#travel_time").calendar({
+                    $("#driving_validity").calendar({
                         dateFormat:'yyyy-mm-dd',
                         onChange:function(p, values, displayValues){
-                            This.travel_time = displayValues;
+                            This.driving_validity = displayValues;
                         }
                     });
                     //驾驶证有效期
-                    $("#drive_time").calendar({
+                    $("#drive_validity").calendar({
                         dateFormat:'yyyy-mm-dd',
                         onChange:function(p, values, displayValues){
-                            This.drive_time = displayValues;
+                            This.drive_validity = displayValues;
                         }
                     });
                     // 保单有效期
-                    $("#policy_time").calendar({
+                    $("#policy_validity").calendar({
                         dateFormat:'yyyy-mm-dd',
                         onChange:function(p, values, displayValues){
-                            This.policy_time = displayValues;
+                            This.policy_validity = displayValues;
                         }
                     });                    
                 }

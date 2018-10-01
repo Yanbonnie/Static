@@ -17,7 +17,7 @@
             <div class="areaSelect">
                 <h3 class="Title">请选择区域</h3>
                 <ul class="areaList">
-                    <li v-for="(item,index) in cityList" :class="[id==item.id?'active':'']" @click="id=item.id">
+                    <li v-for="(item,index) in cityList" :class="[id==item.id?'active':'']" @click="area_id=item.id">
                         <img :src="item.pic" alt="">
                         <p>{{item.name}}</p>
                     </li>
@@ -66,7 +66,7 @@
             data: {
                 car_num:'',
                 pass_time:'',
-                id:1,
+                area_id:1,
                 cityList:[],                //区域数组
                 linkHref:{
                     getRegion:'getRegion',  //获取区域接口
@@ -74,7 +74,7 @@
             },
             methods: {
                 submitHandle:function(){
-                    if(!this.id){
+                    if(!this.area_id){
                         $.toast("请选择区域");
                         return;
                     }
@@ -91,7 +91,7 @@
                     sessionStorage.setItem("info", JSON.stringify({
                         car_num:this.car_num,
                         pass_time:this.pass_time,
-                        id:this.id
+                        area_id:this.area_id
                     })); 
                 },
                 getRegionHandle:function(){
