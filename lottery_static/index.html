@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- <script type='text/javascript' src='js/flexible.js' charset='utf-8'></script> -->
+    <link rel="stylesheet" href="css/sm.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body >
+    <div class="page" id="page" style="background:#ffffff;">
+        <div class="content">
+            <div class="areaSelect">
+                <h3 class="Title">请选择区域</h3>
+                <ul class="areaList">
+                    <li v-for="(item,index) in cityList" :class="[id==item.id?'active':'']" @click="area_id=item.id">
+                        <img :src="item.pic" alt="">
+                        <p>{{item.name}}</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="plate">
+                <h3 class="Title">请输入车牌</h3>
+                <p class="tip">车牌格式提醒【例：苏AP2834】</p>
+                <p class="p_input"><input type="text" v-model='car_num' placeholder="请输入车牌"></p>
+            </div>
+            <div class="plate">
+                <h3 class="Title">请选择通行日期</h3>
+                <p class="p_input"><input type="text" v-model='pass_time' placeholder="请选择日期" id="datetime-picker"></p>
+            </div>
+            <p class="btnBox">
+                <a href="#" class="button button-big" @click="submitHandle">确认，下一步 </a>
+            </p>
+        </div>
+    </div>
+    <script type='text/javascript' src='js/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='js/sm.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='js/vue.min.js' charset='utf-8'></script>
+    <script>
+        Date.prototype.format = function(fmt) { 
+            var o = { 
+                "M+" : this.getMonth()+1,                 //月份 
+                "d+" : this.getDate(),                    //日 
+                "h+" : this.getHours(),                   //小时 
+                "m+" : this.getMinutes(),                 //分 
+                "s+" : this.getSeconds(),                 //秒 
+                "q+" : Math.floor((this.getMonth()+3)/3), //季度 
+                "S"  : this.getMilliseconds()             //毫秒 
+            }; 
+            if(/(y+)/.test(fmt)) {
+                    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+            }
+            for(var k in o) {
+                if(new RegExp("("+ k +")").test(fmt)){
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+                }
+            }
+            return fmt; 
+        }      
+        new Vue({
+            el: '#page',
+            data: {
+                car_num:'',
+                pass_time:'',
+                area_id:1,
+                cityList:[],                //区域数组
+                linkHref:{
+                    getRegion:'getRegion',  //获取区域接口
+                }
+            },
+            methods: {
+                submitHandle:function(){
+                    if(!this.area_id){
+                        $.toast("请选择区域");
+                        return;
+                    }
+                    if(!this.car_num){
+                        $.toast("请输入车牌号码");
+                        return;
+                    }
+                    if(!this.pass_time){
+                        $.toast("请选择通行日期");
+                        return;
+                    }
+                    
+                    window.location.href="./step1.html";
+                    sessionStorage.setItem("info", JSON.stringify({
+                        car_num:this.car_num,
+                        pass_time:this.pass_time,
+                        area_id:this.area_id
+                    })); 
+                },
+                getRegionHandle:function(){
+                    var This = this;
+                    $.showPreloader();
+                    $.ajax({
+                        url:this.linkHref.getRegion,
+                        dataType: 'json',
+                        type: 'get',
+                        async: true,
+                        success:function(res){
+                            $.hidePreloader();
+                            if(res.status == 0){
+                                This.cityList = res.data;
+                            }else{
+                                $.toast(res.msg);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown)
+                        }
+                    })
+                },
+                init:function(){
+                    var This = this;
+                    // this.getRegionHandle();  //获取区域
+                    $("#datetime-picker").calendar({
+                        value: [new Date().format("yyyy-MM-dd")],
+                        dateFormat:'yyyy-mm-dd',
+                        minDate:new Date().format("yyyy-MM-dd"),
+                        onChange:function(p, values, displayValues){
+                            This.pass_time = displayValues[0];
+                        }
+                    });
+                },
+            },
+            mounted() {
+                this.init();
+            },
+        })
+    </script>
+    <!-- <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script> -->
+</body>
+
+</html>
