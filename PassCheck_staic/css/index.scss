@@ -1,10 +1,9 @@
 
+@charset "utf-8";
 *,p{
     padding: 0;
     margin: 0;
 }
-@charset "utf-8";
-/*--------------------功能: 重设浏览器默认样式 START--------------------*/
 a, abbr, acronym, address, applet, article, aside, audio,
 b, blockquote, big, body,
 center, canvas, caption, cite, code, command,
@@ -91,7 +90,8 @@ $REM:            24;//rem unit
 }
 
 
-input {-webkit-appearance:none; /*去除input默认样式*/}
+input {-webkit-appearance:none;}
+
 .page{
     background: #f1f1f1;
 }
@@ -114,7 +114,10 @@ input {-webkit-appearance:none; /*去除input默认样式*/}
         font-size: 1rem;
         &.active{
             img{
-                box-shadow: 0 0 5px #ff503f;
+                box-shadow: 0 0 10px #ff503f;
+            }
+            p{
+                color: #ff503f;
             }
         }
         img{
@@ -182,11 +185,21 @@ input {-webkit-appearance:none; /*去除input默认样式*/}
             font-size: REM(100);
             text-align: center;
             margin-right: REM(20);
+            position: relative;
+            img{
+                max-width: 100%;
+                max-height: 100%;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%);
+            }
         }
     }
 }
 .step3{
     .content{
+<<<<<<< HEAD
         // bottom: REM(140);
         bottom:0;
         display: flex;
@@ -194,6 +207,14 @@ input {-webkit-appearance:none; /*去除input默认样式*/}
     }
     .rolesList{
         flex: 1;
+=======
+        bottom: REM(0);
+        flex-direction: column;
+        display: flex;
+    }
+    .rolesList{
+        flex:1;
+>>>>>>> ddbdc79cbabd9878ca08657fb258e35071f3abe9
         overflow: auto;
         li{
             line-height: REM(80);
@@ -235,5 +256,16 @@ input {-webkit-appearance:none; /*去除input默认样式*/}
         // bottom:0;
         // left:0;
         // right:0;
+    }
+}
+// 中文
+.successBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    p{
+        font-size: 1.1rem;
+        color: #000;
     }
 }
