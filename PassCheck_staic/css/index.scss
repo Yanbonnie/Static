@@ -1,10 +1,10 @@
 
+@charset "utf-8";
 *,p{
     padding: 0;
     margin: 0;
 }
-@charset "utf-8";
-/*--------------------功能: 重设浏览器默认样式 START--------------------*/
+
 a, abbr, acronym, address, applet, article, aside, audio,
 b, blockquote, big, body,
 center, canvas, caption, cite, code, command,
@@ -91,7 +91,8 @@ $REM:            24;//rem unit
 }
 
 
-input {-webkit-appearance:none; /*去除input默认样式*/}
+input {-webkit-appearance:none;}
+
 .page{
     background: #f1f1f1;
 }
@@ -182,6 +183,15 @@ input {-webkit-appearance:none; /*去除input默认样式*/}
             font-size: REM(100);
             text-align: center;
             margin-right: REM(20);
+            position: relative;
+            img{
+                max-width: 100%;
+                max-height: 100%;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%);
+            }
         }
     }
 }
