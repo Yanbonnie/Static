@@ -6,97 +6,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <!-- <script type='text/javascript' src='js/flexible.js' charset='utf-8'></script> -->
-    <link rel="stylesheet" href="css/sm.css">
+    <script type='text/javascript' src='js/flexible.js' charset='utf-8'></script>
     <link rel="stylesheet" href="css/index.css">
 </head>
-
-<body >
-    <div class="page" id="page" style="background:#ffffff;">
-        <div class="content">
-            <div class="areaSelect">
-                <h3 class="Title">请选择区域</h3>
-                <ul class="areaList">
-                    <li v-for="(item,index) in cityList" :class="[id==item.id?'active':'']" @click="area_id=item.id">
-                        <img :src="item.pic" alt="">
-                        <p>{{item.name}}</p>
+<body>
+    <div class="wrap" id="wrap">
+        <div class="page" id="page">
+            <div class="detail_icon" @click="detailState=true"></div>
+            <div class="orders">
+                <ul>
+                    <li v-for="item in 10">
+                        <span><img src="./images/pan.png" alt=""></span>
+                        <span class="shengl">用户打哈萨克给大家</span>
+                        <span>获得</span>
+                        <span class="shengl">vip预约挂号卡</span>
                     </li>
                 </ul>
             </div>
-            <div class="plate">
-                <h3 class="Title">请输入车牌</h3>
-                <p class="tip">车牌格式提醒【例：苏AP2834】</p>
-                <p class="p_input"><input type="text" v-model='car_num' placeholder="请输入车牌"></p>
+            <img class="iconDown" src="./images/icon_down.png" alt="">
+            <div class="flash">
+                <div id="swfcontent" >
+                </div>
             </div>
-            <div class="plate">
-                <h3 class="Title">请选择通行日期</h3>
-                <p class="p_input"><input type="text" v-model='pass_time' placeholder="请选择日期" id="datetime-picker"></p>
-            </div>
-            <p class="btnBox">
-                <a href="#" class="button button-big" @click="submitHandle">确认，下一步 </a>
-            </p>
+        </div>
+        <div class="detail" v-show="detailState">
+            <img class="back" @click="detailState=false" src="./images/back.png" alt="">
+            <img src="./images/details/detail_01.jpg" alt="">
+            <img src="./images/details/detail_02.jpg" alt="">
+            <img src="./images/details/detail_03.jpg" alt="">
+            <img src="./images/details/detail_04.jpg" alt="">
+            <img src="./images/details/detail_05.jpg" alt="">
         </div>
     </div>
     <script type='text/javascript' src='js/zepto.min.js' charset='utf-8'></script>
-    <script type='text/javascript' src='js/sm.min.js' charset='utf-8'></script>
+    <script type="text/javascript" src="js/lottery.min.js"></script>
     <script type='text/javascript' src='js/vue.min.js' charset='utf-8'></script>
     <script>
-        Date.prototype.format = function(fmt) { 
-            var o = { 
-                "M+" : this.getMonth()+1,                 //月份 
-                "d+" : this.getDate(),                    //日 
-                "h+" : this.getHours(),                   //小时 
-                "m+" : this.getMinutes(),                 //分 
-                "s+" : this.getSeconds(),                 //秒 
-                "q+" : Math.floor((this.getMonth()+3)/3), //季度 
-                "S"  : this.getMilliseconds()             //毫秒 
-            }; 
-            if(/(y+)/.test(fmt)) {
-                    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
-            }
-            for(var k in o) {
-                if(new RegExp("("+ k +")").test(fmt)){
-                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
-                }
-            }
-            return fmt; 
-        }      
+             
         new Vue({
-            el: '#page',
+            el: '#wrap',
             data: {
-                car_num:'',
-                pass_time:'',
-                area_id:1,
-                cityList:[],                //区域数组
+                detailState:false,
                 linkHref:{
                     getRegion:'getRegion',  //获取区域接口
                 }
             },
             methods: {
-                submitHandle:function(){
-                    if(!this.area_id){
-                        $.toast("请选择区域");
-                        return;
-                    }
-                    if(!this.car_num){
-                        $.toast("请输入车牌号码");
-                        return;
-                    }
-                    if(!this.pass_time){
-                        $.toast("请选择通行日期");
-                        return;
-                    }
-                    
-                    window.location.href="./step1.html";
-                    sessionStorage.setItem("info", JSON.stringify({
-                        car_num:this.car_num,
-                        pass_time:this.pass_time,
-                        area_id:this.area_id
-                    })); 
-                },
                 getRegionHandle:function(){
-                    var This = this;
-                    $.showPreloader();
                     $.ajax({
                         url:this.linkHref.getRegion,
                         dataType: 'json',
@@ -114,26 +70,104 @@
                             console.log(errorThrown)
                         }
                     })
-                },
-                init:function(){
-                    var This = this;
-                    // this.getRegionHandle();  //获取区域
-                    $("#datetime-picker").calendar({
-                        value: [new Date().format("yyyy-MM-dd")],
-                        dateFormat:'yyyy-mm-dd',
-                        minDate:new Date().format("yyyy-MM-dd"),
-                        onChange:function(p, values, displayValues){
-                            This.pass_time = displayValues[0];
-                        }
-                    });
-                },
+                }
             },
             mounted() {
-                this.init();
-            },
+                var lotteryData = {};   		//定义转盘数据的数组存放数据
+                $(function(){
+                    lotteryData = {
+                        width:$('.swfcontent_hover').width(),
+                        height:$('.swfcontent_hover').height()
+                    }
+                });
+                    
+                //点击开始抽奖 通知js  flash->js
+                var num;
+                var click = true;   			//判断是否是第一次抽奖(默认是第一次)
+                
+                //中奖概率
+                function myRandom() {
+                    var rand = Math.random();
+                    //console.log(rand)
+                    if (rand < .25) return 1;
+                    if (rand < .5) return 2;
+                    if (rand < .75) return 3;
+                    return 5;
+                }
+                
+                function callJsToStart(){
+                //测试
+                console.log('aa')
+                    if(click){
+                        num = myRandom();  		//概率控制中奖id
+                        //console.log(num);
+                        callFlashToRoll(num);   //中奖id （序号从0,1,2.....，0是指针初始指示的位置，沿着顺时针的方向递增）
+                        click = false;
+                    }else{
+                        alert("您今天只有一次抽奖机会。")
+                        $('#swfcontent_start').removeClass('swfcontent_disable').addClass('swfcontent_start');
+                    }	  
+                }
+                
+                //开发获得抽奖结果 通知flash开始播放效果 js->flash
+                function callFlashToRoll(id){
+                    //通知转盘转到对应的中奖产品的id （序号从0,1,2.....，0是指针初始指示的位置，沿着顺时针的方向递增）
+                    if(SWFOBJ)SWFOBJ.stopRoll(id);
+                }
+                
+                //3、flash动画完成通知js  flash->js
+                function callJsToComplete(){
+                    console.log(num)
+                    //alert('恭喜你获得大奖哟！！');
+                    if(num == 1){
+                        console.log("恭喜你获得1");
+                    }
+                    if(num == 2){
+                        console.log("恭喜你获得2");
+                    }
+                    if(num == 3){
+                        console.log("恭喜你获得3");
+                    }
+                    if(num == 4){
+                        console.log("恭喜你获得4");
+                    }
+                    if(num == 5){
+                        console.log("恭喜你获得5");
+                    }
+                    if(num == 6){
+                        console.log("恭喜你获得6");
+                    }
+                    if(num == 7){
+                        console.log("恭喜你获得7");
+                    }
+                    if(num == 8){
+                        console.log("恭喜你获得8");
+                    }
+                }
+                
+                //初始化抽奖对象的SWFOBJ 
+                //转盘的中心点坐标为（0,0））
+                var SWFOBJ= new mo.Lottery({
+                    'flashUrl' : 'http://ossweb-img.qq.com/images/flash/lottery/circle/lotteyround_2013_v1.swf',
+                    'r':8,//奖品总数
+                    'width':lotteryData.width,//flash宽度
+                    'height':lotteryData.height,//flash高度
+                    'flashFirst':false,
+                    'b':'./images/pan.png',//圆盘的图片 文件格式可以是swf、png、jpg（建议swf 可以压缩）
+                    's':'./images/zhen.png',//开始抽奖按钮图片
+                    // 'b':'http://ossweb-img.qq.com/images/flash/lottery/circle/g.png',
+                    // 's':'http://ossweb-img.qq.com/images/flash/lottery/circle/z.png',//开始抽奖按钮图片                    
+                    'bx':0,//圆盘的图片位置x坐标 （转盘的中心点坐标为（0,0））
+                    'by':0,//圆盘的图片位置y坐标
+                    'sx':0,//开始抽奖按钮x坐标
+                    'sy':0,//开始抽奖按钮y坐标
+                    'contentId' : 'swfcontent',//嵌入swf 的div层的 id 
+                    'onClickRollEvent' : callJsToStart,//对应上面接口
+                    'onCompleteRollEvent':callJsToComplete //对应上面接口
+                });
+            }
         })
     </script>
-    <!-- <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script> -->
 </body>
 
 </html>
