@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type='text/javascript' src='js/flexible.js' charset='utf-8'></script>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body >
+    <div class="page" id="page"></div>
+    <script type='text/javascript' src='js/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='js/vue.min.js' charset='utf-8'></script>
+    <script>
+             
+        new Vue({
+            el: '#page',
+            data: {
+                car_num:'',
+                pass_time:'',
+                area_id:1,
+                cityList:[],                //区域数组
+                linkHref:{
+                    getRegion:'getRegion',  //获取区域接口
+                }
+            },
+            methods: {
+                getRegionHandle:function(){
+                    $.ajax({
+                        url:this.linkHref.getRegion,
+                        dataType: 'json',
+                        type: 'get',
+                        async: true,
+                        success:function(res){
+                            $.hidePreloader();
+                            if(res.status == 0){
+                                This.cityList = res.data;
+                            }else{
+                                $.toast(res.msg);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown)
+                        }
+                    })
+                }
+            },
+            mounted() {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

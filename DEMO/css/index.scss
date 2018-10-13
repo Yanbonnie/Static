@@ -1,0 +1,15 @@
+
+@charset "utf-8";
+*{
+    padding: 0;
+    margin: 0;
+}
+@function REM($n){
+    @return $n/75*1rem;
+}
+
+@function REMTWO($n){
+    @return REM(((750-$n)/2));
+}
+.shengl{word-break:keep-all;/* 不换行 */white-space:nowrap;/* 不换行 */overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */text-overflow:ellipsis;}
+

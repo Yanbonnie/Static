@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>健康锦囊</title>
     <script type='text/javascript' src='js/flexible.js' charset='utf-8'></script>
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <div class="wrap" id="wrap">
+    <div class="wrap" :class="giftState ? 'overflow':''" id="wrap">
         <div class="page" id="page">
             <div class="detail_icon" @click="detailState=true"></div>
             <div class="orders">
@@ -37,133 +36,152 @@
             <img src="./images/details/detail_04.jpg" alt="">
             <img src="./images/details/detail_05.jpg" alt="">
         </div>
+        <div class="giftCover" v-show="giftState">
+            <img class="img1" :src="'./images/gift_'+giftId+'.png'" alt="">
+            <img class="img2"  src="./images/package.png" alt="">
+            <img class="img3" @click="giftState = false"  src="./images/tip_btn.png" alt="">
+        </div>
+    </div>
+    <div class="tipCover" id="tipCover">
+        <div class="tipBox">
+            <div class="content">{{tipTxt}}</div>
+        </div>
     </div>
     <script type='text/javascript' src='js/zepto.min.js' charset='utf-8'></script>
+    <script type="text/javascript">
+        var basep = "./images/", //图片目录
+            preLoadSource = [ //背景资源
+            basep + "back.png",
+            basep + "gift_0.png",
+            basep + "gift_1.png",
+            basep + "gift_2.png",
+            basep + "gift_3.png",
+            basep + "gift_4.png",
+            basep + "gift_5.png",
+            basep + "gift_6.png",
+            basep + "gift_7.png",
+            basep + "icon_down.png",
+            basep + "index_bg.jpg",
+            basep + "orders.png",
+            basep + "package.png",
+            basep + "pan.png",
+            basep + "submit.png",
+            basep + "tip_btn.png",
+            basep + "zhen.png",
+            ];
+    </script>
+    <script type='text/javascript' src='js/loading.js' charset='utf-8'></script>
     <script type="text/javascript" src="js/lottery.min.js"></script>
     <script type='text/javascript' src='js/vue.min.js' charset='utf-8'></script>
-    <script>
-             
+    <script>   
+        var giftId = 5;     //中奖id 从0开始算
+        var click = true;   //是否可以中奖       
         new Vue({
             el: '#wrap',
             data: {
+                lotteryData:{}, //定义转盘数据的数组存放数据
+                click:click,     //判断是否是第一次抽奖(默认是第一次)                
+                giftId:giftId,
                 detailState:false,
+                giftState:false,
+                tipTxt:'我是提示',
                 linkHref:{
                     getRegion:'getRegion',  //获取区域接口
                 }
             },
             methods: {
                 getRegionHandle:function(){
+                    This.tipHandle('加载中...',false);
                     $.ajax({
                         url:this.linkHref.getRegion,
                         dataType: 'json',
                         type: 'get',
                         async: true,
                         success:function(res){
-                            $.hidePreloader();
+                            $('#tipCover').fadeOut();
                             if(res.status == 0){
-                                This.cityList = res.data;
+
                             }else{
-                                $.toast(res.msg);
+                                This.tipHandle(res.msg,true);
                             }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
                             console.log(errorThrown)
                         }
                     })
+                },
+                init:function(){
+                    var This = this;
+                    //点击开始抽奖 通知js  flash->js 	
+                    //中奖概率
+                    // function myRandom() {
+                    //     var rand = Math.random();
+                    //     //console.log(rand)
+                    //     if (rand < .25) return 1;
+                    //     if (rand < .5) return 2;
+                    //     if (rand < .75) return 3;
+                    //     return 5;
+                    // }
+                    
+                    function callJsToStart(){
+                        if(This.click){
+                            // num = myRandom();  		//概率控制中奖id
+                            callFlashToRoll(This.giftId);   
+                            // click = false;
+                        }else{
+                            alert("抽奖机会用完了")
+                            $('#swfcontent_start').removeClass('swfcontent_disable').addClass('swfcontent_start');
+                        }	  
+                    }
+                    
+                    //开发获得抽奖结果 通知flash开始播放效果 js->flash
+                    function callFlashToRoll(giftId){  //中奖id （序号从0,1,2.....，0是指针初始指示的位置，沿着顺时针的方向递增）
+                        //通知转盘转到对应的中奖产品的id （序号从0,1,2.....，0是指针初始指示的位置，沿着顺时针的方向递增）
+                        if(SWFOBJ)SWFOBJ.stopRoll(giftId);
+                    }
+                    
+                    //3、flash动画完成通知js  flash->js
+                    function callJsToComplete(){
+                        This.giftState = true;                        
+                    }
+                    
+                    //初始化抽奖对象的SWFOBJ 
+                    //转盘的中心点坐标为（0,0））
+                    var SWFOBJ= new mo.Lottery({
+                        'flashUrl' : 'http://ossweb-img.qq.com/images/flash/lottery/circle/lotteyround_2013_v1.swf',
+                        'r':8,//奖品总数
+                        'width':This.lotteryData.width,//flash宽度
+                        'height':This.lotteryData.height,//flash高度
+                        'flashFirst':false,
+                        'b':'./images/pan.png',//圆盘的图片 文件格式可以是swf、png、jpg（建议swf 可以压缩）
+                        's':'./images/zhen.png',//开始抽奖按钮图片
+                        // 'b':'http://ossweb-img.qq.com/images/flash/lottery/circle/g.png',
+                        // 's':'http://ossweb-img.qq.com/images/flash/lottery/circle/z.png',//开始抽奖按钮图片                    
+                        'bx':0,//圆盘的图片位置x坐标 （转盘的中心点坐标为（0,0））
+                        'by':0,//圆盘的图片位置y坐标
+                        'sx':0,//开始抽奖按钮x坐标
+                        'sy':0,//开始抽奖按钮y坐标
+                        'contentId' : 'swfcontent',//嵌入swf 的div层的 id 
+                        'onClickRollEvent' : callJsToStart,//对应上面接口
+                        'onCompleteRollEvent':callJsToComplete //对应上面接口
+                    });
+                },
+                tipHandle(msg,bol){  //第二个参数表示是否需要自动消失 true - 是  false - 否
+                    this.tipTxt = msg;
+                    $('#tipCover').fadeIn();
+                    if(bol){
+                        setTimeout(function(){$('#tipCover').fadeOut();},1500);
+                    }                    
                 }
             },
-            mounted() {
-                var lotteryData = {};   		//定义转盘数据的数组存放数据
+            mounted:function() {
+                var This = this;  		
                 $(function(){
-                    lotteryData = {
+                    This.lotteryData = {
                         width:$('.swfcontent_hover').width(),
                         height:$('.swfcontent_hover').height()
                     }
-                });
-                    
-                //点击开始抽奖 通知js  flash->js
-                var num;
-                var click = true;   			//判断是否是第一次抽奖(默认是第一次)
-                
-                //中奖概率
-                function myRandom() {
-                    var rand = Math.random();
-                    //console.log(rand)
-                    if (rand < .25) return 1;
-                    if (rand < .5) return 2;
-                    if (rand < .75) return 3;
-                    return 5;
-                }
-                
-                function callJsToStart(){
-                //测试
-                console.log('aa')
-                    if(click){
-                        num = myRandom();  		//概率控制中奖id
-                        //console.log(num);
-                        callFlashToRoll(num);   //中奖id （序号从0,1,2.....，0是指针初始指示的位置，沿着顺时针的方向递增）
-                        click = false;
-                    }else{
-                        alert("您今天只有一次抽奖机会。")
-                        $('#swfcontent_start').removeClass('swfcontent_disable').addClass('swfcontent_start');
-                    }	  
-                }
-                
-                //开发获得抽奖结果 通知flash开始播放效果 js->flash
-                function callFlashToRoll(id){
-                    //通知转盘转到对应的中奖产品的id （序号从0,1,2.....，0是指针初始指示的位置，沿着顺时针的方向递增）
-                    if(SWFOBJ)SWFOBJ.stopRoll(id);
-                }
-                
-                //3、flash动画完成通知js  flash->js
-                function callJsToComplete(){
-                    console.log(num)
-                    //alert('恭喜你获得大奖哟！！');
-                    if(num == 1){
-                        console.log("恭喜你获得1");
-                    }
-                    if(num == 2){
-                        console.log("恭喜你获得2");
-                    }
-                    if(num == 3){
-                        console.log("恭喜你获得3");
-                    }
-                    if(num == 4){
-                        console.log("恭喜你获得4");
-                    }
-                    if(num == 5){
-                        console.log("恭喜你获得5");
-                    }
-                    if(num == 6){
-                        console.log("恭喜你获得6");
-                    }
-                    if(num == 7){
-                        console.log("恭喜你获得7");
-                    }
-                    if(num == 8){
-                        console.log("恭喜你获得8");
-                    }
-                }
-                
-                //初始化抽奖对象的SWFOBJ 
-                //转盘的中心点坐标为（0,0））
-                var SWFOBJ= new mo.Lottery({
-                    'flashUrl' : 'http://ossweb-img.qq.com/images/flash/lottery/circle/lotteyround_2013_v1.swf',
-                    'r':8,//奖品总数
-                    'width':lotteryData.width,//flash宽度
-                    'height':lotteryData.height,//flash高度
-                    'flashFirst':false,
-                    'b':'./images/pan.png',//圆盘的图片 文件格式可以是swf、png、jpg（建议swf 可以压缩）
-                    's':'./images/zhen.png',//开始抽奖按钮图片
-                    // 'b':'http://ossweb-img.qq.com/images/flash/lottery/circle/g.png',
-                    // 's':'http://ossweb-img.qq.com/images/flash/lottery/circle/z.png',//开始抽奖按钮图片                    
-                    'bx':0,//圆盘的图片位置x坐标 （转盘的中心点坐标为（0,0））
-                    'by':0,//圆盘的图片位置y坐标
-                    'sx':0,//开始抽奖按钮x坐标
-                    'sy':0,//开始抽奖按钮y坐标
-                    'contentId' : 'swfcontent',//嵌入swf 的div层的 id 
-                    'onClickRollEvent' : callJsToStart,//对应上面接口
-                    'onCompleteRollEvent':callJsToComplete //对应上面接口
+                    This.init();                    
                 });
             }
         })

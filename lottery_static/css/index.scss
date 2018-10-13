@@ -1,8 +1,13 @@
 
 @charset "utf-8";
+@import 'loading_22.scss';
 *{
     padding: 0;
     margin: 0;
+}
+html,body{
+    width: 100%;
+    height: 100%;
 }
 @function REM($n){
     @return $n/108*1rem;
@@ -14,8 +19,20 @@
 .shengl{word-break:keep-all;/* 不换行 */white-space:nowrap;/* 不换行 */overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */text-overflow:ellipsis;}
 
 $URL:'../images/';
+.wrap,.wrap2{
+    max-width:750px;
+    position: relative;
+    margin: 0 auto;
+    min-height: 100%;    
+    &.overflow{
+        overflow: hidden;
+    }
+}
+.wrap{
+    visibility: hidden;
+}
 .page{
-    width: REM(1080);
+    width: 100%;
     height: REM(2462);
     background: url($URL+'index_bg.jpg');
     background-size: 100% 100%;
@@ -112,5 +129,112 @@ $URL:'../images/';
     }
     img{
         width: 100%;
+        display: block;
+    }
+}
+.giftCover{
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .img1{
+        width: REM(800);
+    }
+    .img2{
+        width: REM(1000);
+        margin-top: REM(-650);
+    }
+    .img3{
+        width: REM(600);
+        margin-top: REM(-50);
+    }
+}
+
+.address{
+    input::-webkit-input-placeholder{color: #696a97}    /* 使用webkit内核的浏览器 */
+    input:-moz-placeholder{color: #696a97}                  /* Firefox版本4-18 */
+    input::-moz-placeholder{color: #696a97}                  /* Firefox版本19+ */
+    input::-ms-input-placeholder{color: #696a97}           /* IE浏览器 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: url($URL+'bg.jpg');
+    background-size: 100% 100%;
+    .title{
+        width: REM(549);
+    }
+    .item{
+        width: REM(780);
+        height: REM(133);
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: flex-end;
+        margin: REM(10) 0;
+        input{
+            height: REM(50);
+            width: REM(620);
+            margin-right: REM(20);
+            background: none;
+            color: #fff;
+            border: 0;
+            font-weight: bold;
+            font-size: REM(24);
+        }
+        &.item1{
+            background: url($URL+'input1.png');
+            background-size: 100% 100%;
+        }
+        &.item2{
+            background: url($URL+'input2.png');
+            background-size: 100% 100%;
+        }
+        &.item3{
+            background: url($URL+'input3.png');
+            background-size: 100% 100%;
+        }
+    }
+    .submitBtn{
+        width: REM(290);
+        margin-top: REM(40);
+    }
+}
+.tipCover{
+    display: none;
+    position: fixed;
+    z-index: 200;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;    
+    .tipBox{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .content{
+            padding: REM(20) REM(50);
+            max-width: REM(600);
+            background: rgba(255,255,255,1);
+            color: #000000;
+            font-size: REM(30);
+            border-radius: REM(50);
+        }
     }
 }
