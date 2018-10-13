@@ -85,22 +85,23 @@
                 detailState:false,
                 giftState:false,
                 tipTxt:'我是提示',
+                list:[],
                 linkHref:{
-                    getRegion:'getRegion',  //获取区域接口
+                    getList:'getList',  //获取区域接口
                 }
             },
             methods: {
                 getRegionHandle:function(){
                     This.tipHandle('加载中...',false);
                     $.ajax({
-                        url:this.linkHref.getRegion,
+                        url:this.linkHref.getList,
                         dataType: 'json',
                         type: 'get',
                         async: true,
                         success:function(res){
                             $('#tipCover').fadeOut();
                             if(res.status == 0){
-
+                                This.list = res.data;
                             }else{
                                 This.tipHandle(res.msg,true);
                             }
