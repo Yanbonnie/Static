@@ -15,7 +15,7 @@
             <div class="item item2">
                 <input type="number" placeholder="请输入手机号" v-model="phone">
             </div>
-            <img class="submitBtn" src="./images/submit.png" alt="">
+            <img class="submitBtn" @click="submitHandle" src="./images/submit.png" alt="">
         </div>
         <div class="tipCover" id="tipCover">
             <div class="tipBox">
@@ -36,7 +36,8 @@
                 }
             },
             methods: {
-                postRecharge:function(){
+                submitHandle:function(){
+                    var This = this;
                     if(!this.phone){
                         This.tipHandle('手机号码不能为空',true);
                         return;
@@ -51,6 +52,9 @@
                         dataType: 'json',
                         type: 'post',
                         async: true,
+                        data:{
+                            mobile:this.phone
+                        },
                         success:function(res){
                             $('#tipCover').fadeOut();
                             if(res.status == 0){

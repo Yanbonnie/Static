@@ -68,6 +68,11 @@
                         dataType: 'json',
                         type: 'post',
                         async: true,
+                        data:{
+                            name:this.name,
+                            mobile:this.phone,
+                            address:this.address
+                        },
                         success:function(res){
                             $('#tipCover').fadeOut();
                             if(res.status == 0){
