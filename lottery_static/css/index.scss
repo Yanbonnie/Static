@@ -67,7 +67,7 @@ $URL:'../images/';
                 height: REM(80);
                 span{
                     display: block;
-                    font-size: REM(20);
+                    font-size: REM(26);
                     color: #ffffff;
                     &:nth-child(1){
                         flex-basis: REM(90);
@@ -194,7 +194,8 @@ $URL:'../images/';
             color: #fff;
             border: 0;
             font-weight: bold;
-            font-size: REM(24);
+            font-size: REM(38);
+            line-height: REM(50);
         }
         &.item1{
             background: url($URL+'input1.png');
@@ -233,7 +234,7 @@ $URL:'../images/';
             max-width: REM(600);
             background: rgba(255,255,255,1);
             color: #000000;
-            font-size: REM(30);
+            font-size: REM(38);
             border-radius: REM(50);
         }
     }
