@@ -1,0 +1,216 @@
+
+@charset "utf-8";
+@import 'loading_22.scss';
+*{
+    padding: 0;
+    margin: 0;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+}
+@function REM($n){
+    @return $n/108*1rem;
+}
+
+@function REMTWO($n){
+    @return REM(((1080-$n)/2));
+}
+.shengl{word-break:keep-all;/* 不换行 */white-space:nowrap;/* 不换行 */overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */text-overflow:ellipsis;}
+
+$URL:'../images/';
+.wrap{
+    max-width:750px;
+    position: relative;
+    margin: 0 auto;    
+    height: 100%;
+    overflow: hidden;
+    .page-contain{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        overflow: hidden;
+    }
+    .contain{
+        flex-grow: 1;
+        overflow: auto;
+    }
+    .navTab{        
+        flex-basis: REM(120);
+        box-shadow: 0 2px 5px #ccc; 
+        background: #f5f5f5;
+    }
+    .indexPage{     
+        .ewm{
+            width: REM(640);
+            height: REM(640);
+            margin: 0 auto;
+            display: block;
+            padding-top: REM(60);   
+        }
+        .tip{
+            text-align: center;
+            padding: REM(20) 0 REM(40);
+            font-size: REM(40);
+        }
+        .selectBox{
+            width: REM(700);
+            height: REM(100);
+            border: 1px #eee solid;
+            border-radius: REM(4);
+            margin: 0 auto;
+            display:flex;
+            align-items: center;
+            span{
+                flex-grow: 1;
+                padding: 0 REM(20);
+                font-size: REM(45);
+            }
+            b{
+                display: block;
+                width: 0;
+                height: 0;
+                border: REM(20) solid;
+                border-color: #ccc rgba(0,0,0,0) rgba(0,0,0,0) rgba(0,0,0,0);
+                margin-right: REM(20);
+                position: relative;
+                top: 3px;
+            }
+        }
+        .blank{
+            height: REM(40);
+        }
+        a{
+            margin: REM(60) auto 0;
+            width: REM(700);
+            height: REM(100);
+            border-radius: REM(10);
+            display: block;
+            font-size: REM(40);
+            text-align: center;
+            line-height: REM(100);
+            color: #ffffff;
+            &.creatBtn{
+                background: #ff503f;
+            }
+            &.addHomeTown{
+                background: #3385ff;
+            }
+        }
+    }
+}
+.cover{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 10;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.townCover{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 10;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    .townBox{
+        max-height: 80%;
+        width: 90%;
+        background: #ffffff;
+        border-radius: 4px;
+        overflow: auto;
+        ul{
+            padding: 0 REM(50);
+            li{
+                height: REM(100);
+                display: flex;
+                border-bottom: 1px #f5f5f5 solid;
+                align-items: center;
+                &.active{
+                    b{
+                        border: 1px #ff503f solid;
+                    }
+                    span{
+                        color: #ff523f;
+                    }
+                }
+                b{
+                    width: REM(40);
+                    height: REM(40);
+                    border-radius: 100%;
+                    border: 1px #ccc solid;
+                    margin-right: REM(40);
+                }
+                span{
+                    font-size: REM(40)
+                }
+            }
+        }
+    }
+}
+
+.tipCover{
+    display: none;
+    position: fixed;
+    z-index: 200;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;    
+    .tipBox{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .content{
+            padding: REM(20) REM(50);
+            max-width: REM(600);
+            background: rgba(255,255,255,1);
+            color: #000000;
+            font-size: REM(38);
+            border-radius: REM(50);
+        }
+    }
+}
+.dialogBox{
+    max-width:REM(900);
+    min-width: REM(500);    
+    background: #ffffff;
+    border-radius: REM(10);
+    overflow: hidden;
+    .dialogCon{
+        padding: REM(40);
+        border-bottom: 1px #f5f5f5 solid;
+        p{
+            font-size: REM(40);
+            text-align: center;
+        }
+    }
+    .dialogFooter{
+        width: 100%;
+        height: REM(100);
+        display: flex;
+        a{
+            flex-grow: 1;
+            line-height: REM(100);
+            font-size: REM(45);
+            color: #000;
+            text-align: center;
+            &:nth-child(2){
+                color: #3385ff;
+            }
+        }
+    }
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>小南塘</title>
+    <script type='text/javascript' src='js/flexible.js' charset='utf-8'></script>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <div class="wrap" id="wrap">
+        <div class="page-contain">
+            <div class="contain indexPage">
+                <img class="ewm" src="./images/ewm.png" alt="">
+                <p class="tip">长按二维码，关注南塘那些事儿</p>
+                <div class="selectBox">
+                    <span>苑西村</span>
+                    <b></b>
+                </div>
+                <div class="blank"></div>
+                <a href="javascript:;" class="creatBtn">生成我的邀请码</a>
+                <a href="javascript:;" class="addHomeTown">上面没有我的家乡</a>
+            </div>
+            <div class="navTab"></div>
+        </div>
+        <div class="townCover">
+            <div class="townBox">
+                <ul>
+                    <li v-for="item in 50">
+                        <b></b>
+                        <span>苑西村</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="tipCover" id="tipCover">
+            <div class="tipBox">
+                <div class="content">{{tipTxt}}</div>
+            </div>
+        </div>
+        <div class="cover dialogCover" style="display:none;">
+            <div class="dialogBox">
+                <div class="dialogCon">
+                    <p>确定要选中苑西村？确认后无法修改</p>
+                </div>
+                <div class="dialogFooter">
+                    <a href="javascript:;">取消</a>
+                    <a href="javascript:;">确定</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script type='text/javascript' src='js/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='js/vue.min.js' charset='utf-8'></script>
+    <script>   
+        
+        new Vue({
+            el: '#wrap',
+            data: {
+                tipTxt:'我是提示',
+                list:[],
+                linkHref:{
+                    getList:'getList',  //获取区域接口
+                }
+            },
+            methods: {
+                getRegionHandle:function(){
+                    This.tipHandle('加载中...',false);
+                    $.ajax({
+                        url:this.linkHref.getList,
+                        dataType: 'json',
+                        type: 'get',
+                        async: true,
+                        success:function(res){
+                            $('#tipCover').fadeOut();
+                            if(res.status == 0){
+                                This.list = res.data;
+                            }else{
+                                This.tipHandle(res.msg,true);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown)
+                        }
+                    })
+                },
+                tipHandle(msg,bol){  //第二个参数表示是否需要自动消失 true - 是  false - 否
+                    this.tipTxt = msg;
+                    $('#tipCover').fadeIn();
+                    if(bol){
+                        setTimeout(function(){$('#tipCover').fadeOut();},1500);
+                    }                    
+                }
+            },
+            mounted:function() {
+                var This = this;  		
+            }
+        })
+    </script>
+</body>
+
+</html>
