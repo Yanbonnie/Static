@@ -7,40 +7,61 @@
     <title>小南塘</title>
     <script type='text/javascript' src='js/flexible.js' charset='utf-8'></script>
     <link rel="stylesheet" href="css/index.css">
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <div class="wrap" id="wrap">
+    <div class="wrap" id="wrap" v-cloak>
         <div class="page-contain">
             <div class="contain indexPage">
                 <img class="ewm" src="./images/ewm.png" alt="">
                 <p class="tip">长按二维码，关注南塘那些事儿</p>
-                <div class="selectBox">
-                    <span>苑西村</span>
-                    <b></b>
+                <div>
+                    <div class="selectBox">
+                        <span>苑西村</span>
+                        <b></b>
+                    </div>
+                    <div class="blank"></div>
+                    <a href="javascript:;" class="creatBtn">生成我的邀请码</a>
+                    <a href="javascript:;" class="addHomeTown">上面没有我的家乡</a>
                 </div>
-                <div class="blank"></div>
-                <a href="javascript:;" class="creatBtn">生成我的邀请码</a>
-                <a href="javascript:;" class="addHomeTown">上面没有我的家乡</a>
+                <div class="box2">
+                    <p class="red">回复排行榜可查看各村排名</p>
+                    <p class="yqm">邀请码: <span>ADASGGAFJLA</span></p>
+                    <a href="javascript:;" class="creatBtn">复制我的邀请码</a>
+                    <a href="javascript:;" class="addHomeTown">加入群聊</a>
+                </div>
             </div>
             <div class="navTab"></div>
         </div>
         <div class="townCover">
             <div class="townBox">
-                <ul>
-                    <li v-for="item in 50">
-                        <b></b>
-                        <span>苑西村</span>
-                    </li>
-                </ul>
+                <div v-for="(item,index) in sortList" class="sortList">
+                    <p class="title" :id="item.letter">{{item.letter}}</p>
+                    <ul>
+                        <li v-for="(item2,index) in item.data"> <!--:class="[item.name == travel_line ? 'active':'']" @click="travel_line=item.name"-->
+                            <span>{{item2.name}}</span>
+                            <span class="icon"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="letter">
+                <a v-for="item in letter" :href="'#'+item">{{item}}</a>
             </div>
         </div>
+
         <div class="tipCover" id="tipCover">
             <div class="tipBox">
                 <div class="content">{{tipTxt}}</div>
             </div>
         </div>
-        <div class="cover dialogCover" style="display:none;">
+        <div class="cover dialogCover" >
             <div class="dialogBox">
+                <div class="title">我是标题</div>
                 <div class="dialogCon">
                     <p>确定要选中苑西村？确认后无法修改</p>
                 </div>
@@ -52,8 +73,9 @@
         </div>
         
     </div>
-    
-    <script type='text/javascript' src='js/zepto.min.js' charset='utf-8'></script>
+    <script src="js/zepto.min.js"></script>
+    <script type="text/javascript" src="js/sort.js"></script>
+    <script src="js/sortList.js"></script>
     <script type='text/javascript' src='js/vue.min.js' charset='utf-8'></script>
     <script>   
         
@@ -61,7 +83,8 @@
             el: '#wrap',
             data: {
                 tipTxt:'我是提示',
-                list:[],
+                sortList:[],
+                letter:['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],
                 linkHref:{
                     getList:'getList',  //获取区域接口
                 }
@@ -96,7 +119,15 @@
                 }
             },
             mounted:function() {
-                var This = this;  		
+                var This = this;  
+                This.sortList = pySegSort(sortList).filter(function(item){
+                    return item.data.length>0
+                })
+
+                // .forEach(element => {
+                //     This.sortList = [...This.sortList,...element.data]
+                // })
+                console.log(This.sortList)
             }
         })
     </script>
