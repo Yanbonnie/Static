@@ -37,6 +37,7 @@
             </div>
             <div class="navTab"></div>
         </div>
+        <!-- 乡村选择 -->
         <div class="townCover">
             <div class="townBox">
                 <div v-for="(item,index) in sortList" class="sortList">
@@ -53,12 +54,13 @@
                 <a v-for="item in letter" :href="'#'+item">{{item}}</a>
             </div>
         </div>
-
+        <!-- 提示框 -->
         <div class="tipCover" id="tipCover">
             <div class="tipBox">
                 <div class="content">{{tipTxt}}</div>
             </div>
         </div>
+        <!-- 对话框 -->
         <div class="cover dialogCover" >
             <div class="dialogBox">
                 <div class="title">我是标题</div>
@@ -116,6 +118,9 @@
                     if(bol){
                         setTimeout(function(){$('#tipCover').fadeOut();},1500);
                     }                    
+                },
+                dialogHandle(params){
+
                 }
             },
             mounted:function() {
