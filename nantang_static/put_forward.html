@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>小南塘</title>
+    <script type='text/javascript' src='js/flexible.js' charset='utf-8'></script>
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap" id="wrap" v-cloak>
+        <div class="page-contain">
+            <div class="contain put_forward">
+                <form>
+                    <p>请输入提现金额</p>
+                    <div class="input-box">
+                        <input type="text" >
+                    </div>
+                    <p class="tip">您可提现的余额为￥100</p>
+                    <a href="javascript:;">提交</a>
+                </form>
+            </div>
+            <div class="navTab"></div>
+        </div>
+        
+
+        <!-- 提示框 -->
+        <div class="tipCover" id="tipCover">
+            <div class="tipBox">
+                <div class="content">{{tipTxt}}</div>
+            </div>
+        </div>
+        <!-- 对话框 -->
+        <div class="cover dialogCover" style="display:none">
+            <div class="dialogBox">
+                <div class="title">{{dialog.title}}</div>
+                <div class="dialogCon">
+                    <p>{{dialog.context}}</p>
+                </div>
+                <div class="dialogFooter">
+                    <a href="javascript:;" v-for="item in dialog.btn" @click="item.callback">{{item.name}}</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <script src="js/zepto.min.js"></script>
+    <script type='text/javascript' src='js/vue.min.js' charset='utf-8'></script>
+    <script>   
+        
+        new Vue({
+            el: '#wrap',
+            data: {
+                linkHref:{
+                    getList:'getList',  //获取区域接口
+                },
+                tipTxt:'我是提示',
+                dialog:{
+                    title:'默认标题',
+                    context:'默认内容',
+                    btn:[
+                        {
+                            name:'取消',
+                            callback:null
+                        },
+                        {
+                            name:'确定',
+                            callback:null
+                        },
+                    ]
+                }
+            },
+            methods: {
+                getRegionHandle:function(){
+                    This.tipHandle('加载中...',false);
+                    $.ajax({
+                        url:this.linkHref.getList,
+                        dataType: 'json',
+                        type: 'get',
+                        async: true,
+                        success:function(res){
+                            $('#tipCover').fadeOut();
+                            if(res.status == 0){
+                                This.list = res.data;
+                            }else{
+                                This.tipHandle(res.msg,true);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown)
+                        }
+                    })
+                },
+                tipHandle:function(msg,bol){  //第二个参数表示是否需要自动消失 true - 是  false - 否
+                    this.tipTxt = msg;
+                    $('#tipCover').fadeIn();
+                    if(bol){
+                        setTimeout(function(){$('#tipCover').fadeOut();},1500);
+                    }                    
+                },
+                dialogHandle:function(params){
+                    $('.dialogCover').fadeIn();
+                    this.dialog = { 
+                        title:params.title,
+                        context:params.context,
+                        btn:params.btn
+                    }
+                }
+            },
+            mounted:function() {
+                var This = this;  
+                // this.dialogHandle(
+                //     {title:'复制成功','context':'',btn:[{
+                //             name:'取消',
+                //             callback:function(){
+                //                 $('.dialogCover').fadeOut();
+                //             }
+                //         },
+                //         {
+                //             name:'确定',
+                //             callback:function(){
+                //                 $('.dialogCover').fadeOut();
+                //             }
+                //         }]
+                //     }
+                // )
+            }
+        })
+    </script>
+</body>
+
+</html>

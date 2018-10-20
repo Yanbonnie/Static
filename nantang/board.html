@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>小南塘-排行榜</title>
+    <script type='text/javascript' src='js/flexible.js' charset='utf-8'></script>
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap" id="wrap" v-cloak>
+        <div class="page-contain">
+            <div class="contain board">
+                <ul v-if="boardList && boardList.length > 0"> 
+                    <li class="title"> <!-- -->
+                        <span>姓名</span>
+                        <span>村名</span>
+                        <span>人数</span>
+                        <span>票数</span>
+                    </li>
+                    <li v-for="item in boardList"> 
+                        <span>{{item.name}}</span>
+                        <span>{{item.village}}</span>
+                        <span>{{item.num}}</span>
+                        <span>{{item.ticket}}</span>
+                    </li>
+                </ul>
+                <p class="no-message" v-if="boardList && boardList.length  == 0">暂无数据</p>
+            </div>
+        </div>
+        
+
+        <!-- 提示框 -->
+        <div class="tipCover" id="tipCover">
+            <div class="tipBox">
+                <div class="content">{{tipTxt}}</div>
+            </div>
+        </div>
+        <!-- 对话框 -->
+        <div class="cover dialogCover" style="display:none">
+            <div class="dialogBox">
+                <div class="title">{{dialog.title}}</div>
+                <div class="dialogCon">
+                    <p>{{dialog.context}}</p>
+                </div>
+                <div class="dialogFooter">
+                    <a href="javascript:;" v-for="item in dialog.btn" @click="item.callback">{{item.name}}</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <script src="js/zepto.min.js"></script>
+    <script type='text/javascript' src='js/vue.min.js' charset='utf-8'></script>
+    <script>   
+        
+        new Vue({
+            el: '#wrap',
+            data: {
+                boardList:null,  //name-姓名    village - 村名   num -人数  ticket  票数
+                linkHref:{
+                    getBoard:'getBoard',  //获取排行榜
+                },
+                tipTxt:'我是提示',
+                dialog:{
+                    title:'默认标题',
+                    context:'默认内容',
+                    btn:[
+                        {
+                            name:'取消',
+                            callback:null
+                        },
+                        {
+                            name:'确定',
+                            callback:null
+                        },
+                    ]
+                }
+            },
+            methods: {
+                getBoardHandle:function(){
+                    var This = this;
+                    This.tipHandle('加载中...',false);
+                    $.ajax({
+                        url:This.linkHref.getBoard,
+                        dataType: 'json',
+                        type: 'get',
+                        async: true,
+                        success:function(res){
+                            $('#tipCover').fadeOut();
+                            if(res.status == 0){
+                                This.boardList = res.data;
+                            }else{
+                                This.tipHandle(res.msg,true);
+                                This.boardList = [];
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown)
+                            $('#tipCover').fadeOut();
+                            This.boardList = [];
+                        }
+                    })
+                },
+                tipHandle:function(msg,bol){  //第二个参数表示是否需要自动消失 true - 是  false - 否
+                    this.tipTxt = msg;
+                    $('#tipCover').fadeIn();
+                    if(bol){
+                        setTimeout(function(){$('#tipCover').fadeOut();},1500);
+                    }                    
+                },
+                dialogHandle:function(params){
+                    $('.dialogCover').fadeIn();
+                    this.dialog = { 
+                        title:params.title,
+                        context:params.context,
+                        btn:params.btn
+                    }
+                }
+            },
+            mounted:function() {
+                var This = this;  
+                This.getBoardHandle();
+            }
+        })
+    </script>
+</body>
+
+</html>

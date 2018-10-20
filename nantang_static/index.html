@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>小南塘</title>
+    <script type='text/javascript' src='js/flexible.js' charset='utf-8'></script>
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap" id="wrap" v-cloak>
+        <div class="page-contain">
+            <div class="contain indexPage">
+                <img class="ewm" src="./images/ewm.png" alt="">
+                <p class="tip">长按二维码，关注南塘那些事儿</p>
+                <div>
+                    <div class="selectBox">
+                        <span>苑西村</span>
+                        <b></b>
+                    </div>
+                    <div class="blank"></div>
+                    <a href="javascript:;" class="creatBtn">生成我的邀请码</a>
+                    <a href="javascript:;" class="addHomeTown">无法加入群聊</a>
+                </div>
+                <div class="box2">
+                    <p class="red">回复排行榜可查看各村排名</p>
+                    <p class="yqm">邀请码: <span>ADASGGAFJLA</span></p>
+                    <a href="javascript:;" class="creatBtn">复制我的邀请码</a>
+                    <a href="javascript:;" class="addHomeTown">加入群聊</a>
+                </div>
+            </div>
+            <div class="navTab"></div>
+        </div>
+        <!-- 乡村选择 -->
+        <div class="townCover">
+            <div class="townBox">
+                <div v-for="(item,index) in sortList" class="sortList">
+                    <p class="title" :id="item.letter">{{item.letter}}</p>
+                    <ul>
+                        <li v-for="(item2,index) in item.data"> <!--:class="[item.name == travel_line ? 'active':'']" @click="travel_line=item.name"-->
+                            <span>{{item2.name}}</span>
+                            <span class="icon"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="letter">
+                <a v-for="item in letter" :href="'#'+item">{{item}}</a>
+            </div>
+        </div>
+        <div class="cover imgCover" v-show="imageState">
+            <div class="imgBox">
+                <img src="./images/ewm.png" alt="">
+            </div>
+        </div>
+        <!-- 提示框 -->
+        <div class="tipCover" id="tipCover">
+            <div class="tipBox">
+                <div class="content">{{tipTxt}}</div>
+            </div>
+        </div>
+        <!-- 对话框 -->
+        <div class="cover dialogCover" style="display:none">
+            <div class="dialogBox">
+                <div class="title">{{dialog.title}}</div>
+                <div class="dialogCon">
+                    <p>{{dialog.context}}</p>
+                </div>
+                <div class="dialogFooter">
+                    <a href="javascript:;" v-for="item in dialog.btn" @click="item.callback">{{item.name}}</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <script src="js/zepto.min.js"></script>
+    <script type="text/javascript" src="js/sort.js"></script>
+    <script src="js/sortList.js"></script>
+    <script type='text/javascript' src='js/vue.min.js' charset='utf-8'></script>
+    <script>   
+        
+        new Vue({
+            el: '#wrap',
+            data: {
+                tipTxt:'我是提示',
+                imageState:false,
+                sortList:[],
+                letter:['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],
+                linkHref:{
+                    getList:'getList',  //获取区域接口
+                },
+                dialog:{
+                    title:'默认标题',
+                    context:'默认内容',
+                    btn:[
+                        {
+                            name:'取消',
+                            callback:null
+                        },
+                        {
+                            name:'确定',
+                            callback:null
+                        },
+                    ]
+                }
+            },
+            methods: {
+                getRegionHandle:function(){
+                    This.tipHandle('加载中...',false);
+                    $.ajax({
+                        url:this.linkHref.getList,
+                        dataType: 'json',
+                        type: 'get',
+                        async: true,
+                        success:function(res){
+                            $('#tipCover').fadeOut();
+                            if(res.status == 0){
+                                This.list = res.data;
+                            }else{
+                                This.tipHandle(res.msg,true);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown)
+                        }
+                    })
+                },
+                tipHandle:function(msg,bol){  //第二个参数表示是否需要自动消失 true - 是  false - 否
+                    this.tipTxt = msg;
+                    $('#tipCover').fadeIn();
+                    if(bol){
+                        setTimeout(function(){$('#tipCover').fadeOut();},1500);
+                    }                    
+                },
+                dialogHandle:function(params){
+                    $('.dialogCover').fadeIn();
+                    this.dialog = { 
+                        title:params.title,
+                        context:params.context,
+                        btn:params.btn
+                    }
+                }
+            },
+            mounted:function() {
+                var This = this;  
+                This.sortList = pySegSort(sortList).filter(function(item){
+                    return item.data.length>0
+                })
+                console.log(This.sortList)
+                // this.dialogHandle(
+                //     {title:'复制成功','context':'',btn:[{
+                //             name:'取消',
+                //             callback:function(){
+                //                 $('.dialogCover').fadeOut();
+                //             }
+                //         },
+                //         {
+                //             name:'确定',
+                //             callback:function(){
+                //                 $('.dialogCover').fadeOut();
+                //             }
+                //         }]
+                //     }
+                // )
+            }
+        })
+    </script>
+</body>
+
+</html>

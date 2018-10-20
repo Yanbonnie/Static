@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>小南塘</title>
+    <script type='text/javascript' src='js/flexible.js' charset='utf-8'></script>
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap" id="wrap" v-cloak>
+        <div class="page-contain">
+            <div class="contain indexPage">
+                <div id="slide01" class="tab">
+                        <ul class="content" v-if="banner.length > 0" :style="{width:100*banner.length+'%'}" > <!--v-if="banner.length > 0" :style="{width:100*banner.length+'%'}"-->
+                            <li  v-for="(item,index) in banner" :key="index"  :style="{width:100/banner.length+'%'}" @click="goDetail(item.url)">
+                                <img :src="item.pic" alt="">
+                            </li>
+                            <!-- <li>
+                                <img src="./images/banner.jpg" alt="">
+                            </li>
+                            <li>
+                                <img src="./images/banner.jpg" alt="">
+                            </li> -->
+                        </ul>
+                    </div>
+                <img class="ewm" src="./images/ewm.png" alt="">
+                <p class="tip">长按二维码，关注南塘那些事儿</p>
+                <div class="box2">
+                    <p class="red">发送好友的邀请码为好友助力</p>
+                    <p class="yqm">邀请码: <span>ADASGGAFJLA</span></p>
+                    <a href="javascript:;" class="creatBtn">复制Ta的邀请码</a>
+                    <a href="javascript:;" class="addHomeTown">我也要参加</a>
+                </div>
+            </div>
+            <div class="navTab"></div>
+        </div>
+       
+        <!-- 提示框 -->
+        <div class="tipCover" id="tipCover">
+            <div class="tipBox">
+                <div class="content">{{tipTxt}}</div>
+            </div>
+        </div>
+        <!-- 对话框 -->
+        <div class="cover dialogCover" style="display:none">
+            <div class="dialogBox">
+                <div class="title">{{dialog.title}}</div>
+                <div class="dialogCon">
+                    <p>{{dialog.context}}</p>
+                </div>
+                <div class="dialogFooter">
+                    <a href="javascript:;" v-for="item in dialog.btn" @click="item.callback">{{item.name}}</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <script src="js/zepto.min.js"></script>
+    <script type='text/javascript' src='js/vue.min.js' charset='utf-8'></script>
+    <script>   
+        
+        new Vue({
+            el: '#wrap',
+            data: {
+                linkHref:{
+                    getList:'getList',  
+                    getBanner:'getBanner'
+                },
+                banner:'',
+                tipTxt:'我是提示',
+                dialog:{
+                    title:'默认标题',
+                    context:'默认内容',
+                    btn:[
+                        {
+                            name:'取消',
+                            callback:null
+                        },
+                        {
+                            name:'确定',
+                            callback:null
+                        },
+                    ]
+                }
+            },
+            methods: {
+                goDetail:function(url){
+                    window.location.href=url;
+                },
+                // 获取banner
+                getBannerHandle:function(){
+                    var This = this;
+                    $.ajax({
+                        url:this.linkHref.getBanner,
+                        dataType: 'json',
+                        type: 'get',
+                        async: true,
+                        success:function(res){
+                            if(res.status == 0){
+                                This.banner = res.data;
+                                setTimeout(function () {
+                                    window.tab1 = new mo.PageSlide({
+                                        target: $('#slide01 .content li'),
+                                        direction:'x',
+                                        controller:true
+                                    });
+                                },1000)
+                            }else{
+                                This.tipHandle(res.msg,true);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown)
+                        }
+                    })
+                },
+                
+                tipHandle:function(msg,bol){  //第二个参数表示是否需要自动消失 true - 是  false - 否
+                    this.tipTxt = msg;
+                    $('#tipCover').fadeIn();
+                    if(bol){
+                        setTimeout(function(){$('#tipCover').fadeOut();},1500);
+                    }                    
+                },
+                dialogHandle:function(params){
+                    $('.dialogCover').fadeIn();
+                    this.dialog = { 
+                        title:params.title,
+                        context:params.context,
+                        btn:params.btn
+                    }
+                }
+            },
+            mounted:function() {
+                var This = this;  
+                This.getBannerHandle();
+                // this.dialogHandle(
+                //     {title:'复制成功','context':'',btn:[{
+                //             name:'取消',
+                //             callback:function(){
+                //                 $('.dialogCover').fadeOut();
+                //             }
+                //         },
+                //         {
+                //             name:'确定',
+                //             callback:function(){
+                //                 $('.dialogCover').fadeOut();
+                //             }
+                //         }]
+                //     }
+                // )
+            }
+        })
+    </script>
+</body>
+
+</html>

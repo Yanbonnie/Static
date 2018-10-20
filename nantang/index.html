@@ -15,27 +15,62 @@
 </head>
 <body>
     <div class="wrap" id="wrap" v-cloak>
+        
         <div class="page-contain">
             <div class="contain indexPage">
+                <div id="slide01" class="tab">
+                    <ul class="content" v-if="banner.length > 0" :style="{width:100*banner.length+'%'}" > <!--v-if="banner.length > 0" :style="{width:100*banner.length+'%'}"-->
+                        <li  v-for="(item,index) in banner" :key="index"  :style="{width:100/banner.length+'%'}" @click="goDetail(item.url)">
+                            <img :src="item.pic" alt="">
+                        </li>
+                        <!-- <li>
+                            <img src="./images/banner.jpg" alt="">
+                        </li>
+                        <li>
+                            <img src="./images/banner.jpg" alt="">
+                        </li> -->
+                    </ul>
+                </div>
                 <img class="ewm" src="./images/ewm.png" alt="">
-                <p class="tip">长按二维码，关注南塘那些事儿</p>
-                <div>
-                    <div class="selectBox">
-                        <span>苑西村</span>
+                <p class="tip"  >长按二维码，关注南塘那些事儿</p>
+                <div v-if="!userInfo.is_binding" >  <!--未绑定-->
+                    <div class="selectBox" @click="getVillageHandle">
+                        <span>{{selectVillage.name ? selectVillage.name : '请选择家乡'}}</span>
                         <b></b>
                     </div>
                     <div class="blank"></div>
-                    <a href="javascript:;" class="creatBtn">生成我的邀请码</a>
-                    <a href="javascript:;" class="addHomeTown">上面没有我的家乡</a>
+                    <a href="javascript:;" class="creatBtn" @click="beforeBind">生成我的邀请码</a>
+                    <a href="javascript:;" class="addHomeTown" @click="getGroupPicHandle">无法加入群聊</a>
                 </div>
-                <div class="box2">
+                <div class="box2" v-else>   <!--已绑定-->
                     <p class="red">回复排行榜可查看各村排名</p>
-                    <p class="yqm">邀请码: <span>ADASGGAFJLA</span></p>
-                    <a href="javascript:;" class="creatBtn">复制我的邀请码</a>
-                    <a href="javascript:;" class="addHomeTown">加入群聊</a>
+                    <p class="yqm">邀请码: <span>{{userInfo.invitation_code}}</span></p>
+                    <a href="javascript:;" class="creatBtn copyBtn" @click="copyHandle">复制我的邀请码</a>
+                    <a href="javascript:;" class="addHomeTown" @click="getGroupPicHandle">加入群聊</a>
                 </div>
             </div>
-            <div class="navTab"></div>
+            <div class="navTab">
+                <ul>
+                    <li class="active">
+                        <a href="javascript:;">
+                            <b></b>
+                            <span>首页</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="townsman.html">
+                            <b></b>
+                            <span>我的老乡</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="put_forward.html">
+                            <b></b>
+                            <span>提现</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <!-- 乡村选择 -->
         <div class="townCover">
@@ -43,7 +78,7 @@
                 <div v-for="(item,index) in sortList" class="sortList">
                     <p class="title" :id="item.letter">{{item.letter}}</p>
                     <ul>
-                        <li v-for="(item2,index) in item.data"> <!--:class="[item.name == travel_line ? 'active':'']" @click="travel_line=item.name"-->
+                        <li v-for="(item2,index) in item.data" @click="selectVillageHandle(item2)" :class="[item2.id == selectVillage.id ? 'active':'']" > <!--:class="[item.name == travel_line ? 'active':'']" @click="travel_line=item.name"-->
                             <span>{{item2.name}}</span>
                             <span class="icon"></span>
                         </li>
@@ -54,6 +89,11 @@
                 <a v-for="item in letter" :href="'#'+item">{{item}}</a>
             </div>
         </div>
+        <div class="cover imgCover" v-show="imageState" @click="imageState = false">
+            <div class="imgBox">
+                <img src="./images/ewm.png" alt="">
+            </div>
+        </div>
         <!-- 提示框 -->
         <div class="tipCover" id="tipCover">
             <div class="tipBox">
@@ -61,15 +101,14 @@
             </div>
         </div>
         <!-- 对话框 -->
-        <div class="cover dialogCover" >
+        <div class="cover dialogCover" style="display:none">
             <div class="dialogBox">
-                <div class="title">我是标题</div>
+                <div class="title">{{dialog.title}}</div>
                 <div class="dialogCon">
-                    <p>确定要选中苑西村？确认后无法修改</p>
+                    <p>{{dialog.context}}</p>
                 </div>
                 <div class="dialogFooter">
-                    <a href="javascript:;">取消</a>
-                    <a href="javascript:;">确定</a>
+                    <a href="javascript:;" v-for="item in dialog.btn" @click="item.callback">{{item.name}}</a>
                 </div>
             </div>
         </div>
@@ -78,6 +117,7 @@
     <script src="js/zepto.min.js"></script>
     <script type="text/javascript" src="js/sort.js"></script>
     <script src="js/sortList.js"></script>
+    <script src="js/clipboard.min.js"></script>
     <script type='text/javascript' src='js/vue.min.js' charset='utf-8'></script>
     <script>   
         
@@ -85,24 +125,57 @@
             el: '#wrap',
             data: {
                 tipTxt:'我是提示',
-                sortList:[],
+                banner:'',
+                imageState:false,
+                imgSrc:'',
+                userInfo:{},                   //is_binding 1-是绑定  0-未绑定   village_name 村庄名  invitation_code 邀请码  money 金额
+                sortList:[],                   //所有村庄
                 letter:['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],
+                selectVillage:{},              //选中的村庄
                 linkHref:{
-                    getList:'getList',  //获取区域接口
+                    getVillage:'getVillage',   //获取区域接口
+                    getUserInfo:'getUserInfo', //获取用户信息
+                    postBinding:'postBinding', //绑定接口
+                    getGroupPic:'getGroupPic', //加群接口
+                    getBanner:'getBanner'      //获取banner
+                },
+                dialog:{
+                    title:'默认标题',
+                    context:'默认内容',
+                    btn:[
+                        {
+                            name:'取消',
+                            callback:null
+                        },
+                        {
+                            name:'确定',
+                            callback:null
+                        },
+                    ]
                 }
             },
             methods: {
-                getRegionHandle:function(){
-                    This.tipHandle('加载中...',false);
+                goDetail:function(url){
+                    window.location.href=url;
+                },
+                // 获取banner
+                getBannerHandle:function(){
+                    var This = this;
                     $.ajax({
-                        url:this.linkHref.getList,
+                        url:this.linkHref.getBanner,
                         dataType: 'json',
                         type: 'get',
                         async: true,
                         success:function(res){
-                            $('#tipCover').fadeOut();
                             if(res.status == 0){
-                                This.list = res.data;
+                                This.banner = res.data;
+                                setTimeout(function () {
+                                    window.tab1 = new mo.PageSlide({
+                                        target: $('#slide01 .content li'),
+                                        direction:'x',
+                                        controller:true
+                                    });
+                                },1000)
                             }else{
                                 This.tipHandle(res.msg,true);
                             }
@@ -112,27 +185,202 @@
                         }
                     })
                 },
-                tipHandle(msg,bol){  //第二个参数表示是否需要自动消失 true - 是  false - 否
+                // 复制邀请码
+                copyHandle:function(){
+                    var This = this;
+                    var clipboard = new ClipboardJS('.copyBtn', {
+                        text: function() {
+                            return  This.userInfo.invitation_code
+                        }
+                    });
+                    clipboard.on('success', function(e) {
+                        This.dialogHandle(
+                            {
+                                title:'复制成功',
+                                context:'请将你的邀请码发给你的好朋友，好友在南塘那些事儿公众号回复后，你将得到现金奖励',
+                                btn:[{
+                                    name:'确定',
+                                    callback:function(){
+                                        $('.dialogCover').fadeOut();
+                                    }
+                                }]
+                            }
+                        )
+                    });
+                
+                },
+                // 选择村庄
+                selectVillageHandle:function(item){
+                    this.selectVillage = item
+                },
+                // 获取村庄
+                getVillageHandle:function(){                    
+                    var This = this;
+                    This.tipHandle('加载中...',false);
+                    $('.townCover').fadeIn();
+                    $.ajax({
+                        url:this.linkHref.getVillage,
+                        dataType: 'json',
+                        type: 'get',
+                        async: true,
+                        success:function(res){
+                            $('#tipCover').fadeOut();
+                            if(res.status == 0){
+                                // This.sortList = res.data;
+                                This.sortList = pySegSort(res.data).filter(function(item){
+                                    return item.data.length>0
+                                })
+                            }else{
+                                This.tipHandle(res.msg,true);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown)
+                        }
+                    })
+                },
+                // 获取用户信息
+                getUserInfoHandle:function(){
+                    var This = this;
+                    $.ajax({
+                        url:this.linkHref.getUserInfo,
+                        dataType: 'json',
+                        type: 'get',
+                        async: true,
+                        success:function(res){
+                            if(res.status == 0){
+                                This.userInfo = res.data;
+                            }else{
+                                This.tipHandle(res.msg,true);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown)
+                        }
+                    })
+                },
+                // 绑定前
+                beforeBind:function(){
+                    var This = this;
+                    if(!This.selectVillage.id){
+                        This.tipHandle('请选择村庄',true);
+                        return;
+                    }
+                    this.dialogHandle(
+                        {
+                            title:'提示',
+                            context:'确定要选中'+This.selectVillage.name+'吗？确认后无法修改',
+                            btn:[{
+                                name:'取消',
+                                callback:function(){
+                                    $('.dialogCover').fadeOut();
+                                }
+                            },
+                            {
+                                name:'确定',
+                                callback:function(){
+                                    $('.dialogCover').fadeOut();
+                                    This.postBindingHandle();
+                                }
+                            }]
+                        }
+                    )
+                },
+                // 绑定
+                postBindingHandle:function(){
+                    var This = this;
+                    This.tipHandle('提交中',false)
+                    $.ajax({
+                        url:This.linkHref.postBinding,
+                        dataType: 'json',
+                        type: 'post',
+                        data:{
+                            id:This.selectVillage.id
+                        },
+                        async: true,
+                        success:function(res){
+                            $('#tipCover').fadeOut();
+                            if(res.status == 0){
+                                This.tipHandle('提交成功',true)
+                                This.getUserInfoHandle();
+                            }else{
+                                This.tipHandle(res.msg,true);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown)
+                        }
+                    })
+                },
+                // 加群
+                getGroupPicHandle:function(){
+                    var This = this;
+                    This.tipHandle('加载中....',false)
+                    $.ajax({
+                        url:this.linkHref.getGroupPic,
+                        dataType: 'json',
+                        type: 'get',
+                        async: true,
+                        success:function(res){
+                            $('#tipCover').fadeOut();
+                            
+                            if(res.status == 0){
+                                This.imgSrc = res.data.url;
+                                This.imageState = true;
+                            }else{
+                                This.tipHandle(res.msg,true);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown)
+                        }
+                    })
+                },
+                tipHandle:function(msg,bol){  //第二个参数表示是否需要自动消失 true - 是  false - 否
                     this.tipTxt = msg;
                     $('#tipCover').fadeIn();
                     if(bol){
                         setTimeout(function(){$('#tipCover').fadeOut();},1500);
                     }                    
                 },
-                dialogHandle(params){
-
+                dialogHandle:function(params){
+                    console.log(1111)
+                    $('.dialogCover').fadeIn();
+                    this.dialog = { 
+                        title:params.title,
+                        context:params.context,
+                        btn:params.btn
+                    }
                 }
             },
             mounted:function() {
                 var This = this;  
-                This.sortList = pySegSort(sortList).filter(function(item){
-                    return item.data.length>0
-                })
-
-                // .forEach(element => {
-                //     This.sortList = [...This.sortList,...element.data]
+                This.getBannerHandle();
+                This.getUserInfoHandle();
+                //  window.tab1 = new mo.PageSlide({
+                //     target: $('#slide01 .content li'),
+                //     direction:'x',
+                //     controller:true
+                // });
+                // This.sortList = pySegSort(sortList).filter(function(item){
+                //     return item.data.length>0
                 // })
-                console.log(This.sortList)
+                // console.log(This.sortList)
+                // this.dialogHandle(
+                //     {title:'复制成功','context':'',btn:[{
+                //             name:'取消',
+                //             callback:function(){
+                //                 $('.dialogCover').fadeOut();
+                //             }
+                //         },
+                //         {
+                //             name:'确定',
+                //             callback:function(){
+                //                 $('.dialogCover').fadeOut();
+                //             }
+                //         }]
+                //     }
+                // )
             }
         })
     </script>
