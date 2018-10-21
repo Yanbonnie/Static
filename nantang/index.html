@@ -41,12 +41,14 @@
                     <div class="blank"></div>
                     <a href="javascript:;" class="creatBtn" @click="beforeBind">生成我的邀请码</a>
                     <a href="javascript:;" class="addHomeTown" @click="getGroupPicHandle">无法加入群聊</a>
+                    
                 </div>
                 <div class="box2" v-else>   <!--已绑定-->
                     <p class="red">回复排行榜可查看各村排名</p>
                     <p class="yqm">邀请码: <span>{{userInfo.invitation_code}}</span></p>
                     <a href="javascript:;" class="creatBtn copyBtn" @click="copyHandle">复制我的邀请码</a>
                     <a href="javascript:;" class="addHomeTown" @click="getGroupPicHandle">加入群聊</a>
+                    <p class="red">无法加入群聊?</p>
                 </div>
             </div>
             <div class="navTab">
