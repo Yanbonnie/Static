@@ -96,15 +96,20 @@ $URL:'../images/';
                 background: url($URL+'home.png');
                 background-size: 100% 100%;
                 margin: 0 auto;
-                &:nth-child(2){
+            }
+            &:nth-child(2){
+                b{
                     background: url($URL+'peoples.png');
                     background-size: 100% 100%;
                 }
-                &:nth-child(3){
+            }
+            &:nth-child(3){
+                b{
                     background: url($URL+'money.png');
                     background-size: 100% 100%;
                 }
             }
+            
             span{
                 text-align: center;
                 display: block;
@@ -114,15 +119,17 @@ $URL:'../images/';
             }
             &.active{
                 b{
-                    &:nth-child(1){
-                        background: url($URL+'home_on.png');
-                        background-size: 100% 100%;
-                    }
-                    &:nth-child(2){
+                    background: url($URL+'home_on.png');
+                    background-size: 100% 100%;
+                }
+                &:nth-child(2){
+                    b{
                         background: url($URL+'peoples_on.png');
                         background-size: 100% 100%;
                     }
-                    &:nth-child(3){
+                }
+                &:nth-child(3){
+                    b{
                         background: url($URL+'money_on.png');
                         background-size: 100% 100%;
                     }
@@ -348,8 +355,22 @@ $URL:'../images/';
     align-items: center;
 }
 .imgBox{
-    img{
+    position: relative;
+    p{
+        color: #ffffff;
+        font-size: REM(40);
+        text-align: center;
+        padding-top: REM(20);
+    }
+    .img{
         max-width: REM(800);
+    }
+    .close{
+        width: REM(80);
+        height: REM(80);
+        position: absolute;
+        right: REM(-80);
+        top: REM(-80);
     }
 }
 .townCover{

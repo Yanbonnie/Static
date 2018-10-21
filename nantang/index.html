@@ -91,9 +91,11 @@
                 <a v-for="item in letter" :href="'#'+item">{{item}}</a>
             </div>
         </div>
-        <div class="cover imgCover" v-show="imageState" @click="imageState = false">
+        <div class="cover imgCover" v-show="imageState">
             <div class="imgBox">
-                <img src="./images/ewm.png" alt="">
+                <img class="close" src="./images/del.png"  @click="imageState = false" alt="">
+                <img class="ewm" src="./images/ewm.png" alt="">
+                <p>长按二维码，识别添加</p>
             </div>
         </div>
         <!-- 提示框 -->
@@ -128,7 +130,7 @@
             data: {
                 tipTxt:'我是提示',
                 banner:'',
-                imageState:false,
+                imageState:true,
                 imgSrc:'',
                 userInfo:{},                   //is_binding 1-是绑定  0-未绑定   village_name 村庄名  invitation_code 邀请码  money 金额
                 sortList:[],                   //所有村庄
