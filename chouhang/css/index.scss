@@ -1,0 +1,391 @@
+
+@charset "utf-8";
+// @import 'loading_22.scss';
+@import './base';
+@import './toast';
+@import './msgBox';
+html,body{
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+}
+.wrap{
+    width: 100%;
+    height: 100%;
+}
+.loginBox{
+    position: absolute;
+    min-height: 100%;
+    background:#ffffff;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    .logo{
+        width: REM(650);
+        position: absolute;
+        left: LEFT(650);
+        top: REM(45);
+    }
+    .loginMain{
+        background: url($URL+'login_popup.png');
+        background-size: 100% 100%;
+        width: REM(560);
+        margin-top: REM(230);
+        margin-left: LEFT(560);
+        height: REM(653);
+        position: relative;
+        z-index: 4;
+        form{
+            top: REM(275);
+            position: relative;
+            padding:0 REM(50);
+            z-index: 4;
+            button{
+                width: REM(333);
+                height: REM(65);
+                margin-top: REM(25);
+                opacity: 0;
+                margin-left: REM(65);
+            }
+        }
+        .input-item{
+            display: flex;
+            height: REM(55);
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: REM(20);
+            
+            input{
+                display: block;
+                height: REM(55);
+                line-height: REM(55);
+                width: 100%;
+                border:0;
+                font-size: REM(26);
+                text-indent: REM(20);
+                border-radius: REM(10);
+                border: 1px #C8C9CA solid;
+                background: #ffffff;
+                ;
+            }
+            .item_left{
+                flex: 1;
+                margin-right: REM(20);
+            }
+            .item_right{
+                flex-basis: REM(190);
+                img{
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .footer{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+    }
+}
+.swiper-container{
+    visibility: hidden;
+    
+}
+.swiper-container,.swiper-slide{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.swiper-slide{
+    position: relative;
+    .logo{
+        width: REM(650);
+        position: absolute;
+        left: LEFT(650);
+        top: REM(45);
+    }
+    .blue{
+        color: #0081CC;
+    }
+    .orange{
+        color: #F8B62D;
+    }
+    h3{
+        font-size: REM(90);
+        font-weight: normal;
+    }
+    h4{
+        font-size: REM(40);
+        font-weight: normal;
+    }
+    p{
+        font-size: REM(30);
+        padding: REM(10) 0;
+    }
+    span{
+        display: inline-block;
+    }
+    .footer{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+    }
+    &.swiper-slide1{
+        text-align: center;
+        .txt1{
+            margin-top: REM(180);
+        }
+        .start{
+            width: REM(411);
+            margin: 0 auto;
+            padding: REM(30) 0 REM(50);
+        }
+    }
+    &.swiper-slide2{
+        text-align: center;
+        .txt1{
+            padding-top: REM(430);
+        }
+        .txt2{
+            padding-top: REM(300);
+        }
+        .txt3{
+            padding-top: REM(60);
+        }
+        
+    }
+    &.swiper-slide3{
+        text-align: center;
+        .rili{
+            width: REM(315);
+            padding: REM(300) 0 REM(50);
+            margin: 0 auto;
+            img{
+                width: 100%;
+            }
+        }
+    }
+    &.swiper-slide4{
+        text-align: center;
+        .logo{
+            top: REM(20);
+        }
+        .txt1{
+            padding-top: REM(130);
+        }
+        p{
+            padding: 0;
+        }
+        .tab1{
+            padding: REM(20) 0;
+            margin: 0 auto;
+            width: REM(152);
+        }
+        .data{
+            width: REM(190);
+            position: absolute;
+            &.data1{
+                left: REM(70);
+                top: REM(380);
+            }
+            &.data2{
+                left: LEFT(190);
+            }
+            &.data3{
+                right: REM(70);
+                top: REM(380);
+            }
+        }
+        .tab2{
+            position: absolute;
+            top: REM(610);
+            left: LEFT(152);
+            width: REM(152);
+        }
+        .data4{
+            width: REM(241);
+            position: absolute;
+            left: REM(110);
+            top: REM(700);
+            z-index: 2;
+        }
+        .data5{
+            width: REM(241);
+            position: absolute;
+            right: REM(110);
+            top: REM(700);
+            z-index: 2;
+        }
+        .footer{
+            bottom: -3rem;
+            width: 150%;
+            left: -30%;
+        }
+    }
+    &.swiper-slide5{
+        .title{
+            width: REM(577);
+            margin: 0 auto;
+            padding-top: REM(200);
+        }
+        .gift{
+            padding-top: REM(30);
+            width:REM(633);
+            margin-left: LEFT(633);
+        }
+        .light{
+            width: REM(647);
+            margin: REM(-350) auto;
+        }
+        .btn{
+            position: absolute;
+            width: REM(303);
+            &.btn1{
+                top: REM(850);
+                left: REM(140);
+            }
+            &.btn2{
+                top: REM(940);
+                left: REM(210);
+            }
+            &.btn3{
+                top: REM(1030);
+                left: REM(280);
+            }
+        }
+    }
+    &.swiper-slide6{
+        .title{
+            width: REM(468);
+            margin: 0 auto;
+            padding-top: REM(200);
+        }
+        .gift{
+            padding-top: REM(30);
+            width:REM(750);
+        }
+        .tip{
+            position: absolute;
+            width:REM(181);
+            left: LEFT(181);
+            bottom: REM(150);
+            z-index: 2;
+        }
+        .btnBox{
+            height: REM(80);
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: url($URL+'bottom.png');
+            background-size: 100% 100%;
+            display: flex;
+            a{
+                flex:1;
+                line-height: REM(80);
+                text-align: center;
+                color: #ffffff;
+                font-size: REM(25);
+            }
+        }
+    }
+    &.swiper-slide7{
+        text-align: center;
+        .txt1{
+            padding-top: REM(300);
+        }
+        .txt2{
+            padding-top: REM(60);
+        }
+    }
+    &.swiper-slide8{
+
+    }
+}
+.mask-cover{
+    background: rgba(0,0,0,0.8);
+    z-index: 8;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+.giftBox{
+    width: REM(560);
+    position: fixed;
+    left: LEFT(560);
+    top: 50%;
+    z-index: 5;
+    transform: translateY(-50%);
+    .contain{
+        position: relative;
+        width: REM(560);
+        height: REM(654);
+        .close{
+            width: REM(61);
+            height: REM(61);
+            position: absolute;
+            right: REM(30);
+            top: REM(110);
+        }
+        .btn{
+            width: REM(340);
+            height: REM(65);
+            position: absolute;
+            left: REM(112);
+            bottom: REM(66);
+        }
+    }
+    img{
+        width: 100%;
+    }
+}
+.shareBox{
+    width: REM(698);
+    position: fixed;
+    left: LEFT(698);
+    top: REM(20);
+    z-index: 10;
+    .contain{
+        position: relative;
+        width: REM(698);
+        height: REM(773);
+        .btn{
+            width: REM(340);
+            height: REM(65);
+            position: absolute;
+            left: REM(180);
+            bottom: 0;
+        }
+    }
+    img{
+        width: 100%;
+    }
+}
+.ruleBox,.guideBox{
+    position: absolute;
+    min-height: 100%;
+    background: #fff;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    img{
+        width: 100%;
+    }
+    .know{
+        position: absolute;
+        bottom:REM(140);
+        left: LEFT(335);
+        width: REM(335);
+    }
+}
+.guideBox{
+    .know{
+        bottom: REM(80);
+    }
+}

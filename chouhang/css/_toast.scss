@@ -1,0 +1,49 @@
+
+.toast{
+  width: REM(200);
+  position: fixed;
+  z-index: 20;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background: rgba(0,0,0,0.8);
+  border-radius: REM(16);
+  padding: REM(30);
+  .toast-wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .toast-text{
+      line-height: REM(60);
+      font-size: REM(24);
+      color: #ffffff;
+    }
+  }
+  
+}
+.icon-loading{
+  width:REM(100);
+  height:REM(100);
+  margin: 0 auto;
+  display: inline-block;
+  background-image: url('../images/loading.gif');
+  background-size:REM(100) REM(100);
+  background-repeat: no-repeat;
+}
+.icon-success{
+  width:REM(100);
+  height:REM(100);
+  display: inline-block;
+  background-image: url('../images/success-toast.gif');
+  background-size: REM(100) REM(100);
+  background-repeat: no-repeat;
+}
+.icon-fail{
+  width:REM(100);
+  height:REM(100);
+  display: inline-block;
+  background-image: url('../images/fail-toast.png');
+  background-size: REM(100) REM(100);
+  background-repeat: no-repeat;
+}
