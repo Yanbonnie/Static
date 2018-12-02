@@ -3,7 +3,6 @@
 // @import 'loading_22.scss';
 @import './base';
 @import './toast';
-@import './msgBox';
 html,body{
     width: 100%;
     height: 100%;
@@ -12,6 +11,15 @@ html,body{
 .wrap{
     width: 100%;
     height: 100%;
+}
+[v-cloak]{
+    display: none;
+}
+.iconDown{
+    width: REM(51);
+    position: absolute;
+    left: LEFT(51);
+    bottom: REM(50);
 }
 .loginBox{
     position: absolute;
@@ -300,10 +308,8 @@ html,body{
             padding-top: REM(60);
         }
     }
-    &.swiper-slide8{
-
-    }
 }
+
 .mask-cover{
     background: rgba(0,0,0,0.8);
     z-index: 8;
@@ -388,4 +394,123 @@ html,body{
     .know{
         bottom: REM(80);
     }
+}
+.dataBox{
+    position: fixed;
+    width: REM(513);
+    height: REM(764);
+    left: LEFT(513);
+    top: 50%;
+    transform: translateY(-50%);
+    background: url($URL+'data_big.png') #ffffff;
+    background-size: 100% 100%;
+    z-index: 10;
+    .data-txt1{
+        position: absolute;
+        font-size: REM(24);
+        width: REM(300);
+        text-align: center;
+        left: 0;
+        top: REM(240);
+        font-weight: bold;
+    }
+    .data-txt2{
+        position: absolute;
+        font-size: REM(24);
+        width: REM(308);
+        text-align: center;
+        right: REM(15);
+        top: REM(70);
+        font-weight: bold;
+    }
+    .data-pro1{
+        width: REM(50);
+        height: REM(140);
+        
+        position: absolute;
+        left: REM(122);
+        bottom: REM(333);
+        display: block;
+        border-top-left-radius: 100px;
+        border-top-right-radius: 100px;
+        overflow: hidden;
+        b{
+            height: 0%;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            border-top-left-radius: 100px;
+            border-top-right-radius: 100px;
+            background: #0081cc;
+        }
+    }
+    .data-pro2{
+        width: REM(50);
+        height: REM(305);
+        position: absolute;
+        right: REM(142);
+        bottom: REM(333);
+        display: block;
+        border-top-left-radius: 100px;
+        border-top-right-radius: 100px;
+        overflow: hidden;
+        b{
+            height: 0%;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            border-top-left-radius: 100px;
+            border-top-right-radius: 100px;
+            background-image: -webkit-linear-gradient(90deg, #008cd6, #2bab91);
+        }
+    }
+    .data-title{
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        bottom: REM(75);
+        font-size: REM(60);
+        color: #0081cc;
+    }
+}
+
+.Upward{
+    -webkit-animation:Upward 0.5s 0s both;
+    animation:Upward 0.5s 0s both;
+}
+.Upward2{
+    -webkit-animation:Upward 0.5s 0s both;
+    animation:Upward 0.5s 0s both;
+}
+@-webkit-keyframes Upward {
+       0% {
+            height: 0%;
+       }
+       100% {
+            height: 100%;
+       }
+}
+@keyframes Upward {
+    0% {
+        height: 0%;
+   }
+   100% {
+        height: 100%;
+   }
+}
+
+.pt-page-moveIconUp {
+    @include prefixer(animation,pt-page-moveIconUp 1s ease both infinite);
+}
+  
+@-webkit-keyframes pt-page-moveIconUp {
+0% { -webkit-transform: translateY(-100%); opacity:0;}
+50% { -webkit-transform: translateY(0%); opacity:1;}
+100% { -webkit-transform: translateY(100%); opacity:0;}
+}
+
+@keyframes pt-page-moveIconUp {
+0% { transform: translateY(-100%); opacity:0;}
+50% { transform: translateY(0%); opacity:1;}
+100% { transform: translateY(100%); opacity:0;}
 }

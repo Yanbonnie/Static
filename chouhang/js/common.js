@@ -2,13 +2,12 @@
  * 定义符合requirejs规范的模块
  * 引入模块的回调函数中得到什么，就return什么
  */
-// define(['jquery'], function ($) {
     var Com = {
         /**
          * @desc 生成带图标的弹框
          * @function $toast
          * @param option
-         * 1.toastText[String]
+         * 1.text[String]
          * 2.type[String]
          *    -success|loading|fail
          * 3.duration[Number]
@@ -17,7 +16,7 @@
         $toast: function (option) {
             var defaults = {
                 text: '',
-                type: '',
+                type: 'success',
                 duration: 1500,
                 callBack: function () {
                     console.log('toast CB')
@@ -63,14 +62,13 @@
          * 1.position[Object|string]
          *      String(center)
          *      Object({y:2}) 
-         * 2.content[String]
+         * 2.text[String]
          * 3.duration[Number]
          */
         $easyToast:function(option){
-            console.log(option)
             var defaults = {
                 position: 'center',
-                content: 'easyToast',
+                text: 'easyToast',
                 duration: 1500
             }
             // 扩展默认参数
@@ -79,7 +77,7 @@
             var duration = params.duration;
             var x , y;
             function initEasyToast(){                
-                var easyToast_html = '<div class="easy-toast">'+params.content+'</div>';
+                var easyToast_html = '<div class="easy-toast">'+params.text+'</div>';
                 $('body').append(easyToast_html);
                 $('.easy-toast').fadeIn()
                 var ele = $('.easy-toast');
@@ -89,7 +87,7 @@
                 var eleH =$('.easy-toast')[0].offsetHeight;
 
                 if(position === 'center'){                    
-                    y = (window.innerHeight - eleH)/2/10;
+                    y = (window.innerHeight - eleH)/2;
                 }else if(typeof position === 'object'){
                     y = Number(position.y)
                 }
@@ -99,11 +97,11 @@
                 })
                 if (y<0) {
                     ele.css({
-                        bottom:(-y) + 'rem'
+                        bottom:(-y) + (position == 'center'? 'px' : 'rem')
                     })
                 } else {
                     ele.css({
-                        top:y + 'rem'
+                        top:y + (position == 'center'? 'px' : 'rem')
                     })
                 }
                 setTimeout(function(){
@@ -116,19 +114,17 @@
          * @desc 生成模态对话框
          * @function $msgBox
          * @param option
-         * 1.title[String]
-         * 2.msgBoxText[String]
-         * 3.cancelText[String]
-         * 4.confirmText[String]  
-         * 5.btnNum[Number] 
-         * 6.callBack[Function]
+         * 1.text[String]
+         * 2.cancelText[String]
+         * 3.confirmText[String]  
+         * 4.btnNum[Number] 
+         * 5.callBack[Function]
          */
-        $msgBox: function (option) {
+        $dialog: function (option) {
             var defaults = {
-                title: '',
-                msgBoxText: '',
+                text: '',
                 cancelText: '取消',  // 否定文本
-                confirmText: '确定', // 肯定文本
+                sureText: '确定', // 肯定文本
                 btnNum: 2,
                 column:false,        //按钮是否是垂直排列  true-是  false-否
                 callBack: function () {
@@ -141,51 +137,33 @@
              * @function initMsgBox
              */
             function initMsgBox() {
-                    // 按钮排序
-                    var btnSort_html = params.column ? '<div class="mint-msgbox-btns">'+                        
-                        '<button class="mint-msgbox-btn mint-msgbox-confirm">'+params.confirmText+'</button>'+
-                        '<button class="mint-msgbox-btn mint-msgbox-cancel">'+params.cancelText+'</button>'+
-                    '</div>'
-                    :
-                    '<div class="mint-msgbox-btns">'+
-                        '<button class="mint-msgbox-btn mint-msgbox-cancel">'+params.cancelText+'</button>'+
-                        '<button class="mint-msgbox-btn mint-msgbox-confirm">'+params.confirmText+'</button>'+
-                    '</div>';
-                    var mintClass = params.column ? 'mint-msgbox-column' : ''
-                    var btnBox_html = params.btnNum == 2 ? btnSort_html
-                        :
-                        '<div class="mint-msgbox-btns">'+
-                            '<button class="mint-msgbox-btn mint-msgbox-confirm">'+params.confirmText+'</button>'+
-                        '</div>';
-                    var msgBox_html = '<div class="mint-msgbox '+mintClass+'">'+
-                        '<div class="mint-msgbox-masker"></div>'+
-                        '<div style="position: absolute; z-index: 2001;" class="mint-msgbox-wrapper">'+
-                           '<div class="mint-msgbox">'+
-                                '<div class="mint-msgbox-head">'+params.title+'</div>'+
-                                '<div class="mint-msgbox-content">'+
-                                '<div class="mint-msgbox-message">'+params.msgBoxText+'</div>'+
-                            '</div>'+btnBox_html                            
-                            '</div>'+
+                    var btn_html = params.btnNum == 1 ? '<a href="javascript:;" class="cancelBtn">'+params.sureText+'</a>' : '<a href="javascript:;" class="sureBtn">'+params.sureText+'</a><a href="javascript:;" class="cancelBtn">'+params.cancelText+'</a>'
+                    var msgBox_html = '<div class="dialogBox">'+
+                    '<div class="dialogContent">'+
+                        '<div class="title">'+
+                            '<p>'+params.text+'</p>'+
                         '</div>'+
-                    '</div>';
-                    $('body').append(msgBox_html);
-                
+                        '<div>'+
+                            btn_html
+                        '</div>'+
+                    '</div>'+
+                '</div>';
+                $('body').append(msgBox_html);
             }
             /**
              * @desc messageBox初始化事件侦听函数
              * @function initMsgEvent
              */
             function initMsgEvent(){
-                $('.mint-msgbox-cancel').click(function () {
-                    $('.mint-msgbox').remove()
+                $('.dialogBox .cancelBtn').click(function () {
+                    $('.dialogBox').remove()
                 })
-                $('.mint-msgbox-confirm').click(function () {
+                $('.dialogBox .sureBtn').click(function () {
                     params.callBack()
-                    $('.mint-msgbox').remove()
+                    $('.dialogBox').remove()
                 })
             }
             initMsgBox();
             initMsgEvent();
         }        
     }
-// })

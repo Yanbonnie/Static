@@ -14,7 +14,34 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding-top: REM(20);
+    .icon-loading{
+      width:REM(100);
+      height:REM(100);
+      margin: 0 auto;
+      display: inline-block;
+      background-image: url('../images/loading.gif');
+      background-size:REM(100) REM(100);
+      background-repeat: no-repeat;
+    }
+    .icon-success{
+      width:REM(100);
+      height:REM(100);
+      display: inline-block;
+      background-image: url('../images/success-toast.gif');
+      background-size: REM(100) REM(100);
+      background-repeat: no-repeat;
+    }
+    .icon-fail{
+      width:REM(100);
+      height:REM(100);
+      display: inline-block;
+      background-image: url('../images/fail-toast.png');
+      background-size: REM(100) REM(100);
+      background-repeat: no-repeat;
+    }
     .toast-text{
+      padding-top: REM(20);
       line-height: REM(60);
       font-size: REM(24);
       color: #ffffff;
@@ -22,28 +49,53 @@
   }
   
 }
-.icon-loading{
-  width:REM(100);
-  height:REM(100);
-  margin: 0 auto;
-  display: inline-block;
-  background-image: url('../images/loading.gif');
-  background-size:REM(100) REM(100);
-  background-repeat: no-repeat;
+
+
+.easy-toast{
+  position: fixed;
+  background: rgba(0,0,0,0.8);
+  padding: REM(10) REM(50);
+  max-width: REM(600);
+  border-radius: REM(100);
+  color: #ffffff;
+  font-size: REM(28);
+  z-index: 20;
 }
-.icon-success{
-  width:REM(100);
-  height:REM(100);
-  display: inline-block;
-  background-image: url('../images/success-toast.gif');
-  background-size: REM(100) REM(100);
-  background-repeat: no-repeat;
-}
-.icon-fail{
-  width:REM(100);
-  height:REM(100);
-  display: inline-block;
-  background-image: url('../images/fail-toast.png');
-  background-size: REM(100) REM(100);
-  background-repeat: no-repeat;
+
+.dialogBox{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 20;
+  background: rgba(0,0,0,0.5);
+  .dialogContent{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    .title{
+      padding: REM(50);
+      font-size: REM(24);
+      color: #848484;
+      background: #ffffff;
+      border-bottom:1px #efefef solid;
+    }
+    a{
+      height: REM(95);
+      background: #ffffff;
+      display: block;
+      line-height: REM(95);
+      font-size: REM(30);
+      text-decoration: none;
+      &:first-child{
+        color: #ff503f;
+      }
+      &:last-child{
+        margin-top: REM(8);
+      }
+    }
+  }
 }
