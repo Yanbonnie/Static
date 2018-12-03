@@ -167,9 +167,23 @@ html,body{
     &.swiper-slide3{
         text-align: center;
         .rili{
-            width: REM(315);
+            width: REM(320);
             padding: REM(300) 0 REM(50);
             margin: 0 auto;
+            .riliBox{
+                width: REM(320);
+                height: REM(320);
+                background: url($URL+'1.png');
+                background-size: REM(320) auto;
+                position: relative;
+                .icon-right{
+                    width: REM(50);
+                    position: absolute;
+                    right: REM(-150);
+                    top: REM(120);
+                }
+            }
+            
             img{
                 width: 100%;
             }
@@ -513,4 +527,24 @@ html,body{
 0% { transform: translateY(-100%); opacity:0;}
 50% { transform: translateY(0%); opacity:1;}
 100% { transform: translateY(100%); opacity:0;}
+}
+
+.swiper-slide.swiper-slide3 .rili .riliBox{
+    &.end{
+        background-position: 0px REM(-2560) !important;
+    }
+}
+// 16-17
+.action {
+    -webkit-animation: action 1s steps(9) both; 
+    animation: action 1s steps(9) both; 
+    
+}
+@-webkit-keyframes action {
+    0% { background-position: 0 0rem; }
+    100% { background-position: 0 REM(-2880); }
+}
+@keyframes action {
+    0% { background-position: 0 0rem; }
+    100% { background-position: 0 REM(-2880); }
 }
