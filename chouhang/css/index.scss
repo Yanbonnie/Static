@@ -1,6 +1,5 @@
 
 @charset "utf-8";
-// @import 'loading_22.scss';
 @import './base';
 @import './toast';
 html,body{
@@ -11,9 +10,49 @@ html,body{
 .wrap{
     width: 100%;
     height: 100%;
+    visibility: hidden;
 }
 [v-cloak]{
     display: none;
+}
+
+// loading
+.loading{
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    img{
+        width: REM(194);
+        margin-bottom: REM(50);
+    }
+    .pro{
+        height: REM(10);
+        width: REM(300);
+        border-radius: REM(50);
+        overflow: hidden;
+        position: relative;
+        span{
+            background-image: -webkit-linear-gradient(0deg, #008cd6, #2bab91);
+            position: absolute;
+            height: 100%;
+            left: 0;
+            top: 0;
+        }
+    }
+    .text{
+        padding-top: REM(30);
+        font-size: REM(30);
+        text-align: center;
+        color: #008cd6;
+    }
 }
 .iconDown{
     width: REM(51);
@@ -173,14 +212,30 @@ html,body{
             .riliBox{
                 width: REM(320);
                 height: REM(320);
+                position: relative;
                 background: url($URL+'1.png');
                 background-size: REM(320) auto;
-                position: relative;
                 .icon-right{
                     width: REM(50);
                     position: absolute;
                     right: REM(-150);
                     top: REM(120);
+                }
+                &.riliBox1{
+                    background: url($URL+'1.png');
+                    background-size: REM(320) auto;
+                }
+                &.riliBox2{
+                    background: url($URL+'2.png');
+                    background-size: REM(320) auto;
+                }
+                &.riliBox3{
+                    background: url($URL+'3.png');
+                    background-size: REM(320) auto;
+                }
+                &.riliBox4{
+                    background: url($URL+'4.png');
+                    background-size: REM(320) auto;
                 }
             }
             

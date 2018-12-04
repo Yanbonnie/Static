@@ -57,15 +57,21 @@ var loading = (function(c){
 		for (var i = 0;i < loadType[ index ].nodes;i++) {
 			str += '<div></div>';
 		}
-		loading_dom.innerHTML = '<div class="loader">' + 
-							        '<div class="loader-inner '+type+'">' +
-							          str +
-							      	'</div>' + 
-						        '</div>'+
-								'<p class="progress">'+
-									'<span id="pro">0</span><span>%</span>'+
-								'</p>';
-		
+		// loading_dom.innerHTML = '<div class="loader">' + 
+		// 					        '<div class="loader-inner '+type+'">' +
+		// 					          str +
+		// 					      	'</div>' + 
+		// 				        '</div>'+
+		// 						'<p class="progress">'+
+		// 							'<span id="pro">0</span><span>%</span>'+
+		// 						'</p>';
+		loading_dom.innerHTML = '<div class="loading">'+
+			'<img src="./images/loading.png" alt="">'+
+			'<span class="pro">'+
+				'<span id="pro"></span>'+
+			'</span>'+
+			'<span class="text">努力加载中</span>'+
+		'</div>';
 		var first=document.body.firstChild; //得到第一个元素
 		document.body.insertBefore(loading_dom,first);
 		config.callback && config.callback.call(this);
@@ -93,13 +99,13 @@ $(function(){
 			minTime : 300,
 			onLoading : function(count,total){
 				var r = Math.round(count/total*100);
-				pro.text(r);
+				// pro.text(r);
+				pro.css({width:r+'%'})
 			},
 			onComplete : function(time){
 				setTimeout(function(){
 					$('.loading').remove();
 					$('.wrap').css('visibility','visible');
-					$('.rule-cover .rule-box').addClass('zoomIn');
 					delete mo.Loader;
 					preLoadSource='';
 					if(checkPar("rank") == "rank"){
