@@ -221,6 +221,16 @@ html,body{
                     right: REM(-150);
                     top: REM(120);
                 }
+                .hand{
+                    position: absolute;
+                    width: REM(100);
+                    z-index: 5;
+                    left: 42%;
+                    bottom: 0;
+                    img{
+                        width: 100%;
+                    }
+                }
                 &.riliBox1{
                     background: url($URL+'1.png');
                     background-size: REM(320) auto;
@@ -259,6 +269,16 @@ html,body{
             padding: REM(20) 0;
             margin: 0 auto;
             width: REM(152);
+        }
+        .hand{
+            position: absolute;
+            width: REM(100);
+            z-index: 5;
+            top: REM(520);
+            left: LEFT(80);
+            img{
+                width: 100%;
+            }
         }
         .data{
             width: REM(190);
@@ -349,6 +369,16 @@ html,body{
             left: LEFT(181);
             bottom: REM(150);
             z-index: 2;
+        }
+        .hand{
+            position: absolute;
+            width: REM(100);
+            z-index: 5;
+            top: REM(520);
+            left: LEFT(80);
+            img{
+                width: 100%;
+            }
         }
         .btnBox{
             height: REM(80);
