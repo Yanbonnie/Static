@@ -471,7 +471,7 @@ html,body{
     left: LEFT(513);
     top: 50%;
     transform: translateY(-50%);
-    background: url($URL+'data_big.png') #ffffff;
+    background: url($URL+'data_big.png');
     background-size: 100% 100%;
     z-index: 10;
     .data-txt1{
@@ -603,3 +603,11 @@ html,body{
     0% { background-position: 0 0rem; }
     100% { background-position: 0 REM(-2880); }
 }
+
+
+.animated.infinite2{-webkit-animation-iteration-count:2;animation-iteration-count:2}
+.animated.infinite3{-webkit-animation-iteration-count:3;animation-iteration-count:3}
+.animated.infinite4{-webkit-animation-iteration-count:4;animation-iteration-count:4}
+.animated.infinite5{-webkit-animation-iteration-count:5;animation-iteration-count:5}
+.animated.infinite6{-webkit-animation-iteration-count:6;animation-iteration-count:6}
+.animated.infinite7{-webkit-animation-iteration-count:7;animation-iteration-count:7}
