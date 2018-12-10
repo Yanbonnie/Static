@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>收款码</title>
+    <script type='text/javascript' src='js/flexible.js' charset='utf-8'></script>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <div class="wrap" id="wrap" v-cloak>
+        <div class="form">
+            <div class="input-form">
+                <label class="item-left" for="">机器号码</label>
+                <div class="item-right" @click="scanHandle">
+                    <input type="text" v-model="number" readonly  placeholder="点击扫码获取">
+                    <img class="photo" src="./images/photo.png" alt="">
+                </div>
+            </div>
+            <div class="tip" @click="previewImage">
+                <span>
+                    <img src="./images/question.png" alt="">
+                </span>
+                <p>如何获取机器号码</p>
+            </div>
+            <div class="input-form">
+                <label class="item-left" for="">手机号码</label>
+                <div class="item-right">
+                    <input type="number" v-model="mobile" placeholder="请输入手机号码">
+                </div>
+            </div>
+            <a href="javascript:;" class="btn submit" :class="[submitState ? '':'gray']">提交</a>
+            <a href="javascript:;" class="btn jiaofei" @click="previewImage">我要交费</a>
+            <div class="footer">
+                <p>如有任何问题，请点击拨打电话</p>
+                <p>
+                    <span><img src="./images/telephone.png" alt=""></span>
+                    <b>13432754811</b>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script type='text/javascript' src='js/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='js/common.js' charset='utf-8'></script>
+    <script type='text/javascript' src='js/vue.min.js' charset='utf-8'></script>
+    <script>
+        var vm = new Vue({
+            el: '#wrap',
+            data: {
+                number:'',
+                mobile:'',
+                submitState:true,
+                linkHref:{
+                    getInfo:'getInfo',
+                    postInfo:'postInfo'
+                }
+            },
+            methods: {
+                // 获取信息
+                getInfo:function(){
+                    var This = this;
+                    $.ajax({
+                        url:this.linkHref['getInfo'],
+                        dataType: 'json',
+                        type: 'get',
+                        async: true,
+                        success:function(res){
+                            if(res.status == 0){
+                                // 成功回调
+                            }else{
+                                Com.$toast({
+                                    text:res.msg || '请求失败',
+                                    type:'fail'
+                                })
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown)
+                        }
+                    })
+                },
+                // 提交信息
+                postInfoHandle: function () {
+                    var This = this;
+                    if(!This.submitState) return;
+                    Com.$toast({
+                        text:'提交中...',
+                        type:'loading'
+                    })
+                    This.submitState = false;
+                    $.ajax({
+                        url:this.linkHref['postInfo'],
+                        dataType: 'json',
+                        type: 'get',
+                        async: true,
+                        data:{
+                            mobile:This.mobile,
+                            number:This.number
+                        },
+                        success:function(res){
+                            This.submitState = true;
+                            $('.toast').hide();
+                            if(res.status == 0){
+                                // 成功回调
+                            }else{
+                                Com.$toast({
+                                    text:res.msg || '请求失败',
+                                    type:'fail'
+                                })
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown)
+                        }
+                    })
+                },
+                // 预览图片功能
+                previewImage:function(){
+                    wx.previewImage({
+                        current: '', // 当前显示图片的http链接
+                        urls: [] // 需要预览的图片http链接列表
+                    })
+                },
+                // 扫一扫功能
+                scanHandle:function(){
+                    var This = this;
+                    wx.scanQRCode({
+                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                        scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                        success: function (res) {
+                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                            This.number = result;
+                        }       
+                    });
+                }
+            },
+            mounted: function () {
+                var This = this;
+                
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -15,7 +15,13 @@ html,body{
 [v-cloak]{
     display: none;
 }
-
+.f46{
+    font-size: REM(46);
+}
+.f40{
+    font-size: REM(46);
+    margin-top: -0.2rem;
+}
 // loading
 .loading{
     z-index: 100;
@@ -189,6 +195,10 @@ html,body{
             margin: 0 auto;
             padding: REM(30) 0 REM(50);
         }
+        .zd{
+            width: REM(308);
+            margin: 0 auto;
+        }
     }
     &.swiper-slide2{
         text-align: center;
@@ -196,7 +206,8 @@ html,body{
             padding-top: REM(430);
         }
         .txt2{
-            padding-top: REM(300);
+            padding-top: REM(280);
+            padding-bottom: 0.4rem;
         }
         .txt3{
             padding-top: REM(60);
@@ -272,10 +283,10 @@ html,body{
         }
         .hand{
             position: absolute;
-            width: REM(100);
+            width: 10rem;
             z-index: 5;
-            top: REM(520);
-            left: LEFT(80);
+            top: 2rem;
+            left: -0.5rem;
             img{
                 width: 100%;
             }
@@ -283,6 +294,15 @@ html,body{
         .data{
             width: REM(190);
             position: absolute;
+            height: REM(289);
+            // background: url($URL+'data_bg.png');
+            // background-size: 100% 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img{
+                width: REM(161);
+            }
             &.data1{
                 left: REM(70);
                 top: REM(380);
@@ -297,7 +317,7 @@ html,body{
         }
         .tab2{
             position: absolute;
-            top: REM(610);
+            top: 9.2rem;
             left: LEFT(152);
             width: REM(152);
         }
@@ -305,14 +325,14 @@ html,body{
             width: REM(241);
             position: absolute;
             left: REM(110);
-            top: REM(700);
+            top: 10rem;
             z-index: 2;
         }
         .data5{
             width: REM(241);
             position: absolute;
             right: REM(110);
-            top: REM(700);
+            top: 10rem;
             z-index: 2;
         }
         .footer{
@@ -339,17 +359,30 @@ html,body{
         .btn{
             position: absolute;
             width: REM(303);
+            height: REM(68);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img{
+                width: REM(303);
+            }
             &.btn1{
                 top: REM(850);
                 left: REM(140);
+                background: url($URL+'btn1_bg.png');
+                background-size: 100% 100%;
             }
             &.btn2{
                 top: REM(940);
                 left: REM(210);
+                background: url($URL+'btn2_bg.png');
+                background-size: 100% 100%;
             }
             &.btn3{
                 top: REM(1030);
                 left: REM(280);
+                background: url($URL+'btn3_bg.png');
+                background-size: 100% 100%;
             }
         }
     }
@@ -484,14 +517,21 @@ html,body{
     }
     .know{
         position: absolute;
-        bottom:REM(140);
+        top:REM(1110);
         left: LEFT(335);
         width: REM(335);
+        z-index: 11;
+    }
+    .footer{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
     }
 }
 .guideBox{
     .know{
-        bottom: REM(80);
+        top: REM(1520);
     }
 }
 .dataBox{
@@ -641,3 +681,25 @@ html,body{
 .animated.infinite5{-webkit-animation-iteration-count:5;animation-iteration-count:5}
 .animated.infinite6{-webkit-animation-iteration-count:6;animation-iteration-count:6}
 .animated.infinite7{-webkit-animation-iteration-count:7;animation-iteration-count:7}
+
+@-webkit-keyframes pulse{
+    0%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}
+    50%{-webkit-transform:scale3d(1.2,1.2,1.2);transform:scale3d(1.2,1.2,1.2)}
+    100%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}
+}
+@keyframes pulse{
+    0%{-webkit-transform:scale3d(1,1,1);-ms-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}
+    50%{-webkit-transform:scale3d(1.2,1.2,1.2);-ms-transform:scale3d(1.2,1.2,1.2);transform:scale3d(1.2,1.2,1.2)}
+    100%{-webkit-transform:scale3d(1,1,1);-ms-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}
+}
+.pulse2{-webkit-animation-name:pulse2;animation-name:pulse2;animation-duration:1s !important;-webkit-animation-duration:1s !important;}
+@-webkit-keyframes pulse2{
+    0%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}
+    50%{-webkit-transform:scale3d(1.05,1.05,1.05);transform:scale3d(1.05,1.05,1.05)}
+    100%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}
+}
+@keyframes pulse2{
+    0%{-webkit-transform:scale3d(1,1,1);-ms-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}
+    50%{-webkit-transform:scale3d(1.05,1.05,1.05);-ms-transform:scale3d(1.05,1.05,1.05);transform:scale3d(1.05,1.05,1.05)}
+    100%{-webkit-transform:scale3d(1,1,1);-ms-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}
+}

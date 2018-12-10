@@ -1,0 +1,365 @@
+@charset "UTF-8";
+/*--------------------功能: 重设浏览器默认样式 START--------------------*/
+a, abbr, acronym, address, applet, article, aside, audio,
+b, blockquote, big, body,
+center, canvas, caption, cite, code, command,
+datalist, dd, del, details, dfn, dl, div, dt,
+em, embed,
+fieldset, figcaption, figure, font, footer, form,
+h1, h2, h3, h4, h5, h6, header, hgroup, html,
+i, iframe, img, ins,
+kbd,
+keygen,
+label, legend, li,
+meter,
+nav,
+object, ol, output,
+p, pre, progress,
+q,
+s, samp, section, small, span, source, strike, strong, sub, sup,
+table, tbody, tfoot, thead, th, tr, tt,
+u, ul,
+var {
+  background: transparent;
+  border: 0 none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  vertical-align: top;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+table, table td {
+  padding: 0;
+  border: none;
+  border-collapse: collapse;
+}
+
+img {
+  border: 0;
+  display: block;
+}
+
+select {
+  white-space: nowrap;
+}
+
+caption {
+  text-align: left;
+}
+
+embed {
+  vertical-align: top;
+}
+
+div, ul, li, ol, dl, dd, p {
+  word-wrap: break-word;
+}
+
+ul, li, ol, dl, dd {
+  list-style-type: none;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  outline: none;
+  font-size: inherit;
+  font-weight: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+body {
+  text-align: left;
+  color: #828282;
+  overflow-x: hidden;
+}
+
+html, body {
+  font: 10px/1.5 Microsoft YaHei,\5b8b\4f53, Arial, Verdana;
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+  white-space: nowrap;
+  color: #828282;
+}
+
+input, input[type="button"], input[type="submit"], input[type="reset"], input[type="number"] {
+  -webkit-appearance: none;
+}
+
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+/*
+ * SASS setting 
+ */
+/*
+@include prefixer(border-radius,REM(20))
+@include fullBg(REM(24),REM(24),'add.png');
+background: url($URL+'pre.png') no-repeat;
+*/
+/*清除浮动*/
+.clf:before, .clf:after {
+  content: "";
+  display: table;
+}
+
+.clf:after {
+  clear: both;
+}
+
+.clf {
+  *zoom: 1;
+}
+
+.shengl {
+  word-break: keep-all;
+  /* 不换行 */
+  white-space: nowrap;
+  /* 不换行 */
+  overflow: hidden;
+  /* 内容超出宽度时隐藏超出部分的内容 */
+  text-overflow: ellipsis;
+}
+
+.toast {
+  width: 2.66667rem;
+  position: fixed;
+  z-index: 20;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 0.21333rem;
+  padding: 0.4rem;
+}
+
+.toast .toast-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 0.26667rem;
+}
+
+.toast .toast-wrap .icon-loading {
+  width: 1.33333rem;
+  height: 1.33333rem;
+  margin: 0 auto;
+  display: inline-block;
+  background-image: url("../images/loading.gif");
+  background-size: 1.33333rem 1.33333rem;
+  background-repeat: no-repeat;
+}
+
+.toast .toast-wrap .icon-success {
+  width: 1.33333rem;
+  height: 1.33333rem;
+  display: inline-block;
+  background-image: url("../images/success-toast.gif");
+  background-size: 1.33333rem 1.33333rem;
+  background-repeat: no-repeat;
+}
+
+.toast .toast-wrap .icon-fail {
+  width: 1.33333rem;
+  height: 1.33333rem;
+  display: inline-block;
+  background-image: url("../images/fail-toast.png");
+  background-size: 1.33333rem 1.33333rem;
+  background-repeat: no-repeat;
+}
+
+.toast .toast-wrap .toast-text {
+  padding-top: 0.26667rem;
+  line-height: 0.8rem;
+  font-size: 0.32rem;
+  color: #ffffff;
+}
+
+.easy-toast {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 0.13333rem 0.66667rem;
+  max-width: 8rem;
+  border-radius: 1.33333rem;
+  color: #ffffff;
+  font-size: 0.37333rem;
+  z-index: 20;
+}
+
+.dialogBox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 20;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.dialogBox .dialogContent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.dialogBox .dialogContent .title {
+  padding: 0.66667rem;
+  font-size: 0.32rem;
+  color: #848484;
+  background: #ffffff;
+  border-bottom: 1px #efefef solid;
+}
+
+.dialogBox .dialogContent a {
+  height: 1.26667rem;
+  background: #ffffff;
+  display: block;
+  line-height: 1.26667rem;
+  font-size: 0.4rem;
+  text-decoration: none;
+}
+
+.dialogBox .dialogContent a:first-child {
+  color: #ff503f;
+}
+
+.dialogBox .dialogContent a:last-child {
+  margin-top: 0.10667rem;
+}
+
+html, body {
+  width: 100%;
+  background: #ffffff;
+}
+
+.wrap {
+  width: 100%;
+  height: 100%;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+.form {
+  margin: 0.66667rem;
+}
+
+.form .input-form {
+  display: flex;
+  align-items: center;
+  height: 1.06667rem;
+  border-bottom: 1px #eeeeee solid;
+}
+
+.form .input-form .item-left {
+  flex-basis: 2.13333rem;
+  font-size: 0.4rem;
+  color: #000000;
+}
+
+.form .input-form .item-right {
+  flex: 1;
+  position: relative;
+}
+
+.form .input-form .item-right input {
+  border: 0;
+  width: 100%;
+  font-size: 0.4rem;
+}
+
+.form .input-form .item-right .photo {
+  width: 0.53333rem;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.form .tip {
+  display: flex;
+  height: 1.06667rem;
+  align-items: center;
+  font-size: 0.34667rem;
+  color: #ff503f;
+}
+
+.form .tip span {
+  width: 0.46667rem;
+}
+
+.form .tip span img {
+  width: 100%;
+}
+
+.form .btn {
+  height: 1.06667rem;
+  line-height: 1.06667rem;
+  text-align: center;
+  color: #ffffff;
+  border-radius: 0.21333rem;
+  display: block;
+  margin-bottom: 0.66667rem;
+  font-size: 0.4rem;
+}
+
+.form .btn.submit {
+  margin-top: 0.66667rem;
+  background: #ff503f;
+}
+
+.form .btn.jiaofei {
+  background: #3385ff;
+}
+
+.form .btn.gray {
+  background: #ccc;
+}
+
+.form .footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.53333rem;
+}
+
+.form .footer p {
+  display: flex;
+  font-size: 0.4rem;
+  justify-content: center;
+}
+
+.form .footer p span {
+  width: 0.46667rem;
+  position: relative;
+  top: 0.1rem;
+}

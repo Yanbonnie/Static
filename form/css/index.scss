@@ -1,0 +1,98 @@
+
+@charset "utf-8";
+@import './base';
+@import './toast';
+html,body{
+    width: 100%;
+    background: #ffffff;
+}
+.wrap{
+    width: 100%;
+    height: 100%;
+}
+[v-cloak]{
+    display: none;
+}
+img{
+    display: block;
+    width: 100%;
+}
+.form{
+    margin: REM(50);
+    .input-form{
+        display: flex;
+        align-items: center;
+        height: REM(80);
+        border-bottom: 1px #eeeeee solid;
+        .item-left{
+            flex-basis: REM(160);
+            font-size: REM(30);
+            color: #000000;
+        }
+        .item-right{
+            flex: 1;
+            position: relative;
+            input{
+                border: 0;
+                width: 100%;
+                font-size: REM(30);
+            }
+            .photo{
+                width: REM(40);
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+    }
+    .tip{
+        display: flex;
+        height: REM(80);
+        align-items: center;
+        font-size: REM(26);
+        color: #ff503f;
+        span{
+            width: REM(35);
+            img{
+                width: 100%;
+            }
+        }
+    }
+    .btn{
+        height: REM(80);
+        line-height: REM(80);
+        text-align: center;
+        color: #ffffff;
+        border-radius: REM(16);
+        display: block;
+        margin-bottom: REM(50);
+        font-size: REM(30);
+        &.submit{
+            margin-top: REM(50);
+            background: #ff503f;
+        } 
+        &.jiaofei{
+            background: #3385ff;
+        }
+        &.gray{
+            background: #ccc;
+        }
+    }
+    .footer{
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: REM(40);
+        p{
+            display: flex;
+            font-size: REM(30);
+            justify-content: center;
+            span{
+                width: REM(35);
+                position: relative;
+                top: 0.1rem;
+            }
+        }
+    }
+}
